@@ -1,0 +1,122 @@
+﻿/* Log in and sign up page */
+@media (width: 700px) {
+    #MainSection{
+        margin-top:80px;
+    }
+}
+
+
+
+
+/*Medium Screen*/
+@media(min-width: 576px) and (max-width: 991px) {
+
+    /* Log in and sign up page */
+    #signPage {
+        min-height: 900px;
+    }
+
+    #MainSection {
+        top: 20rem;
+        width: 676px;
+        height: 750px;
+    }
+
+    .logIn {
+        margin-left: 36%;
+    }
+
+    .signUp {
+        margin-top: 0;
+        margin-left: 26%;
+    }
+
+    #border {
+        margin-top: 6%;
+        margin-bottom: 3%;
+        width: 100%;
+        height: 2px;
+        border: ridge 2px gray;
+    }
+
+
+    .mr-left {
+        margin-left: 21px;
+    }
+    .mr-right{
+        margin-right:19px;
+    }
+    .searchDisplay{
+        display:none;
+    }
+    .minSearchDisplay{
+        display:inline;
+    }
+
+}
+
+@media (min-width: 576px) and (max-width:786px){
+    /* Log in and sign up page */
+    #MainSection {
+        top: 20rem;        
+        width: 576px;
+        height: 750px;
+    }
+    .signUp {
+        margin-top: 0;
+        margin-left: 14%;
+    }
+    /*My Feed*/
+    .none {
+        display: none;
+    }
+
+    .New {
+        width: inherit;
+    }
+}
+
+
+
+
+@media (max-width: 575px){
+    /*NavBar*/
+    .menu_H h6 {
+        display: none;
+    }
+    /* Log in and sign up page */
+    #signPage {
+        min-height: 900px;
+    }
+
+    #MainSection {
+        top: 20rem;
+        width: 494px;
+        height: 750px;
+    }
+
+    .logIn {
+        margin-left: 33%;
+    }
+
+    .signUp {
+        margin-top: 0;
+        margin-left: 9%;
+    }
+
+    #border {
+        margin-top: 6%;
+        margin-bottom: 3%;
+        width: 100%;
+        height: 2px;
+        border: ridge 2px gray;
+    }
+    /*My Feed*/
+    .none {
+        display: none;
+    }
+    .New {
+        width: inherit;
+    }
+}
+
