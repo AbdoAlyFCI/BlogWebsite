@@ -10,7 +10,17 @@
 
 /*Medium Screen*/
 @media(min-width: 576px) and (max-width: 991px) {
-
+    /*Navbar*/
+    .menu_H h6{
+        display:none;
+    }
+    .menu_H a{
+        margin-right:18px;
+        font-size:23px;
+    }
+    .search_H input{
+        width:146px;
+    }
     /* Log in and sign up page */
     #signPage {
         min-height: 900px;
@@ -81,8 +91,19 @@
 
 @media (max-width: 575px){
     /*NavBar*/
+    /*.menu_H{
+        margin-bottom:15px;
+    }*/
     .menu_H h6 {
         display: none;
+    }
+    .menu_H a{
+        margin-right:90px;
+        font-size:24px
+    }
+
+    .search_H input {
+        width: 140px;
     }
     /* Log in and sign up page */
     #signPage {

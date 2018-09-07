@@ -16,58 +16,66 @@
 <body>
     <header> 
         <div class="container">
-            <span class="Logo_H">
-                <a href="https:\\google.com"><img src="~/image/Logo/small logo.png" alt="infinite blogs" /></a>
-            </span>
-            <nav class="menu_H">
-                <a href="#">
-                    <i class="fas fa-home"></i>
-                    <h6>Home</h6>
-                </a>
-                <a href="#">
-                    <i class="fas fa-folder"></i>
-                    <h6>Local Channel</h6>
-                </a>
-                <a href="#">
-                    <i class="fas fa-folder-plus"></i>
-                    <h6>My Channel</h6>
-                </a>
-            </nav>
-            <span class="submenu_H minSearchDisplay ">
-                <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-search"></i>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <form class="search_H">
+            <div class="row">
+                <div class="col-sm-1 col-2">
+                    <div class="Logo_H">
+                        <a href="https:\\google.com"><img src="~/image/Logo/small logo.png" alt="infinite blogs" /></a>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-sm-4 col-10">
+                    <nav class="menu_H">
+                        <a href="#">
+                            <i class="fas fa-home"></i>
+                            <h6>Home</h6>
+                        </a>
+                        <a href="#">
+                            <i class="fas fa-folder"></i>
+                            <h6>Local Channel</h6>
+                        </a>
+                        <a href="#">
+                            <i class="fas fa-folder-plus"></i>
+                            <h6>My Channel</h6>
+                        </a>
+                    </nav>
+                </div>
+                @*<span class="submenu_H minSearchDisplay ">
+            <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search"></i>
+            </a>
+        </span>*@
+                <div class="col-lg-4 col-sm-5 col-7">
+                    <form class="search_H  ">
                         <input class="inputText" type="search" placeholder="Search" aria-label="Search">
                         <button class="inputText" type="submit"><i class="fas fa-search"></i></button>
                     </form>
                 </div>
-            </span>
-            <form class="search_H searchDisplay ">
-                <input class="inputText" type="search" placeholder="Search" aria-label="Search">
-                <button class="inputText" type="submit"><i class="fas fa-search"></i></button>
-            </form>
-            <span class="submenu_H">
-                <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="~/image/Test/square_Marc.jpg" alt="infinite blogs" />
-                </a>
-                <span class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Account Setting</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Log out</a>
-                </span>
-            </span>
-            <span class="notification_H">
-                <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-envelope"></i>
-                </a>
-                <span class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </span>
-            </span>
+                <div class="col-sm-1 col-2">
+                    <div class="submenu_H">
+                        <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="~/image/Test/square_Marc.jpg" alt="infinite blogs" />
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Account Setting</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Log out</a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="notification_H">
+                        <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Account Setting</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Log out</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 

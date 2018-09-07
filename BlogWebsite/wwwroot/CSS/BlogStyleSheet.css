@@ -13,17 +13,13 @@ header {
     z-index:1;
 }
 
-.Logo_H {
-    margin-right: 3.9%
-}
-
 .Logo_H img{
     width:34px;
     height:34px;    
 }
 .menu_H{
     display:inline;
-    margin-right:3%;
+    /*margin-right:3%;*/
 }
 .menu_H h6{
      display:inline
@@ -41,14 +37,14 @@ header {
 
 .search_H{
     display:inline;
-    margin-right:5%;
+    /*margin-right:5%;*/
 }
 .search_H .inputText{
     margin-bottom:2px;
 }
-.submenu_H{
+/*.submenu_H{
     margin-right:5px;
-}
+}*/
 .submenu_H a{
     text-decoration:none;
 }
