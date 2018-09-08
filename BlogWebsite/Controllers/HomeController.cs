@@ -17,5 +17,10 @@ namespace BlogWebsite.Controllers
         {
             return View();
         }
+
+        public ViewResult Channel()
+        {
+            return View();
+        }
     }
 }
