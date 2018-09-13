@@ -262,7 +262,23 @@ table .btn {
 .navigation input{
     border-radius:1rem;
 }
-.ChannelTab i{
-    font-size:75px;
+#files{
+    margin-top:10px;
 }
+
+.ChannelTab i {
+    font-size: 70px;
+}
+.ChannelTab {
+    width:90px;
+    border: 2px solid;
+    border-color: transparent;
+    word-wrap: break-word;
+    min-height:90px;
+}
+/*.ChannelTab p{
+    width:auto;
+}*/
+
+
 
