@@ -1,4 +1,37 @@
-﻿body {
+﻿/*Global style*/
+.link {
+    text-decoration: none;
+    color: #212529;
+}
+
+.link :hover {
+    color: #495057;
+}
+
+.image-SM {
+    width: 34px;
+    height: 34px;
+}
+.inputText {
+    margin-bottom: 8px;
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+
+
+
+
+/*Body*/
+body {
     background-color: #feecdf;
     padding-bottom: 70px;
 }
@@ -13,13 +46,13 @@ header {
     z-index:1;
 }
 
-.Logo_H img{
+/*.Logo_H img{
     width:34px;
     height:34px;    
-}
+}*/
+
 .menu_H{
     display:inline;
-    /*margin-right:3%;*/
 }
 .menu_H h6{
      display:inline
@@ -37,20 +70,20 @@ header {
 
 .search_H{
     display:inline;
-    /*margin-right:5%;*/
+    
 }
 .search_H .inputText{
     margin-bottom:2px;
 }
-/*.submenu_H{
-    margin-right:5px;
-}*/
+
+
+
 .submenu_H a{
     text-decoration:none;
 }
 .submenu_H img {
-    width: 34px;
-    height: 34px;
+    /*width: 34px;
+    height: 34px;*/
     border-radius: 50px;
     margin-bottom: 4px;
 }
@@ -70,13 +103,13 @@ header {
     display:none;
 }
 
-.minSearchDisplay a {
-    color: #212529;
+/*.minSearchDisplay a {
+    /*color: #212529;
 }
-
 .minSearchDisplay a:hover{
-    color:#495057;
-}
+    /*color:#495057;
+}*/
+
 /* Log in and sign up page */
 #loginlogo {
     margin-top: 3%;
@@ -89,14 +122,8 @@ header {
     margin-left: 250px;
 
 }
-/*#signPage {
-    background: url("../image/BackGround/background2.jpg");
-    background-color: #feecdf;
-    background-repeat: no-repeat;
-    background-size: cover;
-    min-height: 700px;
-    min-width: inherit;
-}*/
+
+
 #MainSection {
     /*position: absolute;*/
     margin: 70px auto;
@@ -116,24 +143,12 @@ header {
     margin-top: 10px;
     margin-left: 3%;
 }
-.inputText {
-    margin-bottom: 8px;
-    height: calc(2.25rem + 2px);
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
+
 .LoginText {
-    margin-bottom: 8px;
-    height: calc(2.25rem + 2px);
+    /*margin-bottom: 8px;
+    height: calc(2.25rem + 2px);*/
     width: 100%;
-    padding: 0.375rem 0.75rem;
+    /*padding: 0.375rem 0.75rem;
     font-size: 1rem;
     line-height: 1.5;
     color: #495057;
@@ -141,7 +156,7 @@ header {
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;*/
 }
 
 table .btn {
@@ -211,8 +226,6 @@ table .btn {
 .SChannel:hover {
     background-color: rgba(244, 202, 173, 0.89);
     border-radius:50px;
-    /*height:75px;
-    border:2px solid white;*/
 }
 
 .Channel >img,
@@ -276,9 +289,7 @@ table .btn {
     word-wrap: break-word;
     min-height:90px;
 }
-/*.ChannelTab p{
-    width:auto;
-}*/
+
 
 
 

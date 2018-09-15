@@ -46,8 +46,6 @@
 })();
 
 /*ChannelPage*/
-var df = document.getElementById("ChannelTab");
-
 function iconHoverOver(element) {
     element.style.backgroundColor = 'rgba(8, 73, 244, 0.46)';
     element.style.border = '2px solid blue';

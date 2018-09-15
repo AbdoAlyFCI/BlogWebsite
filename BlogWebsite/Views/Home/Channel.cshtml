@@ -7,126 +7,40 @@
     <div class="container">
         <div class="ChannelBar">
             <div class="row">
-                <div class="arrows col-2">
-                    <a><i class="fas fa-chevron-circle-left"></i></a>
-                    <a><i class="fas fa-chevron-circle-right"></i></a>
+                <div class="arrows col-md-2 col-sm-3 col-3">
+                    <a class="link"><i class="fas fa-chevron-circle-left"></i></a>
+                    <a class="link"><i class="fas fa-chevron-circle-right"></i></a>
                 </div>
-                <div class="arrows Home col-2">
-                    <a><i class="fab fa-fort-awesome"></i></a>
+                <div class="arrows Home col-1">
+                    <a class="link"><i class="fab fa-fort-awesome"></i></a>
                 </div>
-                <div class="navigation col-6">
+                <div class="navigation col-md-6 col-5">
                     <input class="LoginText" type="text" value="Root" readonly />
                 </div>
             </div>
         </div>
         <div id="files"></div>
         <div class="row">
-            @*<div class="col-1 ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
-            <div class=" text-center">
-                <i class="fas fa-folder"></i>
-                <h6>sd</h6>
-            </div>
-        </div>
-        <div class="col-1 ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
-            <div class=" text-center">
-                <i class="fas fa-folder"></i>
-                <h6>sd</h6>
-            </div>
-        </div>
-        <div class="col-1 ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
-            <div class=" text-center">
-                <i class="fas fa-folder"></i>
-                <h6>sd</h6>
-            </div>
-        </div>
-        <div class="col-1 ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
-            <div class=" text-center">
-                <i class="fas fa-file-invoice"></i>
-                <h6>sd</h6>
-            </div>
-        </div>*@
-            <div class="col-1 ">
-                <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
-                    <div class=" text-center">
-                        <i class="fas fa-folder"></i>
-                        <p>sd</p>
+            @for (int i = 0; i < 12; i++)
+            {
+                <div class="col-lg-1 col-md-2 col-sm-3 col-4  ">
+                    <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
+                        <div class=" text-center">
+                            <i class="fas fa-folder"></i>
+                            <p>sd</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-1 ">
-                <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
-                    <div class=" text-center">
-                        <i class="fas fa-folder"></i>
-                        <p>sd</p>
+                <div class="col-lg-1 col-md-2 col-sm-3 col-4  ">
+                    <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
+                        <div class=" text-center">
+                            <i class="fas fa-file-invoice"></i>
+                            <p>sdssddddddddddddddddsssssssssssssss</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-1 ">
-                <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
-                    <div class=" text-center">
-                        <i class="fas fa-folder"></i>
-                        <p>sd</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-1 ">
-                <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
-                    <div class=" text-center">
-                        <i class="fas fa-folder"></i>
-                        <p>sd</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-1 ">
-                <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
-                    <div class=" text-center">
-                        <i class="fas fa-folder"></i>
-                        <p>sd</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-1 ">
-                <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
-                    <div class=" text-center">
-                        <i class="fas fa-folder"></i>
-                        <p>sd</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-1 ">
-                <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
-                    <div class=" text-center">
-                        <i class="fas fa-folder"></i>
-                        <p>sd</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-1 ">
-                <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
-                    <div class=" text-center">
-                        <i class="fas fa-folder"></i>
-                        <p>sd</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-1 ">
-                <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
-                    <div class=" text-center">
-                        <i class="fas fa-folder"></i>
-                        <p>sd</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-1 ">
-                <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
-                    <div class=" text-center">
-                        <i class="fas fa-file-invoice"></i>
-                        <p>sdsssssssssssssssss</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-1 ">
+            }
+            <div class="col-lg-1 col-md-2 col-sm-3  ">
                 <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
                     <div class=" text-center">
                         <i class="fas fa-file-invoice"></i>
@@ -134,6 +48,87 @@
                     </div>
                 </div>
             </div>
+            @*<div class="col-lg-1 col-md-2 col-sm-3 col-6 ">
+            <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
+                <div class=" text-center">
+                    <i class="fas fa-folder"></i>
+                    <p>sd</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-2 col-sm-3 col-6 ">
+            <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
+                <div class=" text-center">
+                    <i class="fas fa-folder"></i>
+                    <p>sd</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-2 col-sm-3 col-6 ">
+            <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
+                <div class=" text-center">
+                    <i class="fas fa-folder"></i>
+                    <p>sd</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-2 col-sm-3 col-6 ">
+            <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
+                <div class=" text-center">
+                    <i class="fas fa-folder"></i>
+                    <p>sd</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-2 col-sm-3 col-6 ">
+            <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
+                <div class=" text-center">
+                    <i class="fas fa-folder"></i>
+                    <p>sd</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-2 col-sm-3 col-6 ">
+            <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
+                <div class=" text-center">
+                    <i class="fas fa-folder"></i>
+                    <p>sd</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-2 col-sm-3 col-6 ">
+            <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
+                <div class=" text-center">
+                    <i class="fas fa-folder"></i>
+                    <p>sd</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-1 ">
+            <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
+                <div class=" text-center">
+                    <i class="fas fa-folder"></i>
+                    <p>sd</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-1 ">
+            <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
+                <div class=" text-center">
+                    <i class="fas fa-file-invoice"></i>
+                    <p>sdsssssssssssssssss</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-1 ">
+            <div class="ChannelTab" onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)">
+                <div class=" text-center">
+                    <i class="fas fa-file-invoice"></i>
+                    <p>sdssddddddddddddddddsssssssssssssss</p>
+                </div>
+            </div>
+        </div>*@
 
         </div>
     </div>
