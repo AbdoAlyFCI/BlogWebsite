@@ -299,25 +299,34 @@ table .btn {
 
 /*Context menu*/
 .contextMenu {
-    width: 120px;
-    box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
-    position: relative;
-    display: none;
-
-
+    perspective: 1000px;
+    position: fixed;
+    top: 7.2rem;
+    left: 40rem;
+    border-radius: 16px;
+    box-shadow: 0 5px 1px 0 rgba(0, 0, 0, 0.2);
+    font-size: 27px;
+    padding-right: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #c570f8;
+    z-index: 2;
 }
-.menu-options {
-    list-style: none;
-    padding: 10px 0;
+.contextMenu a {
+ 
+    margin-left: 30px;   
+}
+.contextMenu i {
+    transition: all 0.8s ease-in-out;
+ }
+
+.contextMenu i:hover {        
+    transform: rotateX(180deg);
 }
 
-.menu-option {
-    font-weight: 500;
-    font-size: 14px;
-    padding: 10px 40px 10px 20px;
-    cursor: pointer;
 
-}
+
+
 
 
 
