@@ -3,7 +3,7 @@
     ViewData["Title"] = "Channel";
 }
 
-<section class="ChannelContainer">
+<section id="ChannelContainer">
     <div class="container">
         <div class="ChannelBar">
             <div class="row">
@@ -21,50 +21,42 @@
         </div>
         <div id="files"></div>
         <div class="row">
-            @for (int i = 0; i < 6; i++)
+            @for (int i = 0; i < 1; i++)
             {
                 <div class="col-lg-1 col-md-2 col-sm-3 col-4  ">
-                    <button class="ChannelTab " onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)" onmousedown="onLongClick()" onmouseup="reset()">
+                    <button id="@i" class="ChannelTab " onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)" onmousedown="onLongClick(this.id)" onmouseup="reset()">
                         <div class=" text-center">
                             <i class="fas fa-folder"></i>
                             <p>sd</p>
                         </div>
                     </button>
                 </div>
-                <div class="col-lg-1 col-md-2 col-sm-3 col-4  ">
-                    <button class="ChannelTab " onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)" onmousedown="onLongClick()" onmouseup="reset()">
-                        <div class=" text-center">
-                            <i class="fas fa-file-invoice"></i>
-                            <p>sdssddddddddddddddddsssssssssssssss</p>
-                        </div>
-                    </button>
-                </div>
             }
-            <div  class="col-lg-1 col-md-2 col-sm-3 col-4  ">
-                <button class="ChannelTab " onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)" onmousedown="onLongClick()" onmouseup="reset()">
+            <div class="col-lg-1 col-md-2 col-sm-3 col-4  ">
+                <button id="1" class="ChannelTab " onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)" onmousedown="onLongClick(this.id)" onmouseup="reset()">
                     <div class=" text-center">
                         <i class="fas fa-folder"></i>
-                        <p>sd</p>
-                    </div>
-                </button>
-            </div>
-            <div id="bv" class="col-lg-1 col-md-2 col-sm-3 col-4  ">
-                <button class="ChannelTab " onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)" onmousedown="onLongClick()" onmouseup="reset()">
-                    <div class=" text-center">
-                        <i class="fas fa-folder"></i>
-                        <p>sd</p>
+                        <p>ssdsdsdsdd</p>
                     </div>
                 </button>
             </div>
         </div>
     </div>
-    .
 </section>
-<div class="contextMenu">
-    <a class="menu-option"><i class="fas fa-pen"></i> </a>
-    <a class="menu-option"><i class="fas fa-cut"></i></a>
-    <a class="menu-option"><i class="fas fa-times"></i></a>
-    <a class="menu-option"><i class="fas fa-info"></i></a>
+<div id="contextMenu">
+    <button id="rename" class="menu-option"><i class="fas fa-pen"></i> </button>
+    <button id="cut" class="menu-option"><i class="fas fa-cut"></i></button>
+    <button id="remove" class="menu-option"><i class="fas fa-times"></i></button>
+    <button id="info" class="menu-option"><i class="fas fa-info"></i></button>
+</div>
+
+<div id="dialoguemodal" >
+    <div id="renameDialogue " class="dialogueBox">
+        <span class="close">&times;</span>
+        <h3>Rename</h3>
+        <input id="renameInput" type="text" />
+        <button id="renameSubmit" >Change</button>
+    </div>
 </div>
 <script src="~/JavaScript/ChannelContent.js"></script>
 

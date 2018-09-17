@@ -145,18 +145,7 @@ header {
 }
 
 .LoginText {
-    /*margin-bottom: 8px;
-    height: calc(2.25rem + 2px);*/
     width: 100%;
-    /*padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;*/
 }
 
 table .btn {
@@ -256,7 +245,7 @@ table .btn {
    
 }
 /*My Channel*/
-.ChannelContainer{
+#ChannelContainer{
     background-color:#edf0f3;
     width:100%;
     height:1000px;
@@ -298,7 +287,9 @@ table .btn {
 
 
 /*Context menu*/
-.contextMenu {
+#contextMenu {
+    opacity: 0;
+    visibility: hidden;
     perspective: 1000px;
     position: fixed;
     top: 7.2rem;
@@ -310,20 +301,45 @@ table .btn {
     padding-top: 5px;
     padding-bottom: 5px;
     background-color: #c570f8;
+    transition: all 0.5s ease-in-out;
     z-index: 2;
 }
-.contextMenu a {
+#contextMenu button {
  
     margin-left: 30px;   
 }
-.contextMenu i {
+#contextMenu button {   
+    color: #212529;
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none; 
+    overflow: hidden;
     transition: all 0.8s ease-in-out;
- }
-
-.contextMenu i:hover {        
+}
+#contextMenu button:hover {        
     transform: rotateX(180deg);
 }
+/*Dialouge box */
+#dialoguemodal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 237px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: no-display;
+    background-color: rgba(0, 0, 0, 0.4);
+}
 
+.dialogueBox {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 20%;
+}
 
 
 
