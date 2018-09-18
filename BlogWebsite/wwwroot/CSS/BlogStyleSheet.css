@@ -338,9 +338,41 @@ table .btn {
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 20%;
 }
 
+#renameDialogue{
+    width:20%;
+    display:none;
+}
+
+#deleteDialogue{
+    width:25%;
+    display:none;
+}
+
+#infoDialogue{
+    margin: -119px auto;
+    width:35%;
+    display:none;
+}
+#infoTable{
+    table-layout: fixed;
+    width: 444px;
+}
+#infoTable tr{
+    margin-bottom:5px;
+}
+
+#infoTable th {
+    width: 16px;
+    vertical-align: top;
+    text-align: left;
+}
+
+#infoTable td {
+    width:24px;
+    word-wrap: break-word;
+}
 
 
 

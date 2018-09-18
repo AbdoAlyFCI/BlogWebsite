@@ -77,17 +77,23 @@ function ContextHiddent() {
 
 //Dialogue part
 var dialoguemodal = document.getElementById("dialoguemodal");
+
+//Rename part
 var renameButton = document.getElementById("rename");
+var renmaeDialogue = document.getElementById("renameDialogue");
 var renameInput = document.getElementById("renameInput");
 var renameSubmit = document.getElementById("renameSubmit");
 var close = document.getElementsByClassName("close")[0];
+
+
 
 
 renameButton.onclick = function () {
     ContextHiddent();
     renameInput.value = currentChannelClickedID.childNodes[1].childNodes[3].innerHTML;
     document.body.style.overflowY = "hidden";
-    dialoguemodal.style.display = "block";    
+    dialoguemodal.style.display = "block";  
+    renmaeDialogue.style.display = "block";
 };
 
 renameInput.onkeyup = function () {
@@ -100,27 +106,95 @@ renameInput.onkeyup = function () {
 renameSubmit.onclick = function () {
     currentChannelClickedID.childNodes[1].childNodes[3].innerHTML = renameInput.value;
     document.body.style.overflowY = "auto";
+
     dialoguemodal.style.display = "none";
+    renmaeDialogue.style.display = "none";
 };
 
 close.onclick = function () {
     document.body.style.overflowY = "auto";
     dialoguemodal.style.display = "none";
+    renmaeDialogue.style.display = "none";
 
 };
+
+
+//Delete part
+var deletebutton = document.getElementById("delete");
+var deleteDialogue = document.getElementById("deleteDialogue");
+var deleteYesButton = document.getElementById("deleteYes");
+var deleteNoButton = document.getElementById("deleteNo");
+var deleteClose = document.getElementsByClassName("close")[1];
+
+deletebutton.onclick = function () {
+    ContextHiddent();
+    document.body.style.overflowY = "hidden";
+    dialoguemodal.style.display = "block";
+    deleteDialogue.style.display = "block";
+};
+
+deleteYesButton.onclick = function () {
+    //so ajax request will do later
+    deleteCloseFunc();
+};
+
+deleteNoButton.onclick = function () {
+    deleteCloseFunc();
+};
+
+deleteClose.onclick = function () {
+    deleteCloseFunc();
+};
+
+function deleteCloseFunc() {
+    document.body.style.overflowY = "auto";
+    dialoguemodal.style.display = "none";
+    deleteDialogue.style.display = "none";
+}
+
+//Info part
+var infoButton = document.getElementById("info");
+var infoDialogue = document.getElementById("infoDialogue");
+var infoClose = document.getElementsByClassName("close")[2];
+
+infoButton.onclick = function () {
+    ContextHiddent();
+    document.body.style.overflowY = "hidden";
+    dialoguemodal.style.display = "block";
+    infoDialogue.style.display = "block";
+};
+
+infoClose.onclick = function () {
+    document.body.style.overflowY = "auto";
+    dialoguemodal.style.display = "none";
+    infoDialogue.style.display = "none";
+};
+
+
+
+
+
+
+
 
 window.onclick = function (event) {
     if (event.target === dialoguemodal) {
         document.body.style.overflowY = "auto";
+
         dialoguemodal.style.display = "none";
+        renmaeDialogue.style.display = "none";
+        deleteDialogue.style.display = "none";
+        infoDialogue.style.display = "none";
+
     }
 };
+
+
+
+
 //var e = document.getElementById("0");
 //var ef = e.childNodes[1];
-//var echild = e.childNodes[0];
-//console.log(ef.childNodes[0]);
-//console.log(ef.childNodes[1]);
-//console.log(ef.childNodes[2]);
-//console.log(ef.childNodes[3]);
-//console.log(ef.childNodes[4]);
+//e.parentNode.removeChild;
+//console.log(e.parentNode);
+
 

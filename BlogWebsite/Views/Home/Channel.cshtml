@@ -46,16 +46,53 @@
 <div id="contextMenu">
     <button id="rename" class="menu-option"><i class="fas fa-pen"></i> </button>
     <button id="cut" class="menu-option"><i class="fas fa-cut"></i></button>
-    <button id="remove" class="menu-option"><i class="fas fa-times"></i></button>
+    <button id="delete" class="menu-option"><i class="fas fa-times"></i></button>
     <button id="info" class="menu-option"><i class="fas fa-info"></i></button>
 </div>
 
-<div id="dialoguemodal" >
-    <div id="renameDialogue " class="dialogueBox">
+<div id="dialoguemodal">
+    <div id="renameDialogue" class="dialogueBox">
         <span class="close">&times;</span>
         <h3>Rename</h3>
         <input id="renameInput" type="text" />
-        <button id="renameSubmit" >Change</button>
+        <button id="renameSubmit">Change</button>
+    </div>
+    <div id="deleteDialogue" class="dialogueBox">
+        <span class="close">&times;</span>
+        <h3>Delete</h3>
+        <p>Do you really want to delete this item ?</p>
+        <button id="deleteYes">Yes</button>
+        <button id="deleteNo">No</button>
+    </div>
+    <div id="infoDialogue" class="dialogueBox">
+        <span class="close">&times;</span>
+        <h3>Info</h3>
+        <table class="table table-striped" id="infoTable">
+            <tr>
+                <th>Name</th>
+                <td>ddddddddddddddddddddddddddddddddddddffffffffffffffffffffffffffffffffffffffff</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>private/Public</td>
+            </tr>
+            <tr>
+                <th>Establish date</th>
+                <td>9/18/2018</td>
+            </tr>
+            <tr>
+                <th>Last Modified Date</th>
+                <td>9/18/2018</td>
+            </tr>
+            <tr>
+                <th>Summary</th>
+                <td>9/18/2018</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td >Test folder with static info and bla bla bla blabla bla bla blabla bla bla blabla bla bla bla </td>
+            </tr>
+        </table>
     </div>
 </div>
 <script src="~/JavaScript/ChannelContent.js"></script>
