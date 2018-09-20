@@ -63,6 +63,23 @@
         display:inline;
     }
 
+    /*My Channel*/
+    #contextMenu{
+        margin-top:5rem;;
+        margin-left:18rem;
+        margin-right:10rem;
+    }
+
+    #renameDialogue {
+        width: 40%;
+        display: none;
+    }
+
+    #deleteDialogue {
+        width: 25%;
+        display: none;
+    }
+
 }
 
 @media (min-width: 576px) and (max-width:786px){
@@ -83,6 +100,18 @@
 
     .New {
         width: inherit;
+    }
+
+    /*My Channel*/
+    #contextMenu {
+        margin-top: 5rem;
+        margin-left: 10rem;
+        margin-right:6rem;
+    }
+
+    #renameDialogue {
+        width: 55%;
+        display: none;
     }
 }
 
@@ -138,6 +167,22 @@
     }
     .New {
         width: inherit;
+    }
+
+    /*My Channel*/
+    .ChannelBar{
+        height:88px;
+    }
+
+    #contextMenu {
+        margin-top: 10rem;
+        margin-left: 3rem;
+        /*margin-right:1rem;*/
+    }
+
+    #renameDialogue {
+        width: 84%;
+        display: none;
     }
 }
 

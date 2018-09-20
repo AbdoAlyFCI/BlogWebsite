@@ -246,14 +246,13 @@ table .btn {
 }
 /*My Channel*/
 #ChannelContainer{
+
     background-color:#edf0f3;
     width:100%;
     height:1000px;
 }
 .ChannelBar {
-    padding-top:5px;
-    padding-bottom:5px;
-    padding-left:70px;
+    padding:5px 70px;
     background-color: #b0b0b0;
     width: inherit;
     height: 50px;
@@ -292,11 +291,13 @@ table .btn {
     visibility: hidden;
     perspective: 1000px;
     position: fixed;
-    top: 7.2rem;
-    left: 40rem;
+    top: 0rem;
+    left: 0rem;
     border-radius: 16px;
     box-shadow: 0 5px 1px 0 rgba(0, 0, 0, 0.2);
     font-size: 27px;
+    margin-top:6rem;
+    margin-left:28rem;
     padding-right: 30px;
     padding-top: 5px;
     padding-bottom: 5px;

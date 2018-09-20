@@ -7,24 +7,25 @@
     <div class="container">
         <div class="ChannelBar">
             <div class="row">
-                <div class="arrows col-md-2 col-sm-3 col-3">
+                <div class="arrows col-md-2 col-sm-3 col-6">
                     <a class="link"><i class="fas fa-chevron-circle-left"></i></a>
                     <a class="link"><i class="fas fa-chevron-circle-right"></i></a>
                 </div>
-                <div class="arrows Home col-1">
+                <div class="arrows Home col-sm-1 col-3">
                     <a class="link"><i class="fab fa-fort-awesome"></i></a>
                 </div>
-                <div class="navigation col-md-6 col-5">
+                <div class="d-sm-none d-block col-12" style="height:8px;"></div>
+                <div class="navigation col-md-6 col-sm-5 col-sm">
                     <input class="LoginText" type="text" value="Root" readonly />
                 </div>
             </div>
         </div>
         <div id="files"></div>
-        <div class="row">
-            @for (int i = 0; i < 1; i++)
+        <div class="row text-center">
+            @for (int i = 0; i < 22; i++)
             {
                 <div class="col-lg-1 col-md-2 col-sm-3 col-4  ">
-                    <button id="@i" class="ChannelTab " onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)" onmousedown="onLongClick(this.id)" onmouseup="reset()">
+                    <button id="@i" class="ChannelTab " onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)"  onmousedown="onLongClick(this.id)" onmouseup="reset()" ontouchstart="onLongClick(this.id)" ontouchend="reset()">
                         <div class=" text-center">
                             <i class="fas fa-folder"></i>
                             <p>sd</p>
@@ -32,16 +33,10 @@
                     </button>
                 </div>
             }
-            <div class="col-lg-1 col-md-2 col-sm-3 col-4  ">
-                <button id="1" class="ChannelTab " onmouseover="iconHoverOver(this)" onmouseout="iconHoverOut(this)" onmousedown="onLongClick(this.id)" onmouseup="reset()">
-                    <div class=" text-center">
-                        <i class="fas fa-folder"></i>
-                        <p>ssdsdsdsdd</p>
-                    </div>
-                </button>
+
             </div>
         </div>
-    </div>
+ 
 </section>
 <div id="contextMenu">
     <button id="rename" class="menu-option"><i class="fas fa-pen"></i> </button>
