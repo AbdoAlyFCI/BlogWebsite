@@ -279,7 +279,7 @@ table .btn {
     color: #212529;
     background-color: Transparent;
     background-repeat: no-repeat;
-    border: none;
+    /*border: none;*/
     cursor: pointer;
     overflow: hidden;
 }
@@ -287,18 +287,22 @@ table .btn {
 
 /*Context menu*/
 #contextMenu {
+    width:300px;
     opacity: 0;
     visibility: hidden;
     perspective: 1000px;
     position: fixed;
-    top: 0rem;
-    left: 0rem;
+    top: 0;
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left: auto;
     border-radius: 16px;
     box-shadow: 0 5px 1px 0 rgba(0, 0, 0, 0.2);
     font-size: 27px;
-    margin-top:6rem;
-    margin-left:28rem;
-    padding-right: 30px;
+    margin-top: 6rem;
+    /*margin-left: 28rem;*/
+    /*padding-right: 30px;*/
     padding-top: 5px;
     padding-bottom: 5px;
     background-color: #c570f8;

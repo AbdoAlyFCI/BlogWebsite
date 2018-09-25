@@ -65,9 +65,7 @@
 
     /*My Channel*/
     #contextMenu{
-        margin-top:5rem;;
-        margin-left:18rem;
-        margin-right:10rem;
+        top:-0.6rem;
     }
 
     #renameDialogue {
@@ -103,11 +101,11 @@
     }
 
     /*My Channel*/
-    #contextMenu {
+    /*#contextMenu {
         margin-top: 5rem;
         margin-left: 10rem;
         margin-right:6rem;
-    }
+    }*/
 
     #renameDialogue {
         width: 55%;
@@ -175,9 +173,7 @@
     }
 
     #contextMenu {
-        margin-top: 10rem;
-        margin-left: 3rem;
-        /*margin-right:1rem;*/
+        top:4rem;
     }
 
     #renameDialogue {
