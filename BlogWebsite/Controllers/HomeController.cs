@@ -22,5 +22,10 @@ namespace BlogWebsite.Controllers
         {
             return View();
         }
+
+        public ViewResult RegisterNewChannel()
+        {
+            return View();
+        }
     }
 }

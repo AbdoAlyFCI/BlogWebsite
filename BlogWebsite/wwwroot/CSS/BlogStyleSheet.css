@@ -103,12 +103,7 @@ header {
     display:none;
 }
 
-/*.minSearchDisplay a {
-    /*color: #212529;
-}
-.minSearchDisplay a:hover{
-    /*color:#495057;
-}*/
+
 
 /* Log in and sign up page */
 #loginlogo {
@@ -378,6 +373,28 @@ table .btn {
     width:24px;
     word-wrap: break-word;
 }
+
+/*RegisterNewChannel*/
+
+.RegisterSection {
+    margin-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top:25px;
+    padding-bottom:10px;
+    width: 500px;
+    min-height: 400px;
+    background-color: rgba(2,2,2,.1);
+}
+.RegisterSection form table{
+    margin-top:10px;
+    margin-left:52px;
+   
+}
+
+
+
+
 
 
 
