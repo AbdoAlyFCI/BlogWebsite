@@ -53,6 +53,7 @@ header {
 
 .menu_H{
     display:inline;
+
 }
 .menu_H h6{
      display:inline
@@ -114,7 +115,7 @@ header {
     margin-right: 108px;
 }
 .mr-left {
-    margin-left: 250px;
+    margin-left: 240px;
 
 }
 
@@ -164,19 +165,54 @@ table .btn {
     height: 1411px;
     padding-top: 13px;
     padding-left: 15px;
+    padding-right:15px;
     margin-bottom:3%;
 }
 .New{
-    /*background-color:white;*/
     height:190px;
     width:700px;
-    padding-top:20px;
-
 }
-.imgs{
-    float:left;
-    margin-right:12px;
+.react{
+    height:inherit;
+    width:52px;
+    padding:25px 12px;
+    font-size:30px;
+    background-color:aqua;
+}
+.react ul{
+    list-style:none;
+    padding-left:0;
+}
 
+
+.image{
+    height:inherit;
+    width:190px;
+    background-image:url(../image/Test/Cyberpunk-2077-150x150.jpg)  ;
+    background-repeat:no-repeat;
+    background-size:cover;
+}
+.image div{
+    padding-top:10px;
+    padding-left:10px;
+}
+
+.image div img{
+    width:50px;
+    height:50px;
+    border-radius:100%;
+}
+.Discription{
+    height:inherit;
+    width:700px;
+    padding:15px 15px 0 257px;
+    background-color:cadetblue;
+}
+.genralInfo{
+    margin-top:25px;
+}
+.Discription p{
+    word-wrap:break-word;
 }
 
 #feedDescription >div{

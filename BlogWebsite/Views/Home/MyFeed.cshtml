@@ -11,69 +11,46 @@
                 <div class="Feed">
                     <h3>Last feed</h3>
                     <div class="New">
-                        <div class="imgs">
+                        @*<div class="imgs">
                             <img src="~/image/Test/Cyberpunk-2077-150x150.jpg" />
                         </div>
                         <div id="feedDescription">
                             <h4>Cyberpunk 2077</h4>
                             <p>dfs';ljxc.,xngdf;kgljcb., nglkjcv; knhkchljnv;cl </p>
+                        </div>*@
+                        <div class="float-left react">
+                            <ul>
+                                <li class="Save" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                    <i class="far fa-bookmark" id="out"></i>
+                                    <i class="fas fa-bookmark" id="in" hidden></i>
+                                </li>
+                                <li class="Like" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                    <i class="far fa-thumbs-up"></i>
+                                    <i class="fas fa-thumbs-up" hidden></i>
+                                </li>
+                                <li class="Dislike" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                    <i class="far fa-thumbs-down"></i>
+                                    <i class="fas fa-thumbs-down" hidden></i>
+                                </li>
+                            </ul>
                         </div>
-                    </div>
-                    <div class="New">
-                        <div class="imgs">
-                            <img src="~/image/Test/Cyberpunk-2077-150x150.jpg" />
+                        <div class="float-left image" >
+                            <div><img src="~/image/Test/square_Marc.jpg"/></div>
                         </div>
-                        <div id="feedDescription">
-                            <h4>Cyberpunk 2077</h4>
-                            <p>dfs';ljxc.,xngdf;kgljcb., nglkjcv; knhkchljnv;cl </p>
+                        <div class="Discription">
+                            <div>
+                                <h2><a>Title</a></h2>
+                                <p>DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD</p>
+                            </div>
+                            <div class="genralInfo">
+                                <span>09/27/2018</span>
+                                <span class="mr-left">
+                                    <i class="far fa-eye"></i><span class="mr-2"> 5</span>
+                                    <i class="fas fa-comments"></i><span> 20</span>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="New">
-                        <div class="imgs">
-                            <img src="~/image/Test/Cyberpunk-2077-150x150.jpg" />
-                        </div>
-                        <div id="feedDescription">
-                            <h4>Cyberpunk 2077</h4>
-                            <p>dfs';ljxc.,xngdf;kgljcb., nglkjcv; knhkchljnv;cl </p>
-                        </div>
-                    </div>
-                    <div class="New">
-                        <div class="imgs">
-                            <img src="~/image/Test/Cyberpunk-2077-150x150.jpg" />
-                        </div>
-                        <div id="feedDescription">
-                            <h4>Cyberpunk 2077</h4>
-                            <p>dfs';ljxc.,xngdf;kgljcb., nglkjcv; knhkchljnv;cl </p>
-                        </div>
-                    </div>
-                    <div class="New">
-                        <div class="imgs">
-                            <img src="~/image/Test/Cyberpunk-2077-150x150.jpg" />
-                        </div>
-                        <div id="feedDescription">
-                            <h4>Cyberpunk 2077</h4>
-                            <p>dfs';ljxc.,xngdf;kgljcb., nglkjcv; knhkchljnv;cl </p>
-                        </div>
-                    </div>
-                    <div class="New">
-                        <div class="imgs">
-                            <img src="~/image/Test/Cyberpunk-2077-150x150.jpg" />
-                        </div>
-                        <div id="feedDescription">
-                            <h4>Cyberpunk 2077</h4>
-                            <p>dfs';ljxc.,xngdf;kgljcb., nglkjcv; knhkchljnv;cl </p>
-                            @*<div><h6>more</h6></div>*@
-                        </div>
-                    </div>
-                    <div class="New">
-                        <div class="imgs">
-                            <img src="~/image/Test/Cyberpunk-2077-150x150.jpg" />
-                        </div>
-                        <div id="feedDescription">
-                            <h4>Cyberpunk 2077</h4>
-                            <p>dfs';ljxc.,xngdf;kgljcb., nglkjcv; knhkchljnv;cl </p>
-                            @*<div><h6>more</h6></div>*@
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -161,3 +138,5 @@
         </div>
     </div>
 </section>
+
+<script src="~/JavaScript/Feed.js"></script>
