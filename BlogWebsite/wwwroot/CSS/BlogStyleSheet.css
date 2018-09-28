@@ -162,15 +162,31 @@ table .btn {
 /*My Feed*/
 .Feed {
     background-color: rgba(2,2,2,.1);
-    height: 1411px;
+    min-height: 1411px;
     padding-top: 13px;
     padding-left: 15px;
     padding-right:15px;
     margin-bottom:3%;
 }
+.NewDisplay {
+    margin-left: 500px;
+    font-size: 20px
+}
+
+#list{
+    color:white;
+}
+#list:hover,
+#block:hover{
+    color: #a5a3a3;
+}
+
+
+
 .New{
     height:190px;
-    width:700px;
+    width:inherit;
+    margin-bottom:15px;
 }
 .react{
     height:inherit;
@@ -185,35 +201,84 @@ table .btn {
 }
 
 
-.image{
-    height:inherit;
-    width:190px;
-    background-image:url(../image/Test/Cyberpunk-2077-150x150.jpg)  ;
-    background-repeat:no-repeat;
-    background-size:cover;
-}
-.image div{
-    padding-top:10px;
-    padding-left:10px;
+.image {
+    height: inherit;
+    width: 190px;
+    background-image: url(../image/Test/Cyberpunk-2077-150x150.jpg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding-top: 10px;
+    padding-left: 10px;
 }
 
-.image div img{
+.image div img,
+.imageBlock div img{
     width:50px;
     height:50px;
     border-radius:100%;
 }
-.Discription{
-    height:inherit;
-    width:700px;
-    padding:15px 15px 0 257px;
-    background-color:cadetblue;
+.Discription {
+    height: inherit;
+    width: 458px;
+    padding: 15px 15px 15px 15px;
+    background-color: cadetblue;
+    word-wrap: break-word;
 }
 .genralInfo{
     margin-top:25px;
 }
-.Discription p{
+
+.NewBlock {
+    height: 342px;
+    background-color: brown;
+    margin-bottom: 20px;
+}
+
+
+
+.imageBlock {
+    width: inherit;
+    height: 190px;
+    padding-top: 10px;
+    padding-left: 10px;
+    background-image: url(../image/Test/Cyberpunk-2077-150x150.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.DiscriptionBlock {
+    height: 100px;
+    padding: 5px;
+    background-color: cadetblue;
     word-wrap:break-word;
 }
+
+.reactBlock {
+    height: 52px;
+    padding: 4px 25px;
+    font-size: 30px;
+    background-color: aqua;
+}
+
+.reactBlock ul {
+     list-style: none;
+     padding-left: 0;
+
+}
+
+.reactBlock li{
+    float:left;
+    margin-left:19px;
+}
+
+
+
+
+
+
+
+
+
 
 #feedDescription >div{
     position:relative;

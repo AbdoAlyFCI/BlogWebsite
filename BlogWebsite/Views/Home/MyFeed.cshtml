@@ -9,49 +9,90 @@
             <div class="col-lg-8 col-md-12" >
                 @* Last Feed *@
                 <div class="Feed">
-                    <h3>Last feed</h3>
-                    <div class="New">
-                        @*<div class="imgs">
-                            <img src="~/image/Test/Cyberpunk-2077-150x150.jpg" />
-                        </div>
-                        <div id="feedDescription">
-                            <h4>Cyberpunk 2077</h4>
-                            <p>dfs';ljxc.,xngdf;kgljcb., nglkjcv; knhkchljnv;cl </p>
-                        </div>*@
-                        <div class="float-left react">
-                            <ul>
-                                <li class="Save" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                    <i class="far fa-bookmark" id="out"></i>
-                                    <i class="fas fa-bookmark" id="in" hidden></i>
-                                </li>
-                                <li class="Like" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                    <i class="far fa-thumbs-up"></i>
-                                    <i class="fas fa-thumbs-up" hidden></i>
-                                </li>
-                                <li class="Dislike" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                    <i class="far fa-thumbs-down"></i>
-                                    <i class="fas fa-thumbs-down" hidden></i>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="float-left image" >
-                            <div><img src="~/image/Test/square_Marc.jpg"/></div>
-                        </div>
-                        <div class="Discription">
-                            <div>
-                                <h2><a>Title</a></h2>
-                                <p>DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD</p>
-                            </div>
-                            <div class="genralInfo">
-                                <span>09/27/2018</span>
-                                <span class="mr-left">
-                                    <i class="far fa-eye"></i><span class="mr-2"> 5</span>
-                                    <i class="fas fa-comments"></i><span> 20</span>
-                                </span>
-                            </div>
-                        </div>
+                    <h3 class="d-inline">Last feed</h3>
+                    <span class="NewDisplay">
+                        <i id="block" class="fas fa-th-large" ></i>
+                        <i id="list" class="fas fa-bars" ></i>
+                    </span>
+                    <div class="row">
+                        @for (int i = 0; i < 30; i++)
+                        {
+                            <div class="col-12 LV">
 
+                                <div class="New">
+                                    <div class="float-left image">
+                                        <div><img src="~/image/Test/square_Marc.jpg" /></div>
+                                    </div>
+                                    <div class="float-left Discription">
+                                        <div>
+                                            <h2><a>Title</a></h2>
+                                            <p>@i</p>
+                                        </div>
+                                        <div class="genralInfo">
+                                            <span>09/27/2018</span>
+                                            <span class="mr-left">
+                                                <i class="far fa-eye"></i><span class="mr-2"> 5</span>
+                                                <i class="fas fa-comments"></i><span> 20</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="float-left react">
+                                        <ul>
+                                            <li class="Save" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                                <i class="far fa-bookmark" id="out"></i>
+                                                <i class="fas fa-bookmark" id="in" hidden></i>
+                                            </li>
+                                            <li class="Like" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                                <i class="far fa-thumbs-up"></i>
+                                                <i class="fas fa-thumbs-up" hidden></i>
+                                            </li>
+                                            <li class="Dislike" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                                <i class="far fa-thumbs-down"></i>
+                                                <i class="fas fa-thumbs-down" hidden></i>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        }
                     </div>
+
+                    @*<div class="row">
+                        @for (int i = 0; i < 1; i++)
+                        {
+                            <div class="col-4 BV">
+                                <div class="NewBlock">
+                                    <div class="imageBlock">
+                                        <div><img src="~/image/Test/square_Marc.jpg" /></div>
+                                    </div>
+                                    <div class="DiscriptionBlock">
+                                        <h2>Title</h2>
+                                        <p>sfd;fl,ckmv,/xmcbpodassssssssssssddddddd</p>
+                                    </div>
+                                    <div class="reactBlock">
+                                        <ul>
+                                            <li class="Save" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                                <i class="far fa-bookmark" id="out"></i>
+                                                <i class="fas fa-bookmark" id="in" hidden></i>
+                                            </li>
+                                            <li class="Like" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                                <i class="far fa-thumbs-up"></i>
+                                                <i class="fas fa-thumbs-up" hidden></i>
+                                            </li>
+                                            <li class="Dislike" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                                <i class="far fa-thumbs-down"></i>
+                                                <i class="fas fa-thumbs-down" hidden></i>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>*@
                 </div>
             </div>
             <div class="col-lg-4 none">
