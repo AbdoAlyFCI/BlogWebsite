@@ -1,18 +1,19 @@
 ﻿
 @{
     ViewData["Title"] = "MyFeed";
-    }
+}
 
 <section class="masterFeedSection">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-md-12" >
+            <div class="col-lg-8 col-md-12 col-12" >
                 @* Last Feed *@
                 <div class="Feed">
-                    <h3 class="d-inline">Last feed</h3>
+                    
                     <span class="NewDisplay">
-                        <i id="block" class="fas fa-th-large" ></i>
-                        <i id="list" class="fas fa-bars" ></i>
+                        <h3 class="d-inline">Last feed</h3>
+                        <i id="block" class="fas fa-th-large"></i>
+                        <i id="list" class="fas fa-bars"></i>
                     </span>
                     <div class="row">
                         @for (int i = 0; i < 30; i++)
@@ -58,134 +59,70 @@
                             </div>
                         }
                     </div>
-                    @*<div class="row">
-                        @for (int i = 0; i < 1; i++)
-                        {
-                            <div class="col-4 BV">
-                                <div class="NewBlock">
-                                    <div class="imageBlock">
-                                        <div><img src="~/image/Test/square_Marc.jpg" /></div>
-                                    </div>
-                                    <div class="DiscriptionBlock">
-                                        <h2>Title</h2>
-                                        <p>sfd;fl,ckmv,/xmcbpodassssssssssssddddddd</p>
-                                    </div>
-                                    <div class="reactBlock">
-                                        <ul>
-                                            <li class="Save" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                                <i class="far fa-bookmark" id="out"></i>
-                                                <i class="fas fa-bookmark" id="in" hidden></i>
-                                            </li>
-                                            <li class="Like" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                                <i class="far fa-thumbs-up"></i>
-                                                <i class="fas fa-thumbs-up" hidden></i>
-                                            </li>
-                                            <li class="Dislike" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                                <i class="far fa-thumbs-down"></i>
-                                                <i class="fas fa-thumbs-down" hidden></i>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-
-
-                    </div>*@
                 </div>
             </div>
-            <div class="col-lg-4 none">
+            <div class="col-lg-4 col-12">
                 <div>
                     @* User Channels that follow *@
-                    <div id="Channels" class="carousel slide" data-ride="carousel" data-interval="false">
-                        <ol class="carousel-indicators">
-                            <li data-target="#Channels" data-slide-to="0" class="active"></li>
-                            <li data-target="#Channels" data-slide-to="1"></li>
-                        </ol>
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="userProperties">
-                                    <h3>Suggested Channels</h3>
-                                    <div class="SChannel">
-                                        <img src="~/image/Test/square_Marc.jpg" />
-                                        <span>Channel</span>
-                                        <button class="btn btn-primary">follow</button>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-6 col-sm-12 col-12 ">
+                            <div id="Channels" class="carousel slide" data-ride="carousel" data-interval="false">
+                                <ol class="carousel-indicators">
+                                    <li data-target="#Channels" data-slide-to="0" class="active"></li>
+                                    <li data-target="#Channels" data-slide-to="1"></li>
+                                </ol>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="userProperties">
+                                            <h3>Suggested Channels</h3>
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                <div class="SChannel">
+                                                    <img src="~/image/Test/square_Marc.jpg" />
+                                                    <span>Channel</span>
+                                                    <button class="btn btn-primary">follow</button>
+                                                </div>
+                                            }
+                                        </div>
                                     </div>
-                                    <div class="SChannel">
-                                        <img src="~/image/Test/square_Marc.jpg" />
-                                        <span>Channel</span>
-                                        <button class="btn btn-primary">follow</button>
-                                    </div>
-                                    <div class="SChannel">
-                                        <img src="~/image/Test/square_Marc.jpg" />
-                                        <span>Channel</span>
-                                        <button class="btn btn-primary">follow</button>
-                                    </div>
-                                    <div class="SChannel">
-                                        <img src="~/image/Test/square_Marc.jpg" />
-                                        <span>Channel</span>
-                                        <button class="btn btn-primary">follow</button>
-                                    </div>
-                                    <div class="SChannel">
-                                        <img src="~/image/Test/square_Marc.jpg" />
-                                        <span>Channel</span>
-                                        <button class="btn btn-primary">follow</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="userProperties">
-                                    <h3>Followed Channels</h3>
-                                    <div class="SChannel">
-                                        <img src="~/image/Test/square_Marc.jpg" />
-                                        <span>Channel</span>
-                                        <button class="btn btn-primary">follow</button>
-                                    </div>
-                                    <div class="SChannel">
-                                        <img src="~/image/Test/square_Marc.jpg" />
-                                        <span>Channel</span>
-                                        <button class="btn btn-primary">follow</button>
-                                    </div>
-                                    <div class="SChannel">
-                                        <img src="~/image/Test/square_Marc.jpg" />
-                                        <span>Channel</span>
-                                        <button class="btn btn-primary">follow</button>
-                                    </div>
-                                    <div class="SChannel">
-                                        <img src="~/image/Test/square_Marc.jpg" />
-                                        <span>Channel</span>
-                                        <button class="btn btn-primary">follow</button>
-                                    </div>
-                                    <div class="SChannel">
-                                        <img src="~/image/Test/square_Marc.jpg" />
-                                        <span>Channel</span>
-                                        <button class="btn btn-primary">follow</button>
+                                    <div class="carousel-item">
+                                        <div class="userProperties">
+                                            <h3>Followed Channels</h3>
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                <div class="SChannel">
+                                                    <img src="~/image/Test/square_Marc.jpg" />
+                                                    <span>Channel</span>
+                                                    <button class="btn btn-primary">follow</button>
+                                                </div>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>                       
-                    </div>
-                   
-                    @* Trend On blogs *@
-                    <div class="userProperties">
-                        <h3>Trends</h3>
-                        <div class="trends">
-                            <ul>
-                                <li>#trend1</li>
-                                <li>#trend1</li>
-                                <li>#trend1</li>
-                                <li>#trend1</li>
-                                <li>#trend1</li>
-                                <li>#trend1</li>
-                                <li>#trend1</li>
-                                <li>#trend1</li>
-                                <li>#trend1</li>
-                                <li>#trend1</li>
+                        </div>
+                        <div class="col-lg-12 col-md-6 col-sm-12 col-12">
+                            <div class="userProperties">
+                                <h3>Trends</h3>
+                                <div class="trends">
+                                    <ul>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
 
-                            </ul>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    @* Suggested Channels *@
+                    
                   
                 </div>
             </div>

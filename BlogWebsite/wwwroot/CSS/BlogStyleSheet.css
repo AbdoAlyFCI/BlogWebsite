@@ -168,10 +168,14 @@ table .btn {
     padding-right:15px;
     margin-bottom:3%;
 }
+
 .NewDisplay {
-    margin-left: 500px;
     font-size: 20px
 }
+.NewDisplay i{
+    margin-left:4px;
+}
+
 
 #list{
     color:white;
@@ -188,7 +192,7 @@ table .btn {
 }
 .react{
     height:inherit;
-    width:52px;
+    width:7.43%;
     padding:25px 12px;
     font-size:30px;
     background-color:aqua;
@@ -200,11 +204,11 @@ table .btn {
 
 
 .image {
-    height: inherit;
-    width: 190px;
+    height: 100%;
+    width: 27.14%;
     background-image: url(../image/Test/Cyberpunk-2077-150x150.jpg);
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     padding-top: 10px;
     padding-left: 10px;
 }
@@ -217,7 +221,7 @@ table .btn {
 }
 .Discription {
     height: inherit;
-    width: 458px;
+    width: 65.43%;
     padding: 15px 15px 15px 15px;
     background-color: cadetblue;
     word-wrap: break-word;
@@ -296,14 +300,17 @@ table .btn {
     padding-left: 9px;
     padding-right:9px;
     margin-bottom: 20px;
+    
 }
 
 .Channel,
-.SChannel{
-    height:70px;
-    padding-top:5px;
-    padding-left:5px;
-    margin-bottom:10px;
+.SChannel {
+    width:inherit;
+    height: 70px;
+    padding-top: 5px;
+    padding-left: 5px;
+    margin-bottom: 10px;
+    
 }
 .Channel:hover,
 .SChannel:hover {
@@ -313,15 +320,22 @@ table .btn {
 
 .Channel >img,
 .SChannel>img{
-    width:60px;
-    height:60px;
+    /*width:60px;*/
+    width:18.07%;
     border-radius:50px;
-    margin-right:15px;
+    /*margin-right:15px;*/
+    margin-right:4.52%;
     
 }
+.Channel>span,
+.SChannel>span{
+    width:50.9%;
+}
+
 .Channel >button,
 .SChannel >button{
-    margin-left:82px;
+    /*margin-left:82px;*/
+    margin-left:24.69%;
 }
 
 .Channel > button:hover {
