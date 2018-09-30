@@ -92,20 +92,17 @@
         margin-left: 14%;
     }
     /*My Feed*/
-    .none {
-        display: none;
-    }
-
     .New {
         width: inherit;
     }
 
-    /*My Channel*/
-    /*#contextMenu {
-        margin-top: 5rem;
-        margin-left: 10rem;
-        margin-right:6rem;
-    }*/
+    .Discription{
+        width:62.43%;
+    }
+    .react{
+        width:10.43%;
+    }
+
 
     #renameDialogue {
         width: 55%;
@@ -160,13 +157,13 @@
         border: ridge 2px gray;
     }
     /*My Feed*/
-    .none {
-        display: none;
-    }
-    .New {
-        width: inherit;
+    .Discription {
+        width: 56.43%;
     }
 
+    .react {
+        width: 16.43%;
+    }
     /*My Channel*/
     .ChannelBar{
         height:88px;

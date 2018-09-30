@@ -37,7 +37,7 @@ blockIcon.onclick = function () {
     var element = document.getElementsByClassName("LV");
     while (element.length) {
         var temp = element[0];
-        temp.className = "col-lg-4 col-md-6 col-6 BV";
+        temp.className = "col-lg-4 col-md-6 col-12 BV";
         temp.childNodes[1].className = "NewBlock";
         temp.childNodes[1].childNodes[1].className = "imageBlock";
         temp.childNodes[1].childNodes[3].className = "DiscriptionBlock";

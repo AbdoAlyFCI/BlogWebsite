@@ -227,7 +227,9 @@ table .btn {
     word-wrap: break-word;
 }
 .genralInfo{
-    margin-top:25px;
+    position:relative;
+    bottom:0;
+    left:0;
 }
 
 .NewBlock {
@@ -257,7 +259,7 @@ table .btn {
 
 .reactBlock {
     height: 52px;
-    padding: 4px 25px;
+    padding: 4px 16px;
     font-size: 30px;
     background-color: aqua;
 }
