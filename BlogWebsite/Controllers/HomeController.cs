@@ -27,5 +27,10 @@ namespace BlogWebsite.Controllers
         {
             return View();
         }
+
+        public ViewResult AccountSetting()
+        {
+            return View();
+        }
     }
 }

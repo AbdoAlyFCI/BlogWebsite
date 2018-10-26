@@ -265,6 +265,8 @@ table .btn {
 }
 
 .reactBlock ul {
+     margin:0 auto;
+     width:181.33px;
      list-style: none;
      padding-left: 0;
 
@@ -499,7 +501,7 @@ table .btn {
     padding-bottom:10px;
     width: 500px;
     min-height: 400px;
-    background-color: rgba(2,2,2,.1);
+    background-color: rgba(2, 2, 2, .1);
 }
 .RegisterSection form table{
     margin-top:10px;
@@ -509,7 +511,45 @@ table .btn {
 
 
 
+/*Personal setting*/
+.PersonalPic {
+    width:150px;
+    height:150px;
+    margin: 2% auto 6% auto;
+}
+.PersonalPic div{
+    text-align:center;
+}
+.PersonalPic div img {      
+    width: 150px;
+    height: 150px;
+    border-radius: 100px;
+}
 
+#settingList {
+    background-color: #c874d7;
+    text-align: center;
+    box-shadow: 24px -4px 13px -9px #712260;
+}
+
+#settingList ul{
+    list-style:none;
+    padding:0;
+}
+
+#settingList ul li{
+    background-color:#c874d7;
+    font-size:x-large;
+    margin:3% auto;
+}
+#settingList ul li:hover{
+    background-color:#86558f;
+}
+
+#settingDetails{
+    min-height:500px;
+    background-color:rgba(168, 93, 157, 0.70);
+}
 
 
 
