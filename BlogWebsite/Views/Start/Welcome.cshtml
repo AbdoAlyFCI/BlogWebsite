@@ -1,4 +1,4 @@
-﻿
+﻿@model HomeData
 @{
     ViewData["Title"] = "Index";
 }
@@ -13,21 +13,23 @@
                 <div class="row">
                     <div class="col-lg-5 col-md-12" > @* Log In div *@
                     <div  >
-                        <form class="logIn ">
+                        <form class="logIn" method="post" asp-action="LogIn" asp-controller="Start">
+                            <span asp-validation-for="currentUser.Email"></span><br />
+                            <span asp-validation-for="currentUser.Password"></span>
                             <fieldset>
                                 <legend><b>Log In</b></legend>
                                 <table>
                                     <tr>
-                                        <td><input class="inputText" type="text" placeholder="Email" required /></td>
+                                        <td><input asp-for="currentUser.Email" class="inputText" type="text" placeholder="Email"  /></td>
                                     </tr>
                                     <tr>
-                                        <td><input class="inputText" type="password" placeholder="Password" required /></td>
+                                        <td><input asp-for="currentUser.Password" class="inputText" type="password" placeholder="Password"  /></td>
                                     </tr>
                                     <tr>
                                         <td><input type="checkbox" name="Remember" value="OK" />&nbsp;&nbsp;  Remember me</td>
                                     </tr>
                                     <tr>
-                                        <td><input class="btn btn-danger" type="submit" value="Log In" asp-action="MyFeed" /></td>
+                                        <td><input class="btn btn-danger" type="submit" value="Log In"  /></td>
                                     </tr>
                                 </table>
 
@@ -44,19 +46,30 @@
                     </div>
                     <div class="col-lg-3 col-md-12"> @* Sign Up div *@
                         <div>
-                            <form class="signUp">
+                            <form class="signUp" method="post" asp-action="signUp">
+                                <span asp-validation-for="newUser.firstName" style="width:320px;"></span>
+                                <span asp-validation-for="newUser.lastName" style="width:320px;"></span>
+                                <span asp-validation-for="newUser.Email" style="width:320px;"></span>
+                                <span asp-validation-for="newUser.Password" style="width:320px;"></span>
+                                <span asp-validation-for="newUser.confirmPassword" style="width:320px;"></span>
+                                <span asp-validation-for="newUser.birthYear" style="width:320px;"></span>
+                                <span asp-validation-for="newUser.birthMonth" style="width:320px;"></span>
+                                <span asp-validation-for="newUser.birthDay" style="width:320px;"></span>
                                 <fieldset>
                                     <legend><b>Sign Up</b></legend>
                                     <table>
                                         <tr>
-                                            <td><input class="inputText" type="text" placeholder="First Name" required /></td>
-                                            <td><input class="inputText" type="text" placeholder="Last Name" required /></td>
+                                            <td><input asp-for="newUser.firstName" class="inputText" type="text" placeholder="First Name" /></td>
+                                            <td><input asp-for="newUser.lastName" class="inputText" type="text" placeholder="Last Name" /></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2"><input class="LoginText inputText" type="text" placeholder="Email" required /></td>
+                                            <td colspan="2"><input asp-for="newUser.Email" class="LoginText inputText" type="text" placeholder="Email" /></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2"><input class="LoginText inputText" type="password" placeholder="Password" required /></td>
+                                            <td colspan="2"><input asp-for="newUser.Password" class="LoginText inputText" type="password" placeholder="Password" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"><input asp-for="newUser.confirmPassword" class="LoginText inputText" type="password" placeholder="Confirm Password" /></td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -66,22 +79,22 @@
                                         <tr>
                                             <td colspan="2">
                                                 @* Years *@
-                                                <select  id="year" required>
+                                                <select asp-for="newUser.birthYear" id="year">
                                                     <option value="" hidden>Year</option>
                                                 </select>
                                                 @* Months *@
-                                                <select id="month" required>
+                                                <select asp-for="newUser.birthMonth" id="month">
                                                     <option value="" hidden>Month</option>
                                                 </select>
                                                 @* Days *@
-                                                <select id="day" required>
+                                                <select asp-for="newUser.birthDay" id="day">
                                                     <option value="" hidden>Day</option>
                                                 </select>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td colspan="2"><input type="checkbox" name="Remember" value="OK" />&nbsp;&nbsp;  I agree with all condtion and rules</td>
-                                        </tr>
+                                        @*<tr>
+                    <td colspan="2"><input type="checkbox" name="Remember" value="OK" />&nbsp;&nbsp;  I agree with all condtion and rules</td>
+                </tr>*@
                                         <tr>
                                             <td><input class="btn btn-danger" type="submit" value="Sign Up" /></td>
                                         </tr>
