@@ -1,4 +1,4 @@
-﻿
+﻿@model localUser
 @{
     ViewData["Title"] = "MyFeed";
 }
@@ -16,48 +16,59 @@
                         <i id="list" class="fas fa-bars">s</i>
                     </span>
                     <div class="row">
-                        @for (int i = 0; i < 30; i++)
+                        @if (@Model.showMyChannel() == 0)
                         {
-                            <div class="col-12 LV">
+                            <h3>@Model.firstName</h3>
 
-                                <div class="New">
-                                    <div class="float-left image">
-                                        <div><img src="~/image/Test/square_Marc.jpg" /></div>
-                                    </div>
-                                    <div class="float-left Discription">
-                                        <div>
-                                            <h2><a>Title</a></h2>
-                                            <p>@i</p>
-                                        </div>
-                                        <div class="genralInfo">
-                                            <span>09/27/2018</span><br />
-                                            <span>
-                                                <i class="far fa-eye"></i><span class="mr-2"> 5</span>
-                                                <i class="fas fa-comments"></i><span> 20</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="float-left react">
-                                        <ul>
-                                            <li class="Save" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                                <i class="far fa-bookmark" id="out"></i>
-                                                <i class="fas fa-bookmark" id="in" hidden></i>
-                                            </li>
-                                            <li class="Like" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                                <i class="far fa-thumbs-up"></i>
-                                                <i class="fas fa-thumbs-up" hidden></i>
-                                            </li>
-                                            <li class="Dislike" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                                <i class="far fa-thumbs-down"></i>
-                                                <i class="fas fa-thumbs-down" hidden></i>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-
-                            </div>
                         }
+                        else
+                        {
+
+                            @for (int i = 0; i < Model.showMyChannel(); i++)
+                            {
+
+                                <div class="col-12 LV">
+
+                                    <div class="New">
+                                        <div class="float-left image">
+                                            <div><img src="~/image/Test/square_Marc.jpg" /></div>
+                                        </div>
+                                        <div class="float-left Discription">
+                                            <div>
+                                                <h2><a>Title</a></h2>
+                                                <p>@i</p>
+                                            </div>
+                                            <div class="genralInfo">
+                                                <span>09/27/2018</span><br />
+                                                <span>
+                                                    <i class="far fa-eye"></i><span class="mr-2"> 5</span>
+                                                    <i class="fas fa-comments"></i><span> 20</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="float-left react">
+                                            <ul>
+                                                <li class="Save" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                                    <i class="far fa-bookmark" id="out"></i>
+                                                    <i class="fas fa-bookmark" id="in" hidden></i>
+                                                </li>
+                                                <li class="Like" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                                    <i class="far fa-thumbs-up"></i>
+                                                    <i class="fas fa-thumbs-up" hidden></i>
+                                                </li>
+                                                <li class="Dislike" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                                    <i class="far fa-thumbs-down"></i>
+                                                    <i class="fas fa-thumbs-down" hidden></i>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            }
+                        }
+
                     </div>
                 </div>
             </div>

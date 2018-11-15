@@ -19,19 +19,31 @@ namespace BlogWebsite
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddMemoryCache();
             services.AddDbContext<InfiniteBlogDBContext>(option => option.UseSqlServer("Server=.\\SQLExpress;Database=InfiniteBlogDB;Trusted_Connection=True;"));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                 .AddCookie();
-            
+              .AddCookie(option => {
+                   //option.LoginPath = "/User/LogIn";
+                   //option.AccessDeniedPath = "/Error/AccessDenied";
+                   //option.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                   option.Events.OnRedirectToLogin = (context) =>
+                  {
+                      context.Response.StatusCode = 401;
+                      return Task.CompletedTask;
+                  };
+
+              });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseExceptionHandler("/Error/Index");
+            //app.UseExceptionHandler("/Error/Index");
+            app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
             app.UseAuthentication();
-            //app.UseMvcWithDefaultRoute();
+          //  app.UseMvcWithDefaultRoute();
             app.UseMvc(routes =>
             {
 
