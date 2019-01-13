@@ -17,37 +17,37 @@ var isTrue;
 var hidden = false;
 //1-Long Click
 
-function onLongClick(eID) {
-    var delay = 500;   //how much long to hold
-    isTrue = true;
-    timer = setTimeout(function () { changes(eID); }, delay);
-}
+//function onLongClick(eID) {
+//    var delay = 500;   //how much long to hold
+//    isTrue = true;
+//    timer = setTimeout(function () { changes(eID); }, delay);
+//}
 
-function changes(eID) {
+//function changes(eID) {
 
-    if (timer)
-        clearTimeout(timer);
+//    if (timer)
+//        clearTimeout(timer);
 
-    if (isTrue) {
-        currentChannelClickedID = document.getElementById(eID);
-        var contextMenu = document.getElementById("contextMenu");
-        contextMenu.style.visibility = "visible";
-        contextMenu.style.opacity = 1;
-        seconds = 10;
-        hidden = true;
-        countDown();
+//    if (isTrue) {
+//        currentChannelClickedID = document.getElementById(eID);
+//        var contextMenu = document.getElementById("contextMenu");
+//        contextMenu.style.visibility = "visible";
+//        contextMenu.style.opacity = 1;
+//        seconds = 10;
+//        hidden = true;
+//        countDown();
         
-    }
-}
+//    }
+//}
 
-function reset() {
-    isTrue = false;
-}
-var ChannelContainer = document.getElementById("ChannelContainer");
-ChannelContainer.ondblclick = function () {
-    ContextHiddent();
-};
-window.onscroll = function () { ContextHiddent(); };
+//function reset() {
+//    isTrue = false;
+//}
+//var ChannelContainer = document.getElementById("ChannelContainer");
+//ChannelContainer.ondblclick = function () {
+//    ContextHiddent();
+//};
+//window.onscroll = function () { ContextHiddent(); };
 
 
 
@@ -69,10 +69,10 @@ function countDown() {
 }
 
 function ContextHiddent() {
-    var contextMenu = document.getElementById("contextMenu");
-    contextMenu.style.visibility = "hidden";
-    contextMenu.style.opacity = 0;
-    hidden = false;
+    //var contextMenu = document.getElementById("contextMenu");
+    //contextMenu.style.visibility = "hidden";
+    //contextMenu.style.opacity = 0;
+    //hidden = false;
 }
 
 //Dialogue part
@@ -91,9 +91,9 @@ var close = document.getElementsByClassName("close")[0];
 renameButton.onclick = function () {
     ContextHiddent();
     renameInput.value = currentChannelClickedID.childNodes[1].childNodes[3].innerHTML;
-    document.body.style.overflowY = "hidden";
-    dialoguemodal.style.display = "block";  
-    renmaeDialogue.style.display = "block";
+    //document.body.style.overflowY = "hidden";
+    //dialoguemodal.style.display = "block";  
+    //renmaeDialogue.style.display = "block";
 };
 
 renameInput.onkeyup = function () {
@@ -177,17 +177,17 @@ infoClose.onclick = function () {
 
 
 
-window.onclick = function (event) {
-    if (event.target === dialoguemodal) {
-        document.body.style.overflowY = "auto";
+//window.onclick = function (event) {
+//    if (event.target === dialoguemodal) {
+//        document.body.style.overflowY = "auto";
 
-        dialoguemodal.style.display = "none";
-        renmaeDialogue.style.display = "none";
-        deleteDialogue.style.display = "none";
-        infoDialogue.style.display = "none";
+//        dialoguemodal.style.display = "none";
+//        renmaeDialogue.style.display = "none";
+//        deleteDialogue.style.display = "none";
+//        infoDialogue.style.display = "none";
 
-    }
-};
+//    }
+//};
 
 
 

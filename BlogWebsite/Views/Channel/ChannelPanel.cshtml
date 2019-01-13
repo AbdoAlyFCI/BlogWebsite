@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewData["Title"] = "Channel Panel";
+}
+
+
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div id="genralInfo">
+                    <img src="~/image/Test/square_Marc.jpg" />
+                    <label>first channel</label><br />
+                    <label>&ass;fs</label>
+                    <ul>
+                        <li>Followers <br /> 125163</li>
+                        <li><a class="link" asp-action="MyChannel">My Files</a></li>
+                        <li><a class="link" asp-action="ChannelSetting">Setting</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div>
+                    <div id="Channelstatistic">
+                        
+                    </div>
+                    <section id="lastUpdate">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div>
+                                    <div class="title">
+                                        <h2>Last Activities</h2>
+                                        <a class="link" asp-action="LastActivites"><h5>more</h5></a>
+                                    </div>
+                                    <div class="detailsTabs">
+
+                                        @for (int i = 0; i < 5; i++)
+                                        {
+                                        <div id="data">
+                                            <div><img src="~/image/Test/square_Marc.jpg" /></div>
+                                            <div><p><a asp-controller="User" asp-action="info">Ahmed</a> Comment on tour article <a asp-controller="User" asp-action="info">newArtticle</a><br />1/1/2019</p></div>
+                                        </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div style="height:400px">
+                                    <div class="title">
+                                        <h2>Last Notifications</h2>
+                                        <a class="link" asp-action="LastNotifications"><h5>more</h5></a>
+                                    </div>
+                                    <div class="detailsTabs">
+
+                                        @for (int i = 0; i < 5; i++)
+                                        {
+                                            <div id="data">
+                                                <div><img src="~/image/Test/square_Marc.jpg" /></div>
+                                                <div><p><a asp-controller="User" asp-action="info" >Ahmed</a> Comment on tour article <a asp-controller="User" asp-action="info" >newArtticle</a><br />1/1/2019</p></div>
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+

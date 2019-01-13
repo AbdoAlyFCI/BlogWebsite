@@ -9,7 +9,7 @@ namespace BlogWebsite.Models
         {
             Channel = new HashSet<Channel>();
             Comment = new HashSet<Comment>();
-            Directory = new HashSet<Directory>();
+            //Directory = new HashSet<Directory>();
             FileReact = new HashSet<FileReact>();
             RelationShip = new HashSet<RelationShip>();
         }
@@ -25,7 +25,7 @@ namespace BlogWebsite.Models
 
         public ICollection<Channel> Channel { get; set; }
         public ICollection<Comment> Comment { get; set; }
-        public ICollection<Directory> Directory { get; set; }
+        //public ICollection<Directory> Directory { get; set; }
         public ICollection<FileReact> FileReact { get; set; }
         public ICollection<RelationShip> RelationShip { get; set; }
     }

@@ -1,6 +1,8 @@
-﻿@model localUser
+﻿@model ModelUser
 @{
     ViewData["Title"] = "MyFeed";
+    ViewData["img"] = Model.img;
+
 }
 
 <section class="masterFeedSection">
@@ -16,7 +18,7 @@
                         <i id="list" class="fas fa-bars">s</i>
                     </span>
                     <div class="row">
-                        @if (@Model.showMyChannel() == 0)
+                        @if (true) 
                         {
                             <h3>@Model.firstName</h3>
 
@@ -24,8 +26,8 @@
                         else
                         {
 
-                            @for (int i = 0; i < Model.showMyChannel(); i++)
-                            {
+                            @*@for (int i = 0; i < Model.showMyChannel(); i++)
+                            {*@
 
                                 <div class="col-12 LV">
 
@@ -36,7 +38,7 @@
                                         <div class="float-left Discription">
                                             <div>
                                                 <h2><a>Title</a></h2>
-                                                <p>@i</p>
+                                                <p></p>
                                             </div>
                                             <div class="genralInfo">
                                                 <span>09/27/2018</span><br />
@@ -66,7 +68,7 @@
 
 
                                 </div>
-                            }
+                            @*}*@
                         }
 
                     </div>

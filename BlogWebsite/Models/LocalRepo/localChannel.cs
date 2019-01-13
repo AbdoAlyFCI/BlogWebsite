@@ -11,6 +11,7 @@ namespace BlogWebsite.Models.LocalRepo
         public string ID { get; set; }
         public List<localGenralUser> Followers { get; set; }
         public localUser Owner { get; set; }
+        public List<localDirectory> directory { get; set; } = new List<localDirectory>();
 
 
     }

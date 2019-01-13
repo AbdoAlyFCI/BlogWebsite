@@ -13,6 +13,7 @@ using BlogWebsite.Models.LocalRepo;
 using System.Security.Claims;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.EntityFrameworkCore;
+using BlogWebsite.Models.ClassDiagram;
 
 namespace BlogWebsite.Controllers
 {
@@ -24,7 +25,6 @@ namespace BlogWebsite.Controllers
         {
             _dbContext = dBContext;
             this.cache = cache;
-
         }
 
 
@@ -34,8 +34,8 @@ namespace BlogWebsite.Controllers
         {
             if (User.Identity.IsAuthenticated == true)
             {
-
-                PutUserDataInAction(User.Identity.Name);
+                //PutUserDataInAction(User.Identity.Name);
+                setUserInAction(User.Identity.Name);
                 return RedirectToAction("MyFeed", "Home");
             }
             await
@@ -75,11 +75,8 @@ namespace BlogWebsite.Controllers
                 UBirthDay = userModel.newUser.birthDay + "-" + userModel.newUser.birthMonth + "-" + userModel.newUser.birthYear,
                 Channel = new List<Channel>(),
                 Comment = new List<Comment>(),
-                Directory = new List<Directory>(),
                 FileReact = new List<FileReact>(),
                 RelationShip = new List<RelationShip>(),
-
-
             };
             newUser.UPassword = hasher.HashPassword(newUser, userModel.newUser.Password);
 
@@ -90,6 +87,7 @@ namespace BlogWebsite.Controllers
             await _dbContext.Users.AddAsync(newUser);
             await _dbContext.SaveChangesAsync();
             await LogInUserAsync(newUser.UId);
+            setUserInCasheForFirstTime(newUser);
             return RedirectToAction("Index", "Home");
         }
 
@@ -140,18 +138,23 @@ namespace BlogWebsite.Controllers
         [HttpPost]
         public async Task<IActionResult> LogOut()
         {
+             cache.Remove(User.Identity.Name);
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            
             return RedirectToAction("Welcome", "Start");
         }
 
         private void PutUserDataInAction(string ID)
         {
-            cache.GetOrCreate(User.Identity.Name,
+            cache.GetOrCreate(ID,
               cacheEntry =>
               {
                   var user = _dbContext.Users.FirstOrDefault(s => s.UId.Equals(ID));
                   var channel = _dbContext.Entry(user)
                       .Collection(c => c.Channel).Query().Select(s => new { s.CId, s.CName }).ToList();
+                  var getChannel = _dbContext.Channel.FirstOrDefault(s => s.COwnerId.Equals(ID));
+                  var directory = _dbContext.Entry(getChannel)
+                      .Collection(d => d.Directory).Query().Select(s => new { s.DName }).ToList();
                   localUser putUser = new localUser()
                   {
                       ID = user.UId,
@@ -170,8 +173,73 @@ namespace BlogWebsite.Controllers
                           Name = channel[0].CName,
                       };
                   }
+
+                  if (directory.Count != 0)
+                  {
+                      foreach (var item in directory)
+                      {
+                          putUser.myChannel.directory.Add(new localDirectory
+                          {
+                              Name = item.DName
+                          });
+                      }
+                  }
+                  UsersImg ImgData = _dbContext.UsersImg.FirstOrDefault(s => s.UId == User.Identity.Name);
+                  var base64 = Convert.ToBase64String(ImgData.UImg);
+                  putUser.Img = string.Format("data:image/png;base64,{0}", base64);
+                  ViewData["img"] = putUser.Img;
                   return putUser;
               });
+        }
+
+        private void setUserInCasheForFirstTime(Users User)
+        {
+            ModelUser newUser = new ModelUser(User.UId, User.UEmail, User.UFirstName, User.ULastName, User.UBirthDay);
+            cache.Set(User.UId, newUser);                    
+        }
+
+        private void setUserInAction(string ID)
+        {
+            cache.GetOrCreate(ID,
+                cacheEntry =>
+                {
+                    var dbUser = _dbContext.Users.FirstOrDefault(u => u.UId.Equals(ID));
+                    ModelUser modelUser = new ModelUser(dbUser.UId, dbUser.UEmail, dbUser.UFirstName, dbUser.ULastName, dbUser.UBirthDay);
+
+                    Channel dbChannel = _dbContext.Entry(dbUser)
+                                  .Collection(c => c.Channel).Query()
+                                  .FirstOrDefault(c => c.COwnerId.Equals(ID));
+                    if(dbChannel != null)
+                    {
+                        setChannelInAction(dbChannel);
+                    }
+                    modelUser.RegisterChannel((ModelChannel)cache.Get(dbChannel.CId));
+
+                    UsersImg ImgData = _dbContext.UsersImg.FirstOrDefault(s => s.UId == User.Identity.Name);
+                    var base64 = Convert.ToBase64String(ImgData.UImg);
+                    modelUser.changeImg(string.Format("data:image/png;base64,{0}", base64));
+                    return modelUser;
+                });
+
+        }
+
+
+        private void setChannelInAction(Channel channel)
+        {
+            cache.GetOrCreate(channel.CId,
+                cacheEntry =>
+                {
+                    ModelChannel modelChannel = new ModelChannel(channel.CId, channel.CName, channel.CDescription, channel.CTotalWatch);
+                    var directories=_dbContext.Entry(channel)
+                                    .Collection(d=>d.Directory).Query()
+                                    .Select(d => new { d.DId, d.DName, d.DType, d.DDepth }).ToList();     //Now not support nested Directory
+                    foreach (var directory in directories)
+                    {
+                        ModelDirectory modelDirectory = new ModelDirectory(directory.DId, directory.DName, directory.DDepth);
+                        modelChannel.createDirectory(directory.DId, modelDirectory);
+                    }
+                    return modelChannel;
+                });           
         }
 
 

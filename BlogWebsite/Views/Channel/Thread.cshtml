@@ -1,9 +1,9 @@
 ﻿@model ModelChannel
 @{
-    ViewData["Title"] = "MyChannel";
+    ViewData["Title"] = "Thread";
 }
 
-<section >
+<section>
     <div class="container">
         <div class="row">
             <div class="col-12" id="Header">
@@ -21,7 +21,7 @@
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
                                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                            </li>                          
+                            </li>
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
                             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -30,17 +30,22 @@
                     </div>
                 </nav>
             </div>
-       
-            </div>
+
         </div>
-  
+    </div>
+
 </section>
 <section style="margin-top:1%">
     <div class="container">
         <div class="row">
             <div class="col-8">
-                <div class="Feed">
-
+                <div style="min-height:30px;background-color:#c1b9d7">
+                    <h3>Test thread</h3>
+                    <p>this the first thread on the channel</p>
+                </div>
+                <br />
+                <div style="min-height:30px;background-color:#c1b9d7">
+                    <h3>Comments</h3>
                 </div>
             </div>
             <div class="col-4">
@@ -48,10 +53,10 @@
 
                     <div class="col-12">
                         <div class="infoTable">
-                            <div >
+                            <div>
                                 <img src="~/image/Test/square_Marc.jpg" />
                             </div>
-                            <div >
+                            <div>
                                 <h4>Channel name</h4>
                                 <h6>122354 followers</h6>
                             </div>
@@ -73,49 +78,49 @@
                             <ul>
                                 @foreach (var Directory in Model.getAllDirectory())
                                 {
-                                <li onclick="onClick(this)">
-                                    <i class="fas fa-folder-open"></i> @{ ModelDirectory D = Directory.Value;}
-                                    @D.Name
-                                    
-                                </li>
+                                    <li onclick="onClick(this)">
+                                        <i class="fas fa-folder-open"></i> @{ ModelDirectory D = Directory.Value;}
+                                        @D.Name
+
+                                    </li>
                                 }
                                 @*<li onclick="OnClick(this)">
 
-                                    <i class="fas fa-folder-open"></i> Game
-                                    <ul>
-                                        @for (int i = 0; i < 5; i++)
-                                        {
-                                            <li> | <i class="fas fa-file"></i> new subject @i</li>
+                                        <i class="fas fa-folder-open"></i> Game
+                                        <ul>
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                <li> | <i class="fas fa-file"></i> new subject @i</li>
 
-                                        }
-                                    </ul>
-                                </li>
-                                <li>
-                                    <i class="fas fa-folder"></i>
-                                    <ul>
-                                        <li>2.1</li>
-                                        <li>2.2</li>
-                                        <li>2.2</li>
-                                        <li>2.2</li>
-                                        <li>2.2</li>
-                                    </ul>
-                                </li>*@
+                                            }
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-folder"></i>
+                                        <ul>
+                                            <li>2.1</li>
+                                            <li>2.2</li>
+                                            <li>2.2</li>
+                                            <li>2.2</li>
+                                            <li>2.2</li>
+                                        </ul>
+                                    </li>*@
                             </ul>
                         </div>
-                    </div>                   
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 <div id="NewFolder">
-    <span ><strong style="font-size:larger">Add new Folder</strong></span>
+    <span><strong style="font-size:larger">Add new Folder</strong></span>
     <i onclick="offNewFolder()" id="Close" class="fas fa-window-close"></i>
     @*<form method="post" asp-action="AddFolder" asp-controller="Channel">
-        <input asp-for="FolderName" type="text" id="FolderNameInput" class="form-control" placeholder="Folder Name">
-        <span asp-validation-for="FolderName"></span>
-        <button id="FolderNameSubmit" class="btn btn-danger" type="submit">Add</button>
-    </form>*@
+            <input asp-for="FolderName" type="text" id="FolderNameInput" class="form-control" placeholder="Folder Name">
+            <span asp-validation-for="FolderName"></span>
+            <button id="FolderNameSubmit" class="btn btn-danger" type="submit">Add</button>
+        </form>*@
 </div>1
 <div id="overlay" onclick="offNewThread()" style="overflow:auto">
     @await Component.InvokeAsync("NewThread")
@@ -124,3 +129,4 @@
 
 
 <script src="~/JavaScript/MyChannel.js"></script>
+

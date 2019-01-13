@@ -36,7 +36,7 @@
                             <i class="fas fa-folder"></i>
                             <h6>Local Channel</h6>
                         </a>
-                        <a class="link" asp-controller="Channel" asp-action="MyChannel">
+                        <a class="link" asp-controller="Channel" asp-action="ChannelPanel">
                             <i class="fas fa-folder-plus"></i>
                             <h6>My Channel</h6>
                         </a>
@@ -52,10 +52,10 @@
                 <div class="col-sm-1 col-2">
                     <div class="submenu_H">
                         <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="image-SM" src="~/image/Test/square_Marc.jpg" alt="infinite blogs" />
+                            <img class="image-SM" src="@ViewBag.img" alt="notfound" />
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" asp-action="AccountSetting">Account Setting</a>
+                            <a class="dropdown-item" asp-action="AccountSetting" asp-controller="Home">Account Setting</a>
                             <div class="dropdown-divider"></div>
                             <form asp-action="LogOut" asp-controller="Start" method="post">
                                 <input  class="dropdown-item" type="submit" value="Logout" />

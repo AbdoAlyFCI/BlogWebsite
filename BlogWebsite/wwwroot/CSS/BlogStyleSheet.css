@@ -357,26 +357,57 @@ table .btn {
    
 }
 /*My Channel*/
-#ChannelContainer{
-
-    background-color:#edf0f3;
-    width:100%;
-    height:1000px;
+#ChannelContainer {
+    width: 100%;
+    height: 1000px;
+    padding-left:.5%;
 }
-.ChannelBar {
+#menuBar {
+    background-color: rgb(222, 208, 208);
+    height: 620px;
+    padding-top:3%;
+}
+/*Context menu*/
+/*#contextMenu {
+}*/
+
+
+#contextMenu i {
+    font-size: 30px;
+    transition: all 0.8s ease-in-out;
+}
+#contextMenu button {
+    color: #212529;
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    overflow: hidden;
+    transition: all 0.8s ease-in-out;
+    margin-left: 36px;
+}
+
+#contextMenu i:hover {
+    color: #f97a7a;
+}
+#SearchFileFolder{
+    margin-top:6%;
+    margin-left:41px;
+}
+/*.ChannelBar {
     padding:5px 70px;
     background-color: #b0b0b0;
     width: inherit;
     height: 50px;
-}
-.arrows a{
-    font-size:25px;
+}*/
+.arrows a {
+    font-size: 25px;
 }
 .navigation input{
     border-radius:1rem;
 }
-#files{
-    margin-top:10px;
+#files {
+    background-color: rgb(222, 208, 208);
+    height:620px;
 }
 
 .ChannelTab i {
@@ -397,45 +428,7 @@ table .btn {
 }
 
 
-/*Context menu*/
-#contextMenu {
-    width:300px;
-    opacity: 0;
-    visibility: hidden;
-    perspective: 1000px;
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    margin-right: auto;
-    margin-left: auto;
-    border-radius: 16px;
-    box-shadow: 0 5px 1px 0 rgba(0, 0, 0, 0.2);
-    font-size: 27px;
-    margin-top: 6rem;
-    /*margin-left: 28rem;*/
-    /*padding-right: 30px;*/
-    padding-top: 5px;
-    padding-bottom: 5px;
-    background-color: #c570f8;
-    transition: all 0.5s ease-in-out;
-    z-index: 2;
-}
-#contextMenu button {
- 
-    margin-left: 30px;   
-}
-#contextMenu button {   
-    color: #212529;
-    background-color: Transparent;
-    background-repeat: no-repeat;
-    border: none; 
-    overflow: hidden;
-    transition: all 0.8s ease-in-out;
-}
-#contextMenu button:hover {        
-    transform: rotateX(180deg);
-}
+
 /*Dialouge box */
 #dialoguemodal {
     display: none;
@@ -450,12 +443,12 @@ table .btn {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.dialogueBox {
-    background-color: #fefefe;
-    margin: auto;
+/*.dialogueBox {
+    
+   
     padding: 20px;
     border: 1px solid #888;
-}
+}*/
 
 #renameDialogue{
     width:20%;
@@ -468,28 +461,25 @@ table .btn {
 }
 
 #infoDialogue{
-    margin: -119px auto;
+    /*margin: -119px auto;*/
     width:35%;
-    display:none;
-}
-#infoTable{
-    table-layout: fixed;
-    width: 444px;
-}
-#infoTable tr{
-    margin-bottom:5px;
+    /*display:none;*/
 }
 
-#infoTable th {
+/*#infoTable tr{
+    margin-bottom:5px;
+}*/
+
+/*#infoTable th {
     width: 16px;
     vertical-align: top;
     text-align: left;
-}
+}*/
 
-#infoTable td {
+/*#infoTable td {
     width:24px;
     word-wrap: break-word;
-}
+}*/
 
 /*RegisterNewChannel*/
 
@@ -551,7 +541,258 @@ table .btn {
     background-color:rgba(168, 93, 157, 0.70);
 }
 
+/*Channel Panel*/
+#genralInfo{
+    background-color:cadetblue;
+    padding:15% 20%
+}
+
+#genralInfo img{
+    width:150px;
+    height:150px;
+    border-radius:100%;
+}
+
+#genralInfo label{
+    margin-top:2%;
+    text-align:center;
+    
+}
+
+#genralInfo ul {
+    font:bold 17px arial;
+    list-style: none;
+    padding-left: 0;
+}
+
+#genralInfo ul li {
+    text-align:center;
+    padding:5px ;
+    height: 50px;
+}
+
+#genralInfo ul li:hover{
+    background-color:dimgrey
+}
+
+#Channelstatistic{
+    background-color:rgba(222, 208, 208, 0.72);
+    height:300px;
+}
+
+#lastUpdate {
+    background-color: rgba(222, 208, 208, 0.72);
+    height: 438px;
+    padding: 2% 2%;
+    margin-top: 4%;
+}
+
+/*#lastUpdate .row div{
+    background-color:#ff9f9f;
+    height:400px;
+}*/
+.title h2{
+    display:inline;
+}
+.title{
+    margin-bottom:3%;
+}
+.title a{
+    float:right;
+    /*display:inline;*/
+    position:relative;
+    top:13px;
+    right:12px;
+}
+
+.detailsTabs #data {
+    transition: all 0.3s ease-in-out;
+    display: block;
+    height: 62px;
+    width: inherit;
+    margin-bottom: 3%;
+    padding: 3px 2px;
+    /*background-color: brown;*/
+}
+
+.detailsTabs #data:hover {
+    background-color: #f5aeae;
+}
+
+.detailsTabs #data div {
+    float: left;
+}
+
+.detailsTabs #data div img {
+    height: 55px;
+    width: 55px;
+    border-radius: 50px;
+}
+
+.detailsTabs #data div p {
+    margin-left:4px;
+    display: inline;
+    word-wrap: break-word;
+}
+
+.detailsTabs #data div p a {
+display: inline;
+}/*New Subject*/#NewSubject{
+    width:800px;
+    background-color:transparent;
+}#NewSubject div{    
+    height:40px;
+    background-color:rgb(220, 203, 203);
+    margin-top:2%;
+    border-radius:11px 11px 0 0;
+    padding-top:1%;
+}
+
+#NewSubject #textArea {
+    height: 500px;
+    width: inherit;
+    border-width: 0 1px 1px 1px;
+    resize: none;
+    background-color: white;
+    margin-top: 0%;
+}
+
+#FolderSelect{
+    margin-bottom:1.5%;
+}
+/*#ThreadName{
+    margin-bottom:1.5%;
+}*/
+#NewSubject i {
+    font-size: 20px;
+    margin-left: 4%;
+}/*MyChannel*/
+
+#Header img {
+    height: 250px;
+    width: inherit;
+}
+#Header i{
+    font-size:20px;
+    position:absolute;
+    top:10px;
+    left:34px;
+    color:white;
+}
+
+.infoTable {
+    width: inherit;
+    height: 70px;
+    padding: 1%;
+    background-color: #cf6868;
+}
+
+.infoTable div {
+    float: left;
+    margin-right:1%;
+}
+
+.infoTable div img {
+    height: 60px;
+    width: 60px;
+    border-radius: 50px;
+    display: inline;
+}
+
+.infoTable div form{
+    margin:15% 1% 1% 35%;
+}
+#AddItemTable{
+    padding-left:28%;
+}
+#AddItemTable button {
+    margin-left: 2%;
+    height: 60px;
+    width: 60px;
+    border-color: transparent;
+    border-radius: 50px;
+    background-color: transparent;
+}
+#AddItemTable button:hover {
+    height: 60px;
+    width: 60px;
+    border-color: transparent;
+    border-radius: 50px;
+    background-color: rgba(178, 178, 178, 0.67);
+}
+
+#AddItemTable i{
+    font-size:40px;
+    margin:auto;
+}
+
+#Folders {
+    height: 450px;
+    padding: 1.5%;
+    font-size:21px;
+    background-color: #cf6868;
+    overflow-y:auto;
+}
+
+#Folders ul {
+    list-style-type: none;
+    padding-left: 10px;
+}
+
+#Folders ul li ul{
+    padding-left:10px;
+}
 
 
 
 
+#overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    padding:5%;
+    z-index: 2;
+}
+#NewFolder {
+    display:none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 30em;
+    height: 18em;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15em; /*set to a negative number 1/2 of your width*/
+    border: 1px solid #bd8383;
+    background-color:#e38383;
+    border-radius:10px 10px 0 0;
+    padding:.5%;
+    
+}
+
+#NewFolder #Close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size:large;
+}
+#FolderNameInput{
+    margin-top:3%
+}
+
+#FolderNameSubmit{
+    position:absolute;
+    bottom:12px;
+    right:12px;
+}
+
+/*Thread*/
+#Thread{
+    min-height:40px;
+    
+}

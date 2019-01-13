@@ -1,0 +1,53 @@
+﻿@*@model ModelChannel*@
+@model Thread
+@*@{
+        ViewData["Title"] = "New Subject";
+    }*@
+<script src="https://cdn.ckeditor.com/4.11.1/standard/ckeditor.js"></script>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div>
+      
+                    <form asp-action="AddThread" asp-controller="Channel" method="post">
+                        <h2 class="align-middle" style="color:white">New Thread</h2>
+                        <select class="form-control" id="FolderSelect" asp-for="directorname">
+                            <option value="" hidden>Select Folder</option>
+                            <option>Game</option>
+                            <option>Anime</option>
+                        </select>
+                        <input type="text" class="form-control" placeholder="Thread Name" id="ThreadName" asp-for="Name" />
+                        <div class="form-group">
+                            <textarea class="form-control" asp-for="Texts"></textarea>
+                        </div>
+                        <script>
+                            CKEDITOR.replace('editor1');
+                        </script>
+
+                        <br /><br />
+                        <h4 style="color:white">Description (Optinal)</h4>
+                        <textarea class="form-control" rows="5" asp-for="Description"></textarea>
+                        <br />
+                        <h4 style="color:white">Tags</h4>
+                        <input type="text" class="form-control" placeholder="Put ',' to distenct between tags" />
+                        <br />
+                        <h4 style="color:white">Thread Image</h4>
+                        <input type="file" />
+                        <br />
+                        <table>
+                            <tr>
+                                <td><button class="btn btn-light" id="SubmitThread">Submit</button></td>
+                            </tr>
+                            <tr>
+                                <td><button class="btn btn-danger"> Reset</button></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

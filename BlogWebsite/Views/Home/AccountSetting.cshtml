@@ -35,7 +35,11 @@
             </div>
             <div class="col-8">
                 <div id="settingDetails">
-
+                    <form method="post" asp-controller="Home" asp-action="AccountSetting" enctype="multipart/form-data">
+                        <input type="file" name="Pic" />
+                        <input type="submit" value="Uploade" />
+                    </form>
+                    <img src="@ViewData["img"]" alt="notfound"/>
                 </div>
             </div>
         </div>

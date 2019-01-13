@@ -1,24 +1,24 @@
-﻿
+﻿@model channelRegister
 @{
     ViewData["Title"] = "RegisterNewChannel";
 }
 
 <div class="RegisterSection">
-    <form>
+    <form asp-action="RegisterNewChannel" asp-controller="Channel" method="post">
         <fieldset>
             <legend class="text-center"><b>Register new channel</b></legend>
             <table>
                 <tr>
                     <th>Channel name*</th>
-                    <td><input class="inputText" required /></td>
+                    <td><input class="inputText" asp-for="@Model.name" /></td>
                 </tr>
                 <tr>
                     <th>Channel ID*</th>
-                    <td><input class="inputText" required /></td>
+                    <td><input class="inputText" asp-for="@Model.ID" /></td>
                 </tr>
                 <tr>
                     <th>Channel description</th>
-                    <td><textarea cols="23" rows="10" class="inputText" style="height:70px;"></textarea></td>
+                    <td><textarea cols="23" rows="10" class="inputText" style="height:70px;" asp-for="@Model.description"></textarea></td>
                 </tr>
                 <tr>
                     <th>Uplode cover Img</th>
