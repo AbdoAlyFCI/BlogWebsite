@@ -5,7 +5,7 @@ namespace BlogWebsite.Models
 {
     public partial class FileTag
     {
-        public int FId { get; set; }
+        public string FId { get; set; }
         public int TId { get; set; }
 
         public Files F { get; set; }

@@ -3,6 +3,11 @@
     document.documentElement.style.overflow = 'hidden';
 }
 
+function onNewHeader() {
+    document.getElementById("Headers").style.display = "block";
+    document.documentElement.style.overflow = 'hidden';
+}
+
 //function offNewThread() {
 //    document.getElementById("overlay").style.display = "none";
 //}

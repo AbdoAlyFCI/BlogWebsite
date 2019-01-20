@@ -12,7 +12,7 @@ namespace BlogWebsite.Models
             FileTag = new HashSet<FileTag>();
         }
 
-        public int FId { get; set; }
+        public string FId { get; set; }
         public string FName { get; set; }
         public string FCid { get; set; }
         public string FDescription { get; set; }

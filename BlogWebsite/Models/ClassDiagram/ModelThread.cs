@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace BlogWebsite.Models.ClassDiagram
 {
-    public class Thread
+    public class ModelThread
     {
         
         public string ID { get; set; }
-        [Required(ErrorMessage ="Please enter a name for the thread")]
+        //[Required(ErrorMessage ="Please enter a name for the thread")]
         public string Name { get; set; }
         
         public string Texts { get; set; }
@@ -18,8 +19,13 @@ namespace BlogWebsite.Models.ClassDiagram
         public string Description { get; set; }
         public List<ModelUser> Like { get; set; }
         public List<ModelUser> Dislike { get; set; }
-        public DateTime PublishDate { get; set; }
-        public string directorname;
+        public DateTime? PublishDate { get; set; }
+        public string directorname { get; set; }
+        public string directorId { get; set; }
+        public IFormFile Pic { get; set; }
+        public string img { get; set; }
+
+        private List<ModelTag> threadTags = new List<ModelTag>();
 
         public void addLike(ModelUser user)
         {
@@ -59,6 +65,16 @@ namespace BlogWebsite.Models.ClassDiagram
         public void ChangeDescription(string Text)
         {
             this.Texts = Text;
+        }
+
+        public void addTag(ModelTag tag)
+        {
+            threadTags.Add(tag);
+        }
+
+        public void removeTag(ModelTag tag)
+        {
+            threadTags.Remove(tag);
         }
     }
 }

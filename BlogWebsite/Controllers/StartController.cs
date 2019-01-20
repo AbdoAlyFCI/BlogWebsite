@@ -209,10 +209,10 @@ namespace BlogWebsite.Controllers
                     Channel dbChannel = _dbContext.Entry(dbUser)
                                   .Collection(c => c.Channel).Query()
                                   .FirstOrDefault(c => c.COwnerId.Equals(ID));
-                    if(dbChannel != null)
-                    {
-                        setChannelInAction(dbChannel);
-                    }
+                    //if(dbChannel != null)
+                    //{
+                    //    setChannelInAction(dbChannel);
+                    //}
                     modelUser.RegisterChannel((ModelChannel)cache.Get(dbChannel.CId));
 
                     UsersImg ImgData = _dbContext.UsersImg.FirstOrDefault(s => s.UId == User.Identity.Name);
@@ -224,23 +224,23 @@ namespace BlogWebsite.Controllers
         }
 
 
-        private void setChannelInAction(Channel channel)
-        {
-            cache.GetOrCreate(channel.CId,
-                cacheEntry =>
-                {
-                    ModelChannel modelChannel = new ModelChannel(channel.CId, channel.CName, channel.CDescription, channel.CTotalWatch);
-                    var directories=_dbContext.Entry(channel)
-                                    .Collection(d=>d.Directory).Query()
-                                    .Select(d => new { d.DId, d.DName, d.DType, d.DDepth }).ToList();     //Now not support nested Directory
-                    foreach (var directory in directories)
-                    {
-                        ModelDirectory modelDirectory = new ModelDirectory(directory.DId, directory.DName, directory.DDepth);
-                        modelChannel.createDirectory(directory.DId, modelDirectory);
-                    }
-                    return modelChannel;
-                });           
-        }
+        //private void setChannelInAction(Channel channel)
+        //{
+        //    cache.GetOrCreate(channel.CId,
+        //        cacheEntry =>
+        //        {
+        //            ModelChannel modelChannel = new ModelChannel(channel.CId, channel.CName, channel.CDescription, channel.CTotalWatch);
+        //            var directories=_dbContext.Entry(channel)
+        //                            .Collection(d=>d.Directory).Query()
+        //                            .Select(d => new { d.DId, d.DName, d.DType, d.DDepth }).ToList();     //Now not support nested Directory
+        //            //foreach (var directory in directories)
+        //            //{
+        //            //    ModelDirectory modelDirectory = new ModelDirectory(directory.DId, directory.DName, directory.DDepth);
+        //            //    modelChannel.createDirectory(directory.DId, modelDirectory);
+        //            //}
+        //            return modelChannel;
+        //        });           
+        //}
 
 
     }

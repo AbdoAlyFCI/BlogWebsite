@@ -71,6 +71,10 @@ namespace BlogWebsite.Models
                     .HasMaxLength(250)
                     .IsUnicode(false);
 
+                entity.Property(e => e.CIMG)
+                    .HasColumnName("C_img");
+
+
                 entity.Property(e => e.CTotalWatch).HasColumnName("C_TotalWatch");
 
                 entity.HasOne(d => d.COwner)
@@ -208,6 +212,8 @@ namespace BlogWebsite.Models
 
                 entity.Property(e => e.FId)
                     .HasColumnName("F_ID")
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.FCid)
@@ -222,8 +228,8 @@ namespace BlogWebsite.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.FImg)
-                    .HasColumnName("F_img")
-                    .HasMaxLength(1);
+                    .HasColumnName("F_img");
+                    
 
                 entity.Property(e => e.FName)
                     .IsRequired()

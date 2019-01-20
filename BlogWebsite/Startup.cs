@@ -46,11 +46,34 @@ namespace BlogWebsite
           //  app.UseMvcWithDefaultRoute();
             app.UseMvc(routes =>
             {
+                //routes.MapRoute(
+                //    name: "ChannelPannel",
+                //    template: "{controller=Channel}/{action=ChannelPanel}/{id}");
+
+                routes.MapRoute(
+                    name: "",
+                    template: "[Controller]/{Cid}/{Did}/{Tid}",
+                    defaults: new { Controller = "Channel", action = "Thread" }
+                    );
+
+                routes.MapRoute(
+                    name:"",
+                    template: "[controller]/{id}",
+                    defaults: new {Controller="Channel",action= "MyChannel"}                    
+                    );
+
+
+                //routes.MapRoute(
+                //    name:"mychannel",
+                //    template: "{controller}/{id}",
+                //    defaults: new {Controller="Channel",action= "MyChannel"}
+                //    );
 
 
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Start}/{action=Welcome}/{id?}");
+
             });
         }
     }

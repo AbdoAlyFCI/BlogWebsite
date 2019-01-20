@@ -7,12 +7,14 @@
     <div class="container">
         <div class="row">
             <div class="col-12" id="Header">
-                <img src="~/image/Test/18055811_1882174805363193_626760598371261668_o.jpg" alt="Channelbanner" />
-                <i class="fas fa-camera"></i>
+                <img src="@Model.img" alt="Channelbanner" />      
+                <button id="ChangeHeader" onclick="onNewHeader()">
+                    <i class="fas fa-camera"></i>
+                </button>
             </div>
             <div class="col-12">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <a class="navbar-brand" href="#">Navbar</a>
+                    <a class="navbar-brand" href="">Navbar</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -20,7 +22,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
                             </li>                          
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
@@ -39,67 +41,119 @@
     <div class="container">
         <div class="row">
             <div class="col-8">
-                <div class="Feed">
+                <div class="ViewBox">
+                    <h3>Channel Feed </h3>
+                    <span class="free-postion top-right md-font">
+                        <i id="block" class="fas fa-th-large">d</i>
+                        <i id="list" class="fas fa-bars">s</i>
+                    </span>
+                    <div class="row">
+                        @foreach (var file in Model.getAllThread())
+                        {
+                            <div class="col-12 LV">
 
+                                <div class="New">
+                                    <div class="float-left image" style="background-image: url(@file.img)">
+                                        @*<div><img src="~/image/Test/square_Marc.jpg" /></div>*@
+                                    </div>
+                                    <div class="float-left Discription">
+                                        <div>
+                                            <h2><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@Model.ID" asp-route-Did="@file.directorId" asp-route-Tid="@file.ID">@file.Name</a></h2>
+                                            <p>@file.Description</p>
+                                        </div>
+                                        <div class="genralInfo">
+                                            <span>@file.PublishDate</span><br />
+                                            <span>
+                                                <i class="far fa-eye"></i><span class="mr-2"> 5</span>
+                                                <i class="fas fa-comments"></i><span> 20</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="float-left react">
+                                        <ul>
+                                            <li class="Save" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                                <i class="far fa-bookmark" id="out"></i>
+                                                <i class="fas fa-bookmark" id="in" hidden></i>
+                                            </li>
+                                            <li class="Like" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                                <i class="far fa-thumbs-up"></i>
+                                                <i class="fas fa-thumbs-up" hidden></i>
+                                            </li>
+                                            <li class="Dislike" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                                <i class="far fa-thumbs-down"></i>
+                                                <i class="fas fa-thumbs-down" hidden></i>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        }
+                    </div>
+                 
                 </div>
             </div>
             <div class="col-4">
                 <div class="row">
-
                     <div class="col-12">
-                        <div class="infoTable">
-                            <div >
-                                <img src="~/image/Test/square_Marc.jpg" />
-                            </div>
-                            <div >
-                                <h4>Channel name</h4>
-                                <h6>122354 followers</h6>
-                            </div>
+                        <div class="sm-Rectangle">
                             <div>
-                                <form>
-                                    <input class="btn btn-primary" type="button" value="follow">
-                                </form>
+                                <img class="md-img float-left" src="~/image/Test/square_Marc.jpg" />
+                                <div class="float-left">
+                                    <h4>Channel name</h4>
+                                    <h6>122354 followers</h6>
+                                </div>
+                                <div class="free-postion top-right">
+                                    <form>
+                                        <input class="btn btn-primary" type="button" value="follow">
+                                    </form>
+                                </div>
+
                             </div>
+                            
                         </div>
                     </div>
                     <div class="col-12" style="margin-top:4%">
-                        <div class="infoTable" id="AddItemTable">
+                        <div class="sm-Rectangle" id="AddItemTable">
+                            @* class="infoTable" *@
                             <button onclick="onNewFolder()"><i class="fas fa-folder-plus"></i></button>
                             <button onclick="onNewThread()"><i class="fas fa-file-medical"></i></button>
                         </div>
                     </div>
                     <div class="col-12" style="margin-top:4%;">
-                        <div id="Folders">
+                        <div class="md-Rectangle">
+                            @*id="Folders"*@
                             <ul>
                                 @foreach (var Directory in Model.getAllDirectory())
                                 {
-                                <li onclick="onClick(this)">
-                                    <i class="fas fa-folder-open"></i> @{ ModelDirectory D = Directory.Value;}
-                                    @D.Name
-                                    
-                                </li>
+                                    <li onclick="onClick(this)">
+                                        <i class="fas fa-folder-open"></i> 
+                                        @Directory.Name
+
+                                    </li>
                                 }
                                 @*<li onclick="OnClick(this)">
 
-                                    <i class="fas fa-folder-open"></i> Game
-                                    <ul>
-                                        @for (int i = 0; i < 5; i++)
-                                        {
-                                            <li> | <i class="fas fa-file"></i> new subject @i</li>
+                <i class="fas fa-folder-open"></i> Game
+                <ul>
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        <li> | <i class="fas fa-file"></i> new subject @i</li>
 
-                                        }
-                                    </ul>
-                                </li>
-                                <li>
-                                    <i class="fas fa-folder"></i>
-                                    <ul>
-                                        <li>2.1</li>
-                                        <li>2.2</li>
-                                        <li>2.2</li>
-                                        <li>2.2</li>
-                                        <li>2.2</li>
-                                    </ul>
-                                </li>*@
+                    }
+                </ul>
+            </li>
+            <li>
+                <i class="fas fa-folder"></i>
+                <ul>
+                    <li>2.1</li>
+                    <li>2.2</li>
+                    <li>2.2</li>
+                    <li>2.2</li>
+                    <li>2.2</li>
+                </ul>
+            </li>*@
                             </ul>
                         </div>
                     </div>                   
@@ -108,15 +162,25 @@
         </div>
     </div>
 </section>
-<div id="NewFolder">
+@*<div id="NewFolder">
     <span ><strong style="font-size:larger">Add new Folder</strong></span>
     <i onclick="offNewFolder()" id="Close" class="fas fa-window-close"></i>
     @*<form method="post" asp-action="AddFolder" asp-controller="Channel">
         <input asp-for="FolderName" type="text" id="FolderNameInput" class="form-control" placeholder="Folder Name">
         <span asp-validation-for="FolderName"></span>
         <button id="FolderNameSubmit" class="btn btn-danger" type="submit">Add</button>
-    </form>*@
-</div>1
+    </form>
+</div>*@
+
+<div id="Headers" style="display:none">
+
+    <span><strong style="font-size:larger">Add new Folder</strong></span>
+    <i onclick="offNewFolder()" id="Close" class="fas fa-window-close"></i>
+    <form method="post" asp-controller="Channel" asp-action="ChangeChannelHeaderPic" asp-route-ID="fc" enctype="multipart/form-data">
+        <input type="file" name="Pic" />
+        <input type="submit" value="Uploade" />
+    </form>
+</div>
 <div id="overlay" onclick="offNewThread()" style="overflow:auto">
     @await Component.InvokeAsync("NewThread")
 </div>

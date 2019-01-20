@@ -10,37 +10,40 @@
         <div class="row">
             <div class="col-lg-3">
                 <div id="genralInfo">
-                    <img src="~/image/Test/square_Marc.jpg" />
+                    <img class="lg-img" src="~/image/Test/square_Marc.jpg" />
                     <label>first channel</label><br />
                     <label>&ass;fs</label>
                     <ul>
                         <li>Followers <br /> 125163</li>
-                        <li><a class="link" asp-action="MyChannel">My Files</a></li>
+                        <li><a class="link" asp-controller="Channel" asp-action="MyChannel" asp-route-id="fc">My Files</a></li>
                         <li><a class="link" asp-action="ChannelSetting">Setting</a></li>
                     </ul>
                 </div>
             </div>
             <div class="col-lg-9">
                 <div>
-                    <div id="Channelstatistic">
+                    <div class="details-box">
                         
                     </div>
-                    <section id="lastUpdate">
+                    <br />
+                    <section class="details-box">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div>
-                                    <div class="title">
+                                    <div>
                                         <h2>Last Activities</h2>
-                                        <a class="link" asp-action="LastActivites"><h5>more</h5></a>
+                                        <a class="free-postion  top-right" asp-action="LastActivites">more</a>
                                     </div>
-                                    <div class="detailsTabs">
+                                    <div>
 
                                         @for (int i = 0; i < 5; i++)
                                         {
-                                        <div id="data">
-                                            <div><img src="~/image/Test/square_Marc.jpg" /></div>
-                                            <div><p><a asp-controller="User" asp-action="info">Ahmed</a> Comment on tour article <a asp-controller="User" asp-action="info">newArtticle</a><br />1/1/2019</p></div>
-                                        </div>
+                                            <div class="tab">
+                                                <div>
+                                                    <img class="md-img" src="~/image/Test/square_Marc.jpg" />
+                                                    <p class="float-right"><a asp-controller="User" asp-action="info">Ahmed</a> Comment on tour article <a asp-controller="User" asp-action="info">newArtticle</a><br />1/1/2019</p>
+                                                </div>
+                                            </div>
                                         }
 
                                     </div>
@@ -48,17 +51,19 @@
                             </div>
                             <div class="col-lg-6">
                                 <div style="height:400px">
-                                    <div class="title">
+                                    <div>
                                         <h2>Last Notifications</h2>
-                                        <a class="link" asp-action="LastNotifications"><h5>more</h5></a>
+                                        <a class="free-postion  top-right" asp-action="LastNotifications">more</a>
                                     </div>
-                                    <div class="detailsTabs">
+                                    <div>
 
                                         @for (int i = 0; i < 5; i++)
                                         {
-                                            <div id="data">
-                                                <div><img src="~/image/Test/square_Marc.jpg" /></div>
-                                                <div><p><a asp-controller="User" asp-action="info" >Ahmed</a> Comment on tour article <a asp-controller="User" asp-action="info" >newArtticle</a><br />1/1/2019</p></div>
+                                            <div class="tab">
+                                                <div>
+                                                    <img class="md-img" src="~/image/Test/square_Marc.jpg" />
+                                                    <p class="float-right"><a asp-controller="User" asp-action="info">Ahmed</a> Comment on tour article <a asp-controller="User" asp-action="info">newArtticle</a><br />1/1/2019</p>
+                                                </div>
                                             </div>
                                         }
 

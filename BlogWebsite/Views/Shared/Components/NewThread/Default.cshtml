@@ -1,8 +1,6 @@
-﻿@*@model ModelChannel*@
-@model Thread
-@*@{
-        ViewData["Title"] = "New Subject";
-    }*@
+﻿
+@model ModelThread
+
 <script src="https://cdn.ckeditor.com/4.11.1/standard/ckeditor.js"></script>
 <section>
     <div class="container">
@@ -10,16 +8,18 @@
             <div class="col-12">
                 <div>
       
-                    <form asp-action="AddThread" asp-controller="Channel" method="post">
+                    <form enctype="multipart/form-data" asp-action="AddThread" asp-controller="Channel" asp-route-id="fc" method="post">
                         <h2 class="align-middle" style="color:white">New Thread</h2>
-                        <select class="form-control" id="FolderSelect" asp-for="directorname">
-                            <option value="" hidden>Select Folder</option>
-                            <option>Game</option>
-                            <option>Anime</option>
-                        </select>
+                        <div class="form-group">
+                            <select class="form-control" id="FolderSelect" asp-for="directorId">
+                                <option value="" hidden>Select Folder</option>
+                                <option value="fcD1">Game</option>
+                                <option value="fcD2">Anime</option>
+                            </select>
+                        </div>
                         <input type="text" class="form-control" placeholder="Thread Name" id="ThreadName" asp-for="Name" />
                         <div class="form-group">
-                            <textarea class="form-control" asp-for="Texts"></textarea>
+                            <textarea class="form-control" asp-for="Texts" id="editor1"></textarea>
                         </div>
                         <script>
                             CKEDITOR.replace('editor1');
@@ -33,12 +33,14 @@
                         <input type="text" class="form-control" placeholder="Put ',' to distenct between tags" />
                         <br />
                         <h4 style="color:white">Thread Image</h4>
-                        <input type="file" />
+                        <input type="file" asp-for="Pic" />
+                      
                         <br />
+                        @*<input type="submit" value="Uploade" />>*@
                         <table>
                             <tr>
-                                <td><button class="btn btn-light" id="SubmitThread">Submit</button></td>
-                            </tr>
+                                <td><button class="btn btn-light" id="SubmitThread" type="submit" value="value="Uploade">Submit</button></td>
+
                             <tr>
                                 <td><button class="btn btn-danger"> Reset</button></td>
                             </tr>

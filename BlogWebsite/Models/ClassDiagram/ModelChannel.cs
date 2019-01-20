@@ -14,7 +14,8 @@ namespace BlogWebsite.Models.ClassDiagram
         public ModelUser Owner { get; set; }
         public HashSet<ModelUser> Followers { get; set; }
         public HashSet<ModelUser> blockedUser { get; set; }
-        private Dictionary<string, ModelDirectory> Directories = new Dictionary<string, ModelDirectory>();
+        private List<ModelDirectory> Directories = new List<ModelDirectory>();
+        public string img { get; set; }
 
 
         public ModelChannel(string ID,string Name,string Description,int? totalView)
@@ -48,39 +49,41 @@ namespace BlogWebsite.Models.ClassDiagram
             blockedUser.Remove(user);
         }
 
-        public void createDirectory(string ID, ModelDirectory directory)
+        public void createDirectory(ModelDirectory directory)
         {
-            Directories.Add(ID, directory);
+            if (Directories.FirstOrDefault(d=>d.ID.Equals(directory.ID))==null)
+                Directories.Add(directory);
         }
 
-        public void removeDirectory(string ID)
-        {
-            Directories.Remove(ID);
-        }
+        //public void removeDirectory( ID)
+        //{
+        //    //Directories.Where(d=>d.Name==ID).Remove();
+        //}
 
         public ModelDirectory GetDirectory(string ID)
         {
-            return Directories[ID];
+            return Directories.FirstOrDefault(d => d.ID == ID);
         }
 
-        public Dictionary<string,ModelDirectory> getAllDirectory()
+        public List<ModelDirectory> getAllDirectory()
         {
             return Directories;
         }
-        public Thread createThread()
+        public ModelThread createThread()
         {
-            return new Thread();
+            return new ModelThread();
         }
 
-        public void createThread(string ID,Thread thread)
+        public void createThread(string ID,ModelThread thread)
         {
-            Directories[ID].addThread(thread);
+            if(Directories.FirstOrDefault(s=>s.ID.Equals(ID))==null)
+                Directories.FirstOrDefault(d=>d.ID==ID).addThread(thread);
         }
 
 
         public void removeThread(string ID,string threadID)
         {
-            Directories[ID].removeThread(threadID);
+            Directories.FirstOrDefault(d => d.ID == ID).removeThread(threadID);
         }
 
         public void setOwner(ModelUser owner)
@@ -91,6 +94,23 @@ namespace BlogWebsite.Models.ClassDiagram
         public void deleteChannel()
         {
 
+        }
+
+        public List<ModelThread> getAllThread()
+        {
+            List<ModelThread> threads = new List<ModelThread>();
+            foreach (var Directorty in Directories)
+            {
+
+                foreach (ModelThread file in Directorty.getallThread())
+                {
+                    threads.Add(file);
+                }
+
+            }
+            threads = threads.OrderBy(t => t.PublishDate).ToList();
+
+            return threads;
         }
 
        

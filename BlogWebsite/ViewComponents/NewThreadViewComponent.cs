@@ -23,7 +23,7 @@ namespace BlogWebsite.ViewComponents
         {
             //var data = _dbContext.Users.FirstOrDefault(s => s.UFirstName.Equals("Abdo"));
             
-            return View(new Thread());
+            return View(new ModelThread());
         }
     }
 }

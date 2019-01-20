@@ -12,12 +12,13 @@ namespace BlogWebsite.Models
             Directory = new HashSet<Directory>();
         }
 
-        public string CId { get; set; }
+        public string CId {get; set; }
         public string COwnerId { get; set; }
         public string CName { get; set; }
         public string CDescription { get; set; }
         public int? CFollowers { get; set; }
         public int? CTotalWatch { get; set; }
+        public  byte[] CIMG { get; set; }
 
         public Users COwner { get; set; }
         //public ICollection<Files> Files { get; set; }

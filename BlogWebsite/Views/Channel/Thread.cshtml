@@ -1,6 +1,6 @@
 ﻿@model ModelChannel
 @{
-    ViewData["Title"] = "Thread";
+    ViewData["Title"] = "MyChannel";
 }
 
 <section>
@@ -39,51 +39,105 @@
     <div class="container">
         <div class="row">
             <div class="col-8">
-                <div style="min-height:30px;background-color:#c1b9d7">
-                    <h3>Test thread</h3>
-                    <p>this the first thread on the channel</p>
-                </div>
-                <br />
-                <div style="min-height:30px;background-color:#c1b9d7">
-                    <h3>Comments</h3>
+                <div class="viewStretch">
+                    @await Component.InvokeAsync("ShowThread")
+                    <div>
+                        <h4>Comments</h4>
+                        <div class="form-group">
+                            <textarea class="form-control"></textarea>
+                        </div>
+                        <br />
+                        <div>
+                            <div>
+                                <div class="float-left" style="height:70px;">
+                                    <img class="md-img" src="~/image/Test/square_Marc.jpg" alt="error" />
+                                </div>
+                                <div style="width:inherit">
+                                    <h5>User</h5>
+                                    <p>First comment First comment  First comment First comment First comment First comment First comment</p>
+                                </div>
+                            </div>
+                            <div style="margin-left:5%">
+                                <div class="float-left" style="height:58px;">
+                                    <img class="sm-img" src="~/image/Test/square_Marc.jpg" alt="error" />
+                                </div>
+                                <div style="width:inherit">
+                                    <h5>User</h5>
+                                    <p>fg comment First comment  First comment First comment First comment First comment First comment</p>
+                                </div>
+                            </div>
+                            <div style="margin-left:5%">
+                                <div class="float-left" style="height:58px;">
+                                    <img class="md-img" src="~/image/Test/square_Marc.jpg" alt="error" />
+                                </div>
+                                <div style="width:inherit">
+                                    <h5>User</h5>
+                                    <p>fg comment First comment  First comment First comment First comment First comment First comment</p>
+                                </div>
+                            </div>
+                            <div style="margin-left:5%">
+                                <div class="float-left" style="height:58px;">
+                                    <img class="md-img" src="~/image/Test/square_Marc.jpg" alt="error" />
+                                </div>
+                                <div style="width:inherit">
+                                    <h5>User</h5>
+                                    <p>fg comment First comment  First comment First comment First comment First comment First comment</p>
+                                </div>
+                            </div>
+                        </div>
+                        @for (int i = 0; i < 3; i++)
+                        {
+                            <div class="float-left" style="height:58px;">
+                                <img class="md-img" src="~/image/Test/square_Marc.jpg" alt="error" />
+                            </div>
+                            <div style="width:inherit">
+                                <h5>User</h5>
+                                <p>First comment First comment  First comment First comment First comment First comment First comment</p>
+                            </div>
+                        }
+
+                    </div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="row">
-
                     <div class="col-12">
-                        <div class="infoTable">
+                        <div class="sm-Rectangle">
                             <div>
-                                <img src="~/image/Test/square_Marc.jpg" />
+                                <img class="md-img float-left" src="~/image/Test/square_Marc.jpg" />
+                                <div class="float-left">
+                                    <h4>Channel name</h4>
+                                    <h6>122354 followers</h6>
+                                </div>
+                                <div class="free-postion top-right">
+                                    <form>
+                                        <input class="btn btn-primary" type="button" value="follow">
+                                    </form>
+                                </div>
+
                             </div>
-                            <div>
-                                <h4>Channel name</h4>
-                                <h6>122354 followers</h6>
-                            </div>
-                            <div>
-                                <form>
-                                    <input class="btn btn-primary" type="button" value="follow">
-                                </form>
-                            </div>
+
                         </div>
                     </div>
                     <div class="col-12" style="margin-top:4%">
-                        <div class="infoTable" id="AddItemTable">
+                        <div class="sm-Rectangle" id="AddItemTable">
+                            @* class="infoTable" *@
                             <button onclick="onNewFolder()"><i class="fas fa-folder-plus"></i></button>
                             <button onclick="onNewThread()"><i class="fas fa-file-medical"></i></button>
                         </div>
                     </div>
                     <div class="col-12" style="margin-top:4%;">
-                        <div id="Folders">
+                        <div class="md-Rectangle">
+                            @*id="Folders"*@
                             <ul>
-                                @foreach (var Directory in Model.getAllDirectory())
+                                @*@foreach (var Directory in Model.getAllDirectory())
                                 {
                                     <li onclick="onClick(this)">
                                         <i class="fas fa-folder-open"></i> @{ ModelDirectory D = Directory.Value;}
                                         @D.Name
 
                                     </li>
-                                }
+                                }*@
                                 @*<li onclick="OnClick(this)">
 
                                         <i class="fas fa-folder-open"></i> Game
@@ -121,7 +175,7 @@
             <span asp-validation-for="FolderName"></span>
             <button id="FolderNameSubmit" class="btn btn-danger" type="submit">Add</button>
         </form>*@
-</div>1
+</div>
 <div id="overlay" onclick="offNewThread()" style="overflow:auto">
     @await Component.InvokeAsync("NewThread")
 </div>
@@ -129,4 +183,3 @@
 
 
 <script src="~/JavaScript/MyChannel.js"></script>
-

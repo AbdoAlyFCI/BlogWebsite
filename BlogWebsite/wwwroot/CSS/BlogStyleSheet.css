@@ -8,10 +8,7 @@
     color: #495057;
 }
 
-.image-SM {
-    width: 34px;
-    height: 34px;
-}
+
 .inputText {
     margin-bottom: 8px;
     height: calc(2.25rem + 2px);
@@ -307,45 +304,7 @@ table .btn {
     
 }
 
-.Channel,
-.SChannel {
-    width:inherit;
-    height: 70px;
-    padding-top: 5px;
-    padding-left: 5px;
-    margin-bottom: 10px;
-    
-}
-.Channel:hover,
-.SChannel:hover {
-    background-color: rgba(244, 202, 173, 0.89);
-    border-radius:50px;
-}
 
-.Channel >img,
-.SChannel>img{
-    /*width:60px;*/
-    width:18.07%;
-    border-radius:50px;
-    /*margin-right:15px;*/
-    margin-right:4.52%;
-    
-}
-.Channel>span,
-.SChannel>span{
-    width:50.9%;
-}
-
-.Channel >button,
-.SChannel >button{
-    /*margin-left:82px;*/
-    margin-left:24.69%;
-}
-
-.Channel > button:hover {
-    background-color: #cb0f0f;
-    border-color: #cb0f0f;
-}
 
 .trends ul {
     list-style-type: none;
@@ -502,15 +461,13 @@ table .btn {
 
 
 /*Personal setting*/
-.PersonalPic {
-    width:150px;
-    height:150px;
-    margin: 2% auto 6% auto;
+#PersonalPic {
+    margin: auto 6% auto;
 }
-.PersonalPic div{
+#PersonalPic div{
     text-align:center;
 }
-.PersonalPic div img {      
+#PersonalPic div img {      
     width: 150px;
     height: 150px;
     border-radius: 100px;
@@ -547,11 +504,11 @@ table .btn {
     padding:15% 20%
 }
 
-#genralInfo img{
+/*#genralInfo img{
     width:150px;
     height:150px;
     border-radius:100%;
-}
+}*/
 
 #genralInfo label{
     margin-top:2%;
@@ -575,22 +532,12 @@ table .btn {
     background-color:dimgrey
 }
 
-#Channelstatistic{
+/*#Channelstatistic{
     background-color:rgba(222, 208, 208, 0.72);
     height:300px;
-}
-
-#lastUpdate {
-    background-color: rgba(222, 208, 208, 0.72);
-    height: 438px;
-    padding: 2% 2%;
-    margin-top: 4%;
-}
-
-/*#lastUpdate .row div{
-    background-color:#ff9f9f;
-    height:400px;
 }*/
+
+
 .title h2{
     display:inline;
 }
@@ -605,39 +552,7 @@ table .btn {
     right:12px;
 }
 
-.detailsTabs #data {
-    transition: all 0.3s ease-in-out;
-    display: block;
-    height: 62px;
-    width: inherit;
-    margin-bottom: 3%;
-    padding: 3px 2px;
-    /*background-color: brown;*/
-}
-
-.detailsTabs #data:hover {
-    background-color: #f5aeae;
-}
-
-.detailsTabs #data div {
-    float: left;
-}
-
-.detailsTabs #data div img {
-    height: 55px;
-    width: 55px;
-    border-radius: 50px;
-}
-
-.detailsTabs #data div p {
-    margin-left:4px;
-    display: inline;
-    word-wrap: break-word;
-}
-
-.detailsTabs #data div p a {
-display: inline;
-}/*New Subject*/#NewSubject{
+/*New Subject*/#NewSubject{
     width:800px;
     background-color:transparent;
 }#NewSubject div{    
@@ -795,4 +710,20 @@ display: inline;
 #Thread{
     min-height:40px;
     
+}
+
+
+#Headers {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 30em;
+    height: 18em;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15em; /*set to a negative number 1/2 of your width*/
+    border: 1px solid #bd8383;
+    background-color: #e38383;
+    border-radius: 10px 10px 0 0;
+    padding: .5%;
 }

@@ -5,7 +5,7 @@ namespace BlogWebsite.Models
 {
     public partial class FileReact
     {
-        public int FId { get; set; }
+        public string FId { get; set; }
         public string UId { get; set; }
         public int RId { get; set; }
 
