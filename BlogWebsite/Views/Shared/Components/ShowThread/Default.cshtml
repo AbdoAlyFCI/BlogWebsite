@@ -1,11 +1,13 @@
 ﻿@model ModelThread
 
 <h3>@Model.Name</h3>
-<span class="free-postion top-right md-font">
-    @*<i id="block" class="fas fa-th-large">d</i>
-        <i id="list" class="fas fa-bars">s</i>*@
-</span>
+@*<span class="free-postion top-right md-font">
+
+    </span>*@
+<span>@Model.PublishDate</span>
+<h6><a asp-controller="Channel" asp-action="getDirectory" asp-route-id="df" asp-route-tid="df">fc/@Model.directorId</a></h6>
+<br />
 <div>
     @Html.Raw(@Model.Texts)
-   
 </div>
+<hr />

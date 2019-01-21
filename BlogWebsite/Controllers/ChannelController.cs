@@ -120,13 +120,15 @@ namespace BlogWebsite.Controllers
             var director = _dbContext.Entry(channel)
                           .Collection(d => d.Directory).Query()
                           .FirstOrDefault(d => d.DId.Equals(thread.directorId));
+            var filesNum = _dbContext.Entry(director)
+                          .Collection(d => d.Files).Query().Count();
             Files newFile = new Files{
-                FId = "th"+director.DName+ channel.CId + Convert.ToString(director.Files.Count),
+                FId = "th"+director.DName+ channel.CId + Convert.ToString(filesNum+1),
                 FName = thread.Name,
                 FCid = channel.CId,
                 FDescription = thread.Description,
                 FText = thread.Texts,
-                FPublishDate = DateTime.UtcNow,
+                FPublishDate = DateTime.Now.Date,
                 FPublishState = 1,
             };
             newFile.FileComment = new List<FileComment>();

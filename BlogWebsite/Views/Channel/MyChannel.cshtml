@@ -58,16 +58,16 @@
                                     </div>
                                     <div class="float-left Discription">
                                         <div>
-                                            <h2><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@Model.ID" asp-route-Did="@file.directorId" asp-route-Tid="@file.ID">@file.Name</a></h2>
+                                            <p style="font-size:large ; margin-bottom:3px;"><b><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@Model.ID" asp-route-Did="@file.directorId" asp-route-Tid="@file.ID">@file.Name</a></b></p>
                                             <p>@file.Description</p>
                                         </div>
-                                        <div class="genralInfo">
+                                        @*<div class="genralInfo">
                                             <span>@file.PublishDate</span><br />
                                             <span>
                                                 <i class="far fa-eye"></i><span class="mr-2"> 5</span>
                                                 <i class="fas fa-comments"></i><span> 20</span>
                                             </span>
-                                        </div>
+                                        </div>*@
                                     </div>
                                     <div class="float-left react">
                                         <ul>
