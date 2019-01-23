@@ -33,14 +33,24 @@
                             <i class="fas fa-home"></i>
                             <h6>Home</h6>
                         </a>
-                        <a class="link" asp-controller="Channel" asp-action="LocalChannel" >
-                            <i class="fas fa-folder"></i>
-                            <h6>Local Channel</h6>
+                        <a class="link" asp-controller="User" asp-action="Discover">
+                            <i class="fas fa-globe"></i>           
+                            <h6>Discover</h6>
                         </a>
-                        <a class="link" asp-controller="Channel" asp-action="ChannelPanel" asp-route-id="cs">
-                            <i class="fas fa-folder-plus"></i>
-                            <h6>My Channel</h6>
-                        </a>
+                        @if (ViewBag.ChannelID == null)
+                        {
+                            <a class="link" asp-controller="Channel" asp-action="RegisterNewChannel" >
+                                <i class="fas fa-folder-plus"></i>
+                                <h6>My Channel</h6>
+                            </a>
+
+                        }
+                        else{
+                            <a class="link" asp-controller="Channel" asp-action="ChannelPanel" asp-route-id="@ViewBag.ChannelID">
+                                <i class="fas fa-folder-plus"></i>
+                                <h6>My Channel</h6>
+                            </a>
+                        }
                     </nav>
                 </div>
                 <div class="d-sm-none d-block col-12" style="height:10px;"></div>

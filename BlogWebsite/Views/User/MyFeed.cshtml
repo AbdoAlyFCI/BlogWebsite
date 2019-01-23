@@ -1,8 +1,6 @@
 ﻿@model ModelUser
 @{
     ViewData["Title"] = "MyFeed";
-    ViewData["img"] = Model.img;
-
 }
 
 <section class="masterFeedSection">
@@ -12,46 +10,48 @@
                 @* Last Feed *@
                 <div class=" ViewBox">
                     @*Feed*@
+                    @if (Model.orderThread().Count == 0)
+                    {
+                        <h3>
+                            You not follow any channel yet
+                        </h3>
+                    }
+                    else
+                    {
                     <h3>Last Feed </h3>
                     <span class="free-postion top-right md-font">
                         <i id="block" class="fas fa-th-large">d</i>
                         <i id="list" class="fas fa-bars">s</i>
                     </span>
                     @*<span class="NewDisplay">
-                        <h3 class="d-inline">Last feed</h3>
-                        <i id="block" class="fas fa-th-large">d</i>
-                        <i id="list" class="fas fa-bars">s</i>
-                    </span>*@
+            <h3 class="d-inline">Last feed</h3>
+            <i id="block" class="fas fa-th-large">d</i>
+            <i id="list" class="fas fa-bars">s</i>
+        </span>*@
                     <div class="row">
-                        @if (true)
-                        {
-                            <h3>@Model.firstName</h3>
-                            <a asp-controller="Channel" asp-action="Thread" asp-route-Cid="fc" asp-route-Tid="fg">بللؤا</a>
-                        }
-                        else
-                        {
 
-                            @*@for (int i = 0; i < Model.showMyChannel(); i++)
-                {*@
+                      
 
+                        @foreach (var file in Model.orderThread())
+                        {
                             <div class="col-12 LV">
 
                                 <div class="New">
-                                    <div class="float-left image">
-                                        <div><img src="~/image/Test/square_Marc.jpg" /></div>
+                                    <div class="float-left image" style="background-image: url(@file.img)">
+                                        @*<div><img src="~/image/Test/square_Marc.jpg" /></div>*@
                                     </div>
                                     <div class="float-left Discription">
                                         <div>
-                                            <h2><a>Title</a></h2>
-                                            <p></p>
+                                            <p style="font-size:large ; margin-bottom:3px;"><b><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@Model.ChannelID" asp-route-Did="@file.directorId" asp-route-Tid="@file.ID">@file.Name</a></b></p>
+                                            <p>@file.Description</p>
                                         </div>
-                                        <div class="genralInfo">
-                                            <span>09/27/2018</span><br />
-                                            <span>
-                                                <i class="far fa-eye"></i><span class="mr-2"> 5</span>
-                                                <i class="fas fa-comments"></i><span> 20</span>
-                                            </span>
-                                        </div>
+                                        @*<div class="genralInfo">
+                                <span>@file.PublishDate</span><br />
+                                <span>
+                                    <i class="far fa-eye"></i><span class="mr-2"> 5</span>
+                                    <i class="fas fa-comments"></i><span> 20</span>
+                                </span>
+                            </div>*@
                                     </div>
                                     <div class="float-left react">
                                         <ul>
@@ -73,10 +73,52 @@
 
 
                             </div>
-                            @*}*@
                         }
 
+
+
+                        
+                        @*<div class="col-12 LV">
+
+                <div class="New">
+                    <div class="float-left image">
+                        <div><img src="~/image/Test/square_Marc.jpg" /></div>
                     </div>
+                    <div class="float-left Discription">
+                        <div>
+                            <h2><a>Title</a></h2>
+                            <p></p>
+                        </div>
+                        <div class="genralInfo">
+                            <span>09/27/2018</span><br />
+                            <span>
+                                <i class="far fa-eye"></i><span class="mr-2"> 5</span>
+                                <i class="fas fa-comments"></i><span> 20</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="float-left react">
+                        <ul>
+                            <li class="Save" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                <i class="far fa-bookmark" id="out"></i>
+                                <i class="fas fa-bookmark" id="in" hidden></i>
+                            </li>
+                            <li class="Like" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                <i class="far fa-thumbs-up"></i>
+                                <i class="fas fa-thumbs-up" hidden></i>
+                            </li>
+                            <li class="Dislike" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                <i class="far fa-thumbs-down"></i>
+                                <i class="fas fa-thumbs-down" hidden></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>*@
+                    </div>
+                    }
                 </div>
             </div>
             <div class="col-lg-4 col-12">

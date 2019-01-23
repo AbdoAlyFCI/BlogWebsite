@@ -17,6 +17,7 @@ using BlogWebsite.Models.ClassDiagram;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace BlogWebsite.Controllers
 {
@@ -40,23 +41,27 @@ namespace BlogWebsite.Controllers
              * 4-if not exist in database retutn wrong id (this channel not avalible)
              */
             //cache.Remove(id);
-
-            SetChannelInAction(id);
-            BuildDirectorInAction(id);
-            SetThreadInAction(id);
+            biuldChannelSteps(id);
             var channel = cache.Get(id);
-            return View("MyChannel", channel);
+            return View("MyChannel",channel);
         }
 
+
+        [HttpGet]
         public IActionResult RegisterNewChannel()
         {
-            var DetectUser = _dbContext.Channel.SingleOrDefault(s => s.COwnerId.Equals(User.Identity.Name));
-            if (DetectUser != null)
+            var jsonUser = HttpContext.Session.GetString(User.Identity.Name);
+            var user = JsonConvert.DeserializeObject<ModelUser>(jsonUser);
+
+            if (user.ChannelID != null)
             {
                 return RedirectToAction("MyChannel","Channel");
             }
+
             return View();
         }
+
+
         [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task <IActionResult> RegisterNewChannel(channelRegister channel)
@@ -66,6 +71,7 @@ namespace BlogWebsite.Controllers
             {
                 return View();
             }
+
             channel.ID = channel.ID.Trim();
             channel.name = channel.name.Trim();
             channel.description = channel.description.Trim();
@@ -73,11 +79,13 @@ namespace BlogWebsite.Controllers
             var newChannel = _dbContext.Channel.SingleOrDefault(s => s.CId.Equals(channel.ID));
             if(newChannel != null)
             {
-                throw new Exception("dgfg");
+                //To Change 
+                return View();
             }
 
             var user = _dbContext.Users
                 .SingleOrDefault(s => s.UId.Equals(User.Identity.Name));
+
             user.Channel.Add(new Channel
             {
                 CId = channel.ID,
@@ -86,16 +94,24 @@ namespace BlogWebsite.Controllers
                 CFollowers = 0,
                 CTotalWatch = 0,
                 RelationShip = new List<RelationShip>(),
-                //Files = new List<Files>(),
             });
             await _dbContext.SaveChangesAsync();
+            var jsonUser = HttpContext.Session.GetString(User.Identity.Name);
+            var cuser = JsonConvert.DeserializeObject<ModelUser>(jsonUser);
+            cuser.ChannelID = channel.ID;
 
             return View("MyChannel");
         }
 
-        //[Route("ChannelPannel")]
-        public ViewResult ChannelPanel(string id)
+
+        public IActionResult ChannelPanel(string id)
         {
+
+            if (id == null)
+            {
+                return RedirectToAction("MyChannel", "RegisterNewChannel");
+            }
+
             return View();
         }
 
@@ -164,8 +180,12 @@ namespace BlogWebsite.Controllers
         //[Route("Thread")]
         public IActionResult Thread(string Cid,string Did,string Tid)
         {
-            var channel = (ModelChannel)cache.Get(Cid);
-
+            ModelChannel channel;
+            if(!cache.TryGetValue(Cid,out channel))
+            {
+                biuldChannelSteps(Cid);
+            }
+            channel =(ModelChannel) cache.Get(Cid);
             return View(channel);
         }
 
@@ -285,6 +305,25 @@ namespace BlogWebsite.Controllers
             return RedirectToAction("MyChannel", "Channel", ID);
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddFollower(string id)
+        {
+            var user = _dbContext.Users.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
+            var channel = _dbContext.Channel.FirstOrDefault(c => c.CId.Equals(id));
+            user.RelationShip.Add(new RelationShip
+            {
+                RUid = user.UId,
+                RCid = channel.CId,
+                RStateId=1,
+                ActioinUserId=user.UId
+            });
+            await _dbContext.SaveChangesAsync();
+            return RedirectToAction("MyChannel", "Channel", id);
+        }
+
+
         //private void RetriveImg()
         //{
         //    UsersImg ImgData = _dbContext.UsersImg.FirstOrDefault(s => s.UId == User.Identity.Name);
@@ -303,6 +342,13 @@ namespace BlogWebsite.Controllers
             var base64 = Convert.ToBase64String(img);
             var imgscr = string.Format("data:image/png;base64,{0}", base64);
             return imgscr;
+        }
+
+        private void biuldChannelSteps(string id)
+        {
+            SetChannelInAction(id);
+            BuildDirectorInAction(id);
+            SetThreadInAction(id);
         }
     }
 

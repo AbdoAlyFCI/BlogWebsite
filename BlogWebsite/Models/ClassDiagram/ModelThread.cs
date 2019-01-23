@@ -12,19 +12,20 @@ namespace BlogWebsite.Models.ClassDiagram
         
         public string ID { get; set; }
         //[Required(ErrorMessage ="Please enter a name for the thread")]
-        public string Name { get; set; }
+        public string Name { get; set; }  //
         
-        public string Texts { get; set; }
+        public string Texts { get; set; }   //
         public ModelUser Owner { get; set; }
-        public string Description { get; set; }
-        public List<ModelUser> Like { get; set; }
+        public string Description { get; set; } //
+        public List<ModelUser> Like { get; set; }  
         public List<ModelUser> Dislike { get; set; }
         public DateTime? PublishDate { get; set; }
-        public string directorname { get; set; }
-        public string directorId { get; set; }
-        public IFormFile Pic { get; set; }
+        public string directorname { get; set; } //
+        public string directorId { get; set; }  //
+        public IFormFile Pic { get; set; } //
         public string img { get; set; }
-
+        public string CID { get; set; }
+        public string CName { get; set;}
         private List<ModelTag> threadTags = new List<ModelTag>();
 
         public void addLike(ModelUser user)

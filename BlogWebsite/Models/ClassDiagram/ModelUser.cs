@@ -12,8 +12,10 @@ namespace BlogWebsite.Models.ClassDiagram
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string birthDate { get; set; }
-        private ModelChannel userChannel;
+        public string ChannelID { get; set; }
         public string img;
+        public List<string> followedChannel { get; set; }
+        private List<ModelThread> threads = new List<ModelThread>();
 
         public ModelUser(String ID,String Email,string firstName,string lastName,string birthDate)
         {
@@ -35,18 +37,18 @@ namespace BlogWebsite.Models.ClassDiagram
             this.lastName = lastName;
         }
 
-        public void RegisterChannel(ModelChannel channel)
-        {
-            if(userChannel == null)
-            {
-                userChannel = channel;
-            }
-        }
+        //public void RegisterChannel(ModelChannel channel)
+        //{
+        //    if(userChannel == null)
+        //    {
+        //        userChannel = channel;
+        //    }
+        //}
 
-        public ModelChannel getMyChannel()
-        {
-            return userChannel;
-        }
+        //public ModelChannel getMyChannel()
+        //{
+        //    return userChannel;
+        //}
 
         public void DeleteChannel()
         {
@@ -72,6 +74,18 @@ namespace BlogWebsite.Models.ClassDiagram
 
         }
         
+        public List<ModelThread> orderThread()
+        {
+            threads = threads.OrderBy(t => t.PublishDate).ToList();
+
+            return threads;
+        }
+
+        public void addThread(ModelThread thread)
+        {
+            threads.Add(thread);
+        }
+
         public void changeImg(string img)
         {
             this.img = img;

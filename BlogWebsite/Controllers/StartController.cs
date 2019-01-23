@@ -14,6 +14,8 @@ using System.Security.Claims;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.EntityFrameworkCore;
 using BlogWebsite.Models.ClassDiagram;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace BlogWebsite.Controllers
 {
@@ -34,13 +36,11 @@ namespace BlogWebsite.Controllers
         {
             if (User.Identity.IsAuthenticated == true)
             {
-                //PutUserDataInAction(User.Identity.Name);
-                setUserInAction(User.Identity.Name);
-                return RedirectToAction("MyFeed", "Home");
+                PutUserInSession(User.Identity.Name);
+                return RedirectToAction("MyFeed", "User");
             }
             await
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
             return View();
         }
 
@@ -56,7 +56,6 @@ namespace BlogWebsite.Controllers
             userModel.newUser.lastName = userModel.newUser.lastName.Trim();
             userModel.newUser.Email = userModel.newUser.Email.Trim();
             userModel.newUser.Password = userModel.newUser.Password.Trim();
-
             var newUser = _dbContext.Users.SingleOrDefault(i => i.UEmail.Equals(userModel.newUser.Email));
             if (newUser != null)
             {
@@ -87,8 +86,7 @@ namespace BlogWebsite.Controllers
             await _dbContext.Users.AddAsync(newUser);
             await _dbContext.SaveChangesAsync();
             await LogInUserAsync(newUser.UId);
-            setUserInCasheForFirstTime(newUser);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "User");
         }
 
         [AllowAnonymous, HttpPost]
@@ -101,12 +99,15 @@ namespace BlogWebsite.Controllers
             var currentUser = _dbContext.Users.SingleOrDefault(i => i.UEmail.Equals(userModel.currentUser.Email));
             if (currentUser == null)
             {
+                //Will Change Soon
+
                 throw new Exception("User does not exist.");
             }
             var hasher = new PasswordHasher<Users>();
             var passwordResult = hasher.VerifyHashedPassword(currentUser, currentUser.UPassword, userModel.currentUser.Password);
             if (passwordResult != PasswordVerificationResult.Success)
             {
+                //Will Change Soon
                 throw new Exception("The password is wrong.");
             }
 
@@ -120,7 +121,6 @@ namespace BlogWebsite.Controllers
         {
             
             var claims = new List<Claim> {
-                //new Claim(ClaimTypes.NameIdentifier,user.UId),
                 new Claim(ClaimTypes.Name,ID)
             };
 
@@ -137,111 +137,43 @@ namespace BlogWebsite.Controllers
         [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> LogOut()
-        {
-             cache.Remove(User.Identity.Name);
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            
+        {            
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);            
             return RedirectToAction("Welcome", "Start");
         }
 
-        private void PutUserDataInAction(string ID)
+
+        private void PutUserInSession(string ID)
         {
-            cache.GetOrCreate(ID,
-              cacheEntry =>
-              {
-                  var user = _dbContext.Users.FirstOrDefault(s => s.UId.Equals(ID));
-                  var channel = _dbContext.Entry(user)
-                      .Collection(c => c.Channel).Query().Select(s => new { s.CId, s.CName }).ToList();
-                  var getChannel = _dbContext.Channel.FirstOrDefault(s => s.COwnerId.Equals(ID));
-                  var directory = _dbContext.Entry(getChannel)
-                      .Collection(d => d.Directory).Query().Select(s => new { s.DName }).ToList();
-                  localUser putUser = new localUser()
-                  {
-                      ID = user.UId,
-                      firstName = user.UFirstName,
-                      lastName = user.ULastName,
-                      Email = user.UEmail,
-                      USignUP = user.USignUp,
-                      lastLogIn = user.ULogIn,
-                  };
+            var DBuser = _dbContext.Users.FirstOrDefault(U => U.UId.Equals(ID));
+            var sessionUser = new ModelUser(DBuser.UId, DBuser.UEmail, DBuser.UFirstName, DBuser.ULastName, DBuser.UBirthDay);
+            var userChannel = _dbContext.Entry(DBuser)
+                             .Collection(u => u.Channel).Query()
+                             .FirstOrDefault(U => U.COwnerId.Equals(ID));
+            var userImg = _dbContext.UsersImg.FirstOrDefault(u => u.UId.Equals(ID));
+            if(userImg != null)
+            {
+                ViewBag.img = RetriveImg(userImg.UImg);
+            }
 
-                  if (channel.Count != 0)
-                  {
-                      putUser.myChannel = new localChannel()
-                      {
-                          ID = channel[0].CId,
-                          Name = channel[0].CName,
-                      };
-                  }
-
-                  if (directory.Count != 0)
-                  {
-                      foreach (var item in directory)
-                      {
-                          putUser.myChannel.directory.Add(new localDirectory
-                          {
-                              Name = item.DName
-                          });
-                      }
-                  }
-                  UsersImg ImgData = _dbContext.UsersImg.FirstOrDefault(s => s.UId == User.Identity.Name);
-                  var base64 = Convert.ToBase64String(ImgData.UImg);
-                  putUser.Img = string.Format("data:image/png;base64,{0}", base64);
-                  ViewData["img"] = putUser.Img;
-                  return putUser;
-              });
+            if (userChannel != null)
+            {
+                sessionUser.ChannelID=userChannel.CId;
+            }
+            var jsonUser= JsonConvert.SerializeObject(sessionUser);
+            HttpContext.Session.SetString(ID, jsonUser);
         }
-
-        private void setUserInCasheForFirstTime(Users User)
+        private string RetriveImg(byte[] img)
         {
-            ModelUser newUser = new ModelUser(User.UId, User.UEmail, User.UFirstName, User.ULastName, User.UBirthDay);
-            cache.Set(User.UId, newUser);                    
+            //UsersImg ImgData = _dbcontext.UsersImg.FirstOrDefault(s => s.UId == User.Identity.Name);
+            if (img == null)
+            {
+                return "non";
+            }
+            var base64 = Convert.ToBase64String(img);
+            var imgscr = string.Format("data:image/png;base64,{0}", base64);
+            return imgscr;
         }
-
-        private void setUserInAction(string ID)
-        {
-            cache.GetOrCreate(ID,
-                cacheEntry =>
-                {
-                    var dbUser = _dbContext.Users.FirstOrDefault(u => u.UId.Equals(ID));
-                    ModelUser modelUser = new ModelUser(dbUser.UId, dbUser.UEmail, dbUser.UFirstName, dbUser.ULastName, dbUser.UBirthDay);
-
-                    Channel dbChannel = _dbContext.Entry(dbUser)
-                                  .Collection(c => c.Channel).Query()
-                                  .FirstOrDefault(c => c.COwnerId.Equals(ID));
-                    //if(dbChannel != null)
-                    //{
-                    //    setChannelInAction(dbChannel);
-                    //}
-                    modelUser.RegisterChannel((ModelChannel)cache.Get(dbChannel.CId));
-
-                    UsersImg ImgData = _dbContext.UsersImg.FirstOrDefault(s => s.UId == User.Identity.Name);
-                    var base64 = Convert.ToBase64String(ImgData.UImg);
-                    modelUser.changeImg(string.Format("data:image/png;base64,{0}", base64));
-                    return modelUser;
-                });
-
-        }
-
-
-        //private void setChannelInAction(Channel channel)
-        //{
-        //    cache.GetOrCreate(channel.CId,
-        //        cacheEntry =>
-        //        {
-        //            ModelChannel modelChannel = new ModelChannel(channel.CId, channel.CName, channel.CDescription, channel.CTotalWatch);
-        //            var directories=_dbContext.Entry(channel)
-        //                            .Collection(d=>d.Directory).Query()
-        //                            .Select(d => new { d.DId, d.DName, d.DType, d.DDepth }).ToList();     //Now not support nested Directory
-        //            //foreach (var directory in directories)
-        //            //{
-        //            //    ModelDirectory modelDirectory = new ModelDirectory(directory.DId, directory.DName, directory.DDepth);
-        //            //    modelChannel.createDirectory(directory.DId, modelDirectory);
-        //            //}
-        //            return modelChannel;
-        //        });           
-        //}
-
 
     }
 }

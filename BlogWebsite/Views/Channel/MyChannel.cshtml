@@ -101,8 +101,11 @@
                             <div>
                                 <img class="md-img float-left" src="~/image/Test/square_Marc.jpg" />
                                 <div class="float-left">
-                                    <h4>Channel name</h4>
-                                    <h6>122354 followers</h6>
+                                    <form method="post" asp-controller="Channel" asp-action="AddFollower" asp-route-id="@Model.ID">
+                                         <button class="btn btn-danger" type="submit"> Follow</button>
+                                    </form>
+                                    @*<h4>Channel name</h4>
+                                    <h6>122354 followers</h6>*@
                                 </div>
                                 <div class="free-postion top-right">
                                     <form>

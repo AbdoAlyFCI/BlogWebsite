@@ -33,7 +33,9 @@ namespace BlogWebsite
                   };
 
               });
-
+            services.AddSession(options => {
+                //options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +45,8 @@ namespace BlogWebsite
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
             app.UseAuthentication();
-          //  app.UseMvcWithDefaultRoute();
+            app.UseSession();
+            //  app.UseMvcWithDefaultRoute();
             app.UseMvc(routes =>
             {
                 //routes.MapRoute(
