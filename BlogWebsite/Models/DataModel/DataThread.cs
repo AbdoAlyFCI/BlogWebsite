@@ -10,11 +10,11 @@ namespace BlogWebsite.Models.DataModel
     public class DataThread
     {
         [Required(ErrorMessage ="Please enter a name to the thread")]
-        [Range(1,50,ErrorMessage = "You pass the Max limit for name Title")]
+        [StringLength(70, ErrorMessage = "You pass the Max limit for name Title")]
         public string Name { get; set; }
 
         public string Text { get; set; }
-        [Range(1, 220, ErrorMessage = "You pass the Max limit for name Title")]
+        [StringLength(220, ErrorMessage = "You pass the Max limit for name Title")]
         public string Description { get; set; }
 
         [Required(ErrorMessage ="Please select the directory")]
@@ -23,6 +23,7 @@ namespace BlogWebsite.Models.DataModel
         [Required(ErrorMessage ="Please select Image for tread")]
         public IFormFile Pic { get; set; }
 
+        public Dictionary<string, string> AvailbleDirectory = new Dictionary<string, string>();
 
 
     }

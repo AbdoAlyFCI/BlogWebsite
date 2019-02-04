@@ -11,11 +11,13 @@ namespace BlogWebsite.Models.ClassDiagram
         public string Name { get; set; }
         public string Description { get; set; }
         public int? totalView { get; set; }
-        public ModelUser Owner { get; set; }
-        public HashSet<ModelUser> Followers { get; set; }
-        public HashSet<ModelUser> blockedUser { get; set; }
+        public int Followers { get; set; } = 0;
+        public string ownerID { get; set; }
+
         private List<ModelDirectory> Directories = new List<ModelDirectory>();
+        private List<ModelNavBar> navBars = new List<ModelNavBar>();
         public string img { get; set; }
+        public string simg { get; set; }
 
 
         public ModelChannel(string ID,string Name,string Description,int? totalView)
@@ -29,25 +31,25 @@ namespace BlogWebsite.Models.ClassDiagram
             //this.blockedUser = blockedUser;
         }
 
-        public void addFollower(ModelUser user)
+        public void addFollower()
         {
-            Followers.Add(user);
+            Followers++;
         }
 
         public void removeFollower(ModelUser user)
         {
-            Followers.Remove(user);
+            Followers--;
         }
 
-        public void addblockUser(ModelUser user)
-        {
-            blockedUser.Add(user);
-        }
+        //public void addblockUser(ModelUser user)
+        //{
+        //    blockedUser.Add(user);
+        //}
 
-        public void removeBlockUser(ModelUser user)
-        {
-            blockedUser.Remove(user);
-        }
+        //public void removeBlockUser(ModelUser user)
+        //{
+        //    blockedUser.Remove(user);
+        //}
 
         public void createDirectory(ModelDirectory directory)
         {
@@ -86,10 +88,6 @@ namespace BlogWebsite.Models.ClassDiagram
             Directories.FirstOrDefault(d => d.ID == ID).removeThread(threadID);
         }
 
-        public void setOwner(ModelUser owner)
-        {
-            this.Owner = owner;
-        }
 
         public void deleteChannel()
         {
@@ -113,7 +111,70 @@ namespace BlogWebsite.Models.ClassDiagram
             return threads;
         }
 
-       
+        public List<ModelThread> getSpecificDirectoryThreads(string Did)
+        {
+            return  Directories.FirstOrDefault(d => d.ID.Equals(Did)).getallThread();
+        }
 
+        public int ThreadsNum()
+        {
+            int files = 0;
+            foreach (var item in Directories)
+            {
+                files += item.threadNums();
+            }
+            return files;
+        }
+
+        public int FollowersNum()
+        {
+            return Followers;
+        }
+
+        public int DirectoryNum()
+        {
+            return Directories.Count;
+        }
+
+        public List<ModelThread> getDraftThreads()
+        {
+            List<ModelThread> threads = new List<ModelThread>();
+
+            foreach (var Directorty in Directories)
+            {
+
+                foreach (ModelThread file in Directorty.getallThread().Where(t=>t.Draft==true))
+                {
+                    threads.Add(file);
+                }
+
+            }
+            threads = threads.OrderBy(t => t.PublishDate).ToList();
+
+
+            return threads;
+        }
+
+        public List<ModelNavBar> getNavBar()
+        {
+            return navBars;
+        }
+
+        public ModelNavBar getNavObject()
+        {
+            return new ModelNavBar();
+        }
+
+        public void AddNavItem(ModelNavBar navBar)
+        {
+            navBars.Add(navBar);
+        }
+
+        public void ChangeNavItem(ModelNavBar navBar, String NID)
+        {
+            navBars.FirstOrDefault(n => n.NID.Equals(NID)).Name = navBar.Name;
+
+            navBars.FirstOrDefault(n => n.NID.Equals(NID)).Url = navBar.Url;
+        }
     }
 }

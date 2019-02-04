@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Files>
+﻿@model IEnumerable<ModelPeekThread>
 
 <div class="row">
     @foreach (var file in Model)
@@ -6,13 +6,13 @@
         <div class="col-12 LV">
 
             <div class="New">
-                <div class="float-left image" style="background-image: url()">
+                <div class="float-left image" style="background-image: url(@file.img)">
                     @*<div><img src="~/image/Test/square_Marc.jpg" /></div>*@
                 </div>
                 <div class="float-left Discription">
                     <div>
-                        <p style="font-size:large ; margin-bottom:3px;"><b><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@file.FCid" asp-route-Did="@file.FId" asp-route-Tid="@file.FId">@file.FName</a></b></p>
-                        <p>@file.FDescription</p>
+                        <p style="font-size:large ; margin-bottom:3px;"><b><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@file.CID" asp-route-Did="@file.directorId" asp-route-Tid="@file.ID">@file.Name</a></b></p>
+                        <p>@file.Description</p>
                     </div>
                     @*<div class="genralInfo">
                             <span>@file.PublishDate</span><br />

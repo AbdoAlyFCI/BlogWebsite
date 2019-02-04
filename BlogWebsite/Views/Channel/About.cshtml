@@ -1,20 +1,23 @@
 ﻿@model ModelChannel
 @{
-    ViewData["Title"] = Model.Name;
+    ViewData["Title"] = "About";
 }
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 <section>
     <div class="container">
         <div class="row">
             <div class="col-12" id="Header">
                 <img src="@Model.img" alt="Channelbanner" />
-                <button id="ChangeHeader" onclick="onNewHeader()" style="">
+                <button id="ChangeHeader" onclick="onNewHeader()">
                     <i class="fas fa-camera"></i>
                 </button>
             </div>
             <div class="col-12">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
+                    @*<a class="navbar-brand" href="">Navbar</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>*@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
@@ -51,8 +54,8 @@
         <div class="row">
             <div class="col-8">
                 <div class="viewStretch">
-                    @await Component.InvokeAsync("ShowThread")
-                    
+                    <h3>About</h3>
+                    <p>@Model.Description</p>
                 </div>
             </div>
             <div class="col-4">
@@ -60,14 +63,14 @@
                     <div class="col-12">
                         <div class="sm-Rectangle">
                             <div>
-                                <img class="md-img float-left" src="~/image/Test/square_Marc.jpg" />
+                                <img class="md-img float-left" src="@Model.simg" />
                                 <div class="float-left">
-                                    <h4>Channel name</h4>
-                                    <h6>122354 followers</h6>
+                                    <h4>@Model.Name</h4>
+                                    <h6>@Model.FollowersNum() followers</h6>
                                 </div>
                                 <div class="free-postion top-right">
-                                    <form>
-                                        <input class="btn btn-primary" type="button" value="follow">
+                                    <form method="post" asp-controller="Channel" asp-action="AddFollower" asp-route-id="@Model.ID">
+                                        <button class="btn btn-primary" type="submit"> Follow</button>
                                     </form>
                                 </div>
 
@@ -86,14 +89,14 @@
                         <div class="md-Rectangle">
                             @*id="Folders"*@
                             <ul>
-                                @*@foreach (var Directory in Model.getAllDirectory())
+                                @foreach (var Directory in Model.getAllDirectory())
                                 {
                                     <li onclick="onClick(this)">
-                                        <i class="fas fa-folder-open"></i> @{ ModelDirectory D = Directory.Value;}
-                                        @D.Name
+                                        <i class="fas fa-folder-open"></i>
+                                        @Directory.Name
 
                                     </li>
-                                }*@
+                                }
                                 @*<li onclick="OnClick(this)">
 
                                         <i class="fas fa-folder-open"></i> Game
@@ -123,15 +126,16 @@
         </div>
     </div>
 </section>
-<div id="NewFolder">
-    <span><strong style="font-size:larger">Add new Folder</strong></span>
-    <i onclick="offNewFolder()" id="Close" class="fas fa-window-close"></i>
-    @*<form method="post" asp-action="AddFolder" asp-controller="Channel">
+@*<div id="NewFolder">
+        <span ><strong style="font-size:larger">Add new Folder</strong></span>
+        <i onclick="offNewFolder()" id="Close" class="fas fa-window-close"></i>
+        @*<form method="post" asp-action="AddFolder" asp-controller="Channel">
             <input asp-for="FolderName" type="text" id="FolderNameInput" class="form-control" placeholder="Folder Name">
             <span asp-validation-for="FolderName"></span>
             <button id="FolderNameSubmit" class="btn btn-danger" type="submit">Add</button>
-        </form>*@
-</div>
+        </form>
+    </div>*@
+
 <div id="Headers" style="display:none">
 
     <span><strong style="font-size:larger">Add new Folder</strong></span>
@@ -141,10 +145,12 @@
         <input type="submit" value="Uploade" />
     </form>
 </div>
-<div id="overlay" onclick="offNewThread()" style="overflow:auto">
-    @await Component.InvokeAsync("NewThread")
-</div>
+@*<div id="overlay" onclick="offNewThread()" style="overflow:auto">
+        @await Component.InvokeAsync("NewThread")
+    </div>*@
+
 
 
 
 <script src="~/JavaScript/MyChannel.js"></script>
+

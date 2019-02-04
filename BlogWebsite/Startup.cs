@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using BlogWebsite.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 
 namespace BlogWebsite
 {
@@ -21,6 +22,7 @@ namespace BlogWebsite
             services.AddMvc();
             services.AddMemoryCache();
             services.AddDbContext<InfiniteBlogDBContext>(option => option.UseSqlServer("Server=.\\SQLExpress;Database=InfiniteBlogDB;Trusted_Connection=True;"));
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
               .AddCookie(option => {
                    //option.LoginPath = "/User/LogIn";
@@ -33,6 +35,8 @@ namespace BlogWebsite
                   };
 
               });
+
+
             services.AddSession(options => {
                 //options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
             });
@@ -49,21 +53,37 @@ namespace BlogWebsite
             //  app.UseMvcWithDefaultRoute();
             app.UseMvc(routes =>
             {
+
+
+
+
+                //routes.MapRoute(
+                //    name: "",
+                //    template: "{controller=Start}/{action=Welcome}/{id?}");
+
+                //routes.MapRoute(
+                // name: "",
+                // template: "{Controller}/{Cid}",
+                // defaults: new { Controller = "Channel", action = "MyChannel" }
+                // );
+
+
+
+
                 //routes.MapRoute(
                 //    name: "ChannelPannel",
                 //    template: "{controller=Channel}/{action=ChannelPanel}/{id}");
 
-                routes.MapRoute(
-                    name: "",
-                    template: "[Controller]/{Cid}/{Did}/{Tid}",
-                    defaults: new { Controller = "Channel", action = "Thread" }
-                    );
 
-                routes.MapRoute(
-                    name:"",
-                    template: "[controller]/{id}",
-                    defaults: new {Controller="Channel",action= "MyChannel"}                    
-                    );
+
+
+                //routes.MapRoute(
+                //    name: "",
+                //    template: "{Controller}/{Cid}/{Did?}/{Tid?}",
+                //    defaults: new { Controller = "Channel", action = "Thread" }
+                //    );
+
+
 
 
                 //routes.MapRoute(
@@ -71,11 +91,15 @@ namespace BlogWebsite
                 //    template: "{controller}/{id}",
                 //    defaults: new {Controller="Channel",action= "MyChannel"}
                 //    );
-
+                routes.MapRoute(
+                    name:"",
+                    template:"{Controller}/{action}/{Cid}/{Did?}/{Tid?}",
+                    defaults:new { Controller = "Channel", action = "MyChannel" });
 
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Start}/{action=Welcome}/{id?}");
+           
 
             });
         }

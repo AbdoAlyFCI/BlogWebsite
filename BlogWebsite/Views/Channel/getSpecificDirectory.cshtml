@@ -1,37 +1,32 @@
 ﻿@model ModelChannel
+
 @{
-    ViewData["Title"] = Model.Name;
+    ViewData["Title"] = ViewBag.Name;
 }
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+
 <section>
     <div class="container">
         <div class="row">
             <div class="col-12" id="Header">
                 <img src="@Model.img" alt="Channelbanner" />
-                <button id="ChangeHeader" onclick="onNewHeader()" style="">
+                <button id="ChangeHeader" onclick="onNewHeader()">
                     <i class="fas fa-camera"></i>
                 </button>
             </div>
             <div class="col-12">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
+                    <a class="navbar-brand" href="">Navbar</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" asp-controller="Channel" asp-action="MyChannel" asp-route-Cid="@Model.ID">Home <span class="sr-only">(current)</span></a>
-                            </li>
-                            @for (int i = 0; i < 4; i++)
-                            {
-                                if (Model.getNavBar()[i].Name != null || Model.getNavBar()[i].Url != null)
-                                {
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href="@Model.getNavBar()[i].Url">@Model.getNavBar()[i].Name<span class="sr-only">(current)</span></a>
-                                    </li>
-                                }
-                            }
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Channel" asp-action="About" asp-route-Cid="@Model.ID">About <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
                             </li>
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
@@ -50,9 +45,57 @@
     <div class="container">
         <div class="row">
             <div class="col-8">
-                <div class="viewStretch">
-                    @await Component.InvokeAsync("ShowThread")
-                    
+                <div class="ViewBox">
+                    <h3>Channel Feed </h3>
+                    <span class="free-postion top-right md-font">
+                        <i id="block" class="fas fa-th-large">d</i>
+                        <i id="list" class="fas fa-bars">s</i>
+                    </span>
+                    <div class="row">
+                        @foreach (var file in Model.getSpecificDirectoryThreads(ViewBag.Did))
+                        {
+                            <div class="col-12 LV">
+
+                                <div class="New">
+                                    <div class="float-left image" style="background-image: url(@file.img)">
+                                        @*<div><img src="~/image/Test/square_Marc.jpg" /></div>*@
+                                    </div>
+                                    <div class="float-left Discription">
+                                        <div>
+                                            <p style="font-size:large ; margin-bottom:3px;"><b><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@Model.ID" asp-route-Did="@file.directorId" asp-route-Tid="@file.ID">@file.Name</a></b></p>
+                                            <p>@file.Description</p>
+                                        </div>
+                                        @*<div class="genralInfo">
+                                                <span>@file.PublishDate</span><br />
+                                                <span>
+                                                    <i class="far fa-eye"></i><span class="mr-2"> 5</span>
+                                                    <i class="fas fa-comments"></i><span> 20</span>
+                                                </span>
+                                            </div>*@
+                                    </div>
+                                    <div class="float-left react">
+                                        <ul>
+                                            <li class="Save" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                                <i class="far fa-bookmark" id="out"></i>
+                                                <i class="fas fa-bookmark" id="in" hidden></i>
+                                            </li>
+                                            <li class="Like" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                                <i class="far fa-thumbs-up"></i>
+                                                <i class="fas fa-thumbs-up" hidden></i>
+                                            </li>
+                                            <li class="Dislike" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                                <i class="far fa-thumbs-down"></i>
+                                                <i class="fas fa-thumbs-down" hidden></i>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        }
+                    </div>
+
                 </div>
             </div>
             <div class="col-4">
@@ -62,8 +105,11 @@
                             <div>
                                 <img class="md-img float-left" src="~/image/Test/square_Marc.jpg" />
                                 <div class="float-left">
-                                    <h4>Channel name</h4>
-                                    <h6>122354 followers</h6>
+                                    <form method="post" asp-controller="Channel" asp-action="AddFollower" asp-route-id="@Model.ID">
+                                        <button class="btn btn-danger" type="submit"> Follow</button>
+                                    </form>
+                                    @*<h4>Channel name</h4>
+                                        <h6>122354 followers</h6>*@
                                 </div>
                                 <div class="free-postion top-right">
                                     <form>
@@ -86,14 +132,14 @@
                         <div class="md-Rectangle">
                             @*id="Folders"*@
                             <ul>
-                                @*@foreach (var Directory in Model.getAllDirectory())
+                                @foreach (var Directory in Model.getAllDirectory())
                                 {
                                     <li onclick="onClick(this)">
-                                        <i class="fas fa-folder-open"></i> @{ ModelDirectory D = Directory.Value;}
-                                        @D.Name
+                                        <i class="fas fa-folder-open"></i>
+                                        @Directory.Name
 
                                     </li>
-                                }*@
+                                }
                                 @*<li onclick="OnClick(this)">
 
                                         <i class="fas fa-folder-open"></i> Game
@@ -123,15 +169,16 @@
         </div>
     </div>
 </section>
-<div id="NewFolder">
-    <span><strong style="font-size:larger">Add new Folder</strong></span>
-    <i onclick="offNewFolder()" id="Close" class="fas fa-window-close"></i>
-    @*<form method="post" asp-action="AddFolder" asp-controller="Channel">
+@*<div id="NewFolder">
+        <span ><strong style="font-size:larger">Add new Folder</strong></span>
+        <i onclick="offNewFolder()" id="Close" class="fas fa-window-close"></i>
+        @*<form method="post" asp-action="AddFolder" asp-controller="Channel">
             <input asp-for="FolderName" type="text" id="FolderNameInput" class="form-control" placeholder="Folder Name">
             <span asp-validation-for="FolderName"></span>
             <button id="FolderNameSubmit" class="btn btn-danger" type="submit">Add</button>
-        </form>*@
-</div>
+        </form>
+    </div>*@
+
 <div id="Headers" style="display:none">
 
     <span><strong style="font-size:larger">Add new Folder</strong></span>
@@ -141,9 +188,9 @@
         <input type="submit" value="Uploade" />
     </form>
 </div>
-<div id="overlay" onclick="offNewThread()" style="overflow:auto">
+@*<div id="overlay" onclick="offNewThread()" style="overflow:auto">
     @await Component.InvokeAsync("NewThread")
-</div>
+</div>*@
 
 
 

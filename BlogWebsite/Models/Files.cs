@@ -7,7 +7,7 @@ namespace BlogWebsite.Models
     {
         public Files()
         {
-            FileComment = new HashSet<FileComment>();
+            FileComment = new HashSet<Comment>();
             FileReact = new HashSet<FileReact>();
             FileTag = new HashSet<FileTag>();
         }
@@ -23,7 +23,7 @@ namespace BlogWebsite.Models
         public int? FPublishState { get; set; }
 
         public Directory FC { get; set; }
-        public ICollection<FileComment> FileComment { get; set; }
+        public ICollection<Comment> FileComment { get; set; }
         public ICollection<FileReact> FileReact { get; set; }
         public ICollection<FileTag> FileTag { get; set; }
     }

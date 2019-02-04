@@ -40,5 +40,10 @@ namespace BlogWebsite.Models.ClassDiagram
         {
             return threads;
         }
+
+        public int threadNums()
+        {
+            return threads.Count;
+        }
     }
 }

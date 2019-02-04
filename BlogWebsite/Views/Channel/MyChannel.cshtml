@@ -1,29 +1,37 @@
 ﻿@model ModelChannel
 @{
-    ViewData["Title"] = "MyChannel";
+    ViewData["Title"] = Model.Name;
 }
 
-<section >
+<section>
     <div class="container">
         <div class="row">
             <div class="col-12" id="Header">
-                <img src="@Model.img" alt="Channelbanner" />      
-                <button id="ChangeHeader" onclick="onNewHeader()">
+                <img src="@Model.img" alt="Channelbanner" />
+                <button id="ChangeHeader"  onclick="onNewHeader()" style="">
                     <i class="fas fa-camera"></i>
                 </button>
             </div>
             <div class="col-12">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <a class="navbar-brand" href="">Navbar</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
-                            </li>                          
+                                <a class="nav-link" asp-controller="Channel" asp-action="MyChannel" asp-route-Cid="@Model.ID">Home <span class="sr-only">(current)</span></a>
+                            </li>
+                            @for (int i = 0; i < 4; i++)
+                            {
+                                if (Model.getNavBar()[i].Name != null || Model.getNavBar()[i].Url != null)
+                                {
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="@Model.getNavBar()[i].Url">@Model.getNavBar()[i].Name<span class="sr-only">(current)</span></a>
+                                </li>
+                                }
+                            }
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Channel" asp-action="About" asp-route-Cid="@Model.ID">About <span class="sr-only">(current)</span></a>
+                            </li>
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
                             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -32,10 +40,10 @@
                     </div>
                 </nav>
             </div>
-       
-            </div>
+
         </div>
-  
+    </div>
+
 </section>
 <section style="margin-top:1%">
     <div class="container">
@@ -62,12 +70,12 @@
                                             <p>@file.Description</p>
                                         </div>
                                         @*<div class="genralInfo">
-                                            <span>@file.PublishDate</span><br />
-                                            <span>
-                                                <i class="far fa-eye"></i><span class="mr-2"> 5</span>
-                                                <i class="fas fa-comments"></i><span> 20</span>
-                                            </span>
-                                        </div>*@
+                                                <span>@file.PublishDate</span><br />
+                                                <span>
+                                                    <i class="far fa-eye"></i><span class="mr-2"> 5</span>
+                                                    <i class="fas fa-comments"></i><span> 20</span>
+                                                </span>
+                                            </div>*@
                                     </div>
                                     <div class="float-left react">
                                         <ul>
@@ -91,7 +99,7 @@
                             </div>
                         }
                     </div>
-                 
+
                 </div>
             </div>
             <div class="col-4">
@@ -99,24 +107,54 @@
                     <div class="col-12">
                         <div class="sm-Rectangle">
                             <div>
-                                <img class="md-img float-left" src="~/image/Test/square_Marc.jpg" />
+                                <img class="md-img float-left" src="@Model.simg" />
                                 <div class="float-left">
-                                    <form method="post" asp-controller="Channel" asp-action="AddFollower" asp-route-id="@Model.ID">
-                                         <button class="btn btn-danger" type="submit"> Follow</button>
-                                    </form>
-                                    @*<h4>Channel name</h4>
-                                    <h6>122354 followers</h6>*@
+                                    <h4>@Model.Name</h4>
+                                    <h6>@Model.FollowersNum() followers</h6>
                                 </div>
                                 <div class="free-postion top-right">
-                                    <form>
-                                        <input class="btn btn-primary" type="button" value="follow">
-                                    </form>
-                                </div>
+                                    @if (User.Identity.IsAuthenticated == true)
+                                    {
+                                        @if (Model.ownerID.Equals(User.Identity.Name))
+                                        {
+                                            <button class="btn btn-primary" type="submit"><a class="link" asp-controller="Channel" asp-action="ChannelPanel" asp-route-Cid="@Model.ID">Setting</a></button>
 
+                                        }
+                                        else
+                                        {
+                                            if (ViewBag.State == "N")
+                                            {
+                                                <form method="post" asp-controller="Channel" asp-action="AddFollower" asp-route-Cid="@Model.ID">
+                                                    <button class="btn btn-primary" type="submit"> Follow</button>
+                                                </form>
+                                            }
+                                            else if (ViewBag.State == "F")
+                                            {
+                                                <form method="post" asp-controller="Channel" asp-action="RemoveFollower" asp-route-Cid="@Model.ID">
+                                                    <button class="btn btn-primary" type="submit"> Unfollow</button>
+                                                </form>
+                                            }
+                                            else if (ViewBag.State == "B")
+                                            {
+                                                <form method="post" asp-controller="Channel" asp-action="AddFollower" asp-route-Cid="@Model.ID">
+                                                    <button class="btn btn-primary" type="submit"> UnBlock</button>
+                                                </form>
+                                            }
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-primary" type="submit"><a class="link" asp-controller="Start" asp-action="Welcome"> SignUp</a></button>
+
+                                    }
+
+                                </div>
                             </div>
-                            
+
                         </div>
                     </div>
+                    @if(Model.ownerID.Equals(User.Identity.Name)){
                     <div class="col-12" style="margin-top:4%">
                         <div class="sm-Rectangle" id="AddItemTable">
                             @* class="infoTable" *@
@@ -124,60 +162,63 @@
                             <button onclick="onNewThread()"><i class="fas fa-file-medical"></i></button>
                         </div>
                     </div>
+                    }
                     <div class="col-12" style="margin-top:4%;">
-                        <div class="md-Rectangle">
+                        <div id="Folders" class="md-Rectangle">
                             @*id="Folders"*@
                             <ul>
                                 @foreach (var Directory in Model.getAllDirectory())
                                 {
                                     <li onclick="onClick(this)">
-                                        <i class="fas fa-folder-open"></i> 
+                                        <i class="fas fa-folder-open"></i>
                                         @Directory.Name
+                                        <ul>
+                                            @foreach (var item in Directory.getallThread())
+                                            {
+                                                <li>| <i class="fas fa-file"></i>&ensp;
+                                                      <a class="link" asp-controller="Channel" asp-action="Thread" asp-route-Cid="@Model.ID" asp-route-Did="@Directory.ID" asp-route-Tid="@item.ID">
+                                                          @if (item.Name.Length > 27)
+                                                          {
+                                                              
+                                                                  string s = item.Name.Substring(0, 22) + "........";
+                                                              @s
+                                                                     
 
+                                                          }
+                                                          else
+                                                          {
+
+                                                              @item.Name
+                                                          }
+
+                                                      </a>                                           
+                                                </li>
+                                            
+                                            }
+                                        </ul>
                                     </li>
-                                }
-                                @*<li onclick="OnClick(this)">
-
-                <i class="fas fa-folder-open"></i> Game
-                <ul>
-                    @for (int i = 0; i < 5; i++)
-                    {
-                        <li> | <i class="fas fa-file"></i> new subject @i</li>
-
-                    }
-                </ul>
-            </li>
-            <li>
-                <i class="fas fa-folder"></i>
-                <ul>
-                    <li>2.1</li>
-                    <li>2.2</li>
-                    <li>2.2</li>
-                    <li>2.2</li>
-                    <li>2.2</li>
-                </ul>
-            </li>*@
+                                }                                
                             </ul>
                         </div>
-                    </div>                   
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-@*<div id="NewFolder">
-    <span ><strong style="font-size:larger">Add new Folder</strong></span>
-    <i onclick="offNewFolder()" id="Close" class="fas fa-window-close"></i>
-    @*<form method="post" asp-action="AddFolder" asp-controller="Channel">
-        <input asp-for="FolderName" type="text" id="FolderNameInput" class="form-control" placeholder="Folder Name">
-        <span asp-validation-for="FolderName"></span>
-        <button id="FolderNameSubmit" class="btn btn-danger" type="submit">Add</button>
-    </form>
-</div>*@
+<div id="NewFolder">
+        <span ><strong style="font-size:larger">Add new Folder</strong></span>
+        <i onclick="offNewFolder()" id="Close" class="fas fa-window-close"></i>
+        @*<form method="post" asp-action="AddFolder" asp-controller="Channel">
+            <input asp-for="FolderName" type="text" id="FolderNameInput" class="form-control" placeholder="Folder Name">
+            <span asp-validation-for="FolderName"></span>
+            <button id="FolderNameSubmit" class="btn btn-danger" type="submit">Add</button>
+        </form>*@
+    </div>
 
 <div id="Headers" style="display:none">
 
-    <span><strong style="font-size:larger">Add new Folder</strong></span>
+    <span><strong style="font-size:larger">Change Channel Header</strong></span>
     <i onclick="offNewFolder()" id="Close" class="fas fa-window-close"></i>
     <form method="post" asp-controller="Channel" asp-action="ChangeChannelHeaderPic" asp-route-ID="fc" enctype="multipart/form-data">
         <input type="file" name="Pic" />
@@ -187,6 +228,7 @@
 <div id="overlay" onclick="offNewThread()" style="overflow:auto">
     @await Component.InvokeAsync("NewThread")
 </div>
+
 
 
 

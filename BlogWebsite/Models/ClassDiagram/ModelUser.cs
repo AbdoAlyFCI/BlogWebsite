@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlogWebsite.Models.DataModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace BlogWebsite.Models.ClassDiagram
         public List<string> followedChannel { get; set; }
         private List<ModelThread> threads = new List<ModelThread>();
 
+        public ModelUser() { }
         public ModelUser(String ID,String Email,string firstName,string lastName,string birthDate)
         {
             this.ID = ID;
@@ -93,6 +95,10 @@ namespace BlogWebsite.Models.ClassDiagram
         public void deleteAccount()
         {
 
+        }
+        public passwordModel changePassword()
+        {
+            return new passwordModel();
         }
 
     }

@@ -23,9 +23,36 @@ namespace BlogWebsite.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var Files = _dbContext.Files.OrderBy(f => f.FView).OrderBy(f => f.FPublishDate).ToList();
+            List<ModelPeekThread> modelPeeks = new List<ModelPeekThread>();
+            var Files = _dbContext.Files.ToList();
+            var allData = from file in Files
+                          join directory in _dbContext.Directory on file.FCid equals directory.DId
+                          select new
+                          {
+                              Cid=directory.DOwnerId,
+                              Did=directory.DId,
+                              Tid=file.FId,
+                              Name=file.FName,
+                              Description=file.FDescription,
+                              date=file.FPublishDate,
+                              img=file.FImg
+                              
+                          };
+            foreach (var file in allData)
+            {
+                modelPeeks.Add(new ModelPeekThread
+                {
+                    ID=file.Tid,
+                    Name=file.Name,
+                    Description=file.Description,
+                    img=Infrastructure.ImageConverter.ConvertToString(file.img),
+                    PublishDate=file.date,
+                    directorId=file.Did,
+                    CID=file.Cid
+                });
+            }
 
-            return View(Files);
+            return View(modelPeeks);
         }
     }
 }

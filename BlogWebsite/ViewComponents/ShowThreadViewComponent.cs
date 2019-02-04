@@ -8,7 +8,7 @@ using Microsoft.Extensions.Caching.Memory;
 using BlogWebsite.Models.ClassDiagram;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.AspNetCore.Html;
-
+using BlogWebsite.Infrastructure;
 namespace BlogWebsite.ViewComponents
 {
     public class ShowThreadViewComponent: ViewComponent
@@ -48,6 +48,20 @@ namespace BlogWebsite.ViewComponents
                     }
                     else
                     {
+                        var Comments = _dbContext.Comment.Where(c => c.FileID.Equals(threadID)).ToList();
+                        foreach (var comment in Comments)
+                        {
+                            var user = _dbContext.Users.FirstOrDefault(u => u.UId.Equals(comment.CUserId)).UFirstName;
+                            var useImg =ImageConverter.ConvertToString(_dbContext.UsersImg.FirstOrDefault(u => u.UId.Equals(comment.CUserId)).UImg);
+
+                            thread.AddComment(new ModelComment
+                            {
+                                CommentId=comment.CId,
+                                Comment = comment.CommentText,
+                                userName = user,
+                                userImg= useImg
+                            });
+                        }
                         return View(thread);      //return thread
                     }
                 }

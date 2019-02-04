@@ -29,7 +29,7 @@
 
 /*Body*/
 body {
-    background-color: #feecdf;
+    background-color: white;
     padding-bottom: 70px;
 }
 /*header NavBar*/
@@ -474,28 +474,29 @@ table .btn {
 }
 
 #settingList {
-    background-color: #c874d7;
+    border-right:solid 2px;
+    /*background-color: #c874d7;
     text-align: center;
-    box-shadow: 24px -4px 13px -9px #712260;
+    box-shadow: 24px -4px 13px -9px #712260;*/
 }
 
 #settingList ul{
     list-style:none;
-    padding:0;
+    padding-left:4%;
 }
 
 #settingList ul li{
-    background-color:#c874d7;
+    /*background-color:#c874d7;*/
     font-size:x-large;
     margin:3% auto;
 }
 #settingList ul li:hover{
-    background-color:#86558f;
+    background-color:#33b4a6
 }
 
 #settingDetails{
     min-height:500px;
-    background-color:rgba(168, 93, 157, 0.70);
+    background-color:#7cd8f4
 }
 
 /*Channel Panel*/
@@ -587,12 +588,18 @@ table .btn {
     height: 250px;
     width: inherit;
 }
-#Header i{
-    font-size:20px;
-    position:absolute;
-    top:10px;
-    left:34px;
-    color:white;
+
+#Header button {
+    font-size: 20px;
+    position: absolute;
+    top: 10px;
+    left: 34px;
+    color: white;
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
 }
 
 .infoTable {
@@ -726,4 +733,10 @@ table .btn {
     background-color: #e38383;
     border-radius: 10px 10px 0 0;
     padding: .5%;
+}
+
+
+
+#PersonalPic div div{
+    position:absolute;
 }

@@ -10,6 +10,7 @@ namespace BlogWebsite.Models.DataModel.RegisterThreadModel
 
 
         public DataThread DataThread { get; set; }
+
         public Dictionary<string, string> AvailbleDirectory = new Dictionary<string, string>();
 
     }

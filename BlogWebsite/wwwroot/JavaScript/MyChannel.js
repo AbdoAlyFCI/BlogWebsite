@@ -20,7 +20,7 @@ function offNewFolder() {
     document.getElementById("NewFolder").style.display = "none";
 }
 
-function OnClick(Parent) {
+function onClick(Parent) {
     console.log(Parent.childNodes);
     if (Parent.childNodes[3].style.display === 'none') {
         Parent.childNodes[1].className = ('fas fa-folder-open');

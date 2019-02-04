@@ -153,7 +153,7 @@ namespace BlogWebsite.Controllers
             var userImg = _dbContext.UsersImg.FirstOrDefault(u => u.UId.Equals(ID));
             if(userImg != null)
             {
-                ViewBag.img = RetriveImg(userImg.UImg);
+                ViewBag.img = Infrastructure.ImageConverter.ConvertToString(userImg.UImg);
             }
 
             if (userChannel != null)
@@ -163,17 +163,7 @@ namespace BlogWebsite.Controllers
             var jsonUser= JsonConvert.SerializeObject(sessionUser);
             HttpContext.Session.SetString(ID, jsonUser);
         }
-        private string RetriveImg(byte[] img)
-        {
-            //UsersImg ImgData = _dbcontext.UsersImg.FirstOrDefault(s => s.UId == User.Identity.Name);
-            if (img == null)
-            {
-                return "non";
-            }
-            var base64 = Convert.ToBase64String(img);
-            var imgscr = string.Format("data:image/png;base64,{0}", base64);
-            return imgscr;
-        }
+
 
     }
 }

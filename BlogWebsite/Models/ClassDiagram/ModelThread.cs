@@ -27,6 +27,27 @@ namespace BlogWebsite.Models.ClassDiagram
         public string CID { get; set; }
         public string CName { get; set;}
         private List<ModelTag> threadTags = new List<ModelTag>();
+        public bool Draft { get; set; } = false;
+
+        private List<ModelComment> comments = new List<ModelComment>();
+
+
+
+
+        public void AddComment(ModelComment comment)
+        {
+            if (comments.FirstOrDefault(c => c.CommentId.Equals(comment.CommentId)) == null)
+            {
+                comments.Add(comment);
+            }
+
+                    }
+
+
+        public List<ModelComment> GetComments()
+        {
+            return comments;
+        }
 
         public void addLike(ModelUser user)
         {

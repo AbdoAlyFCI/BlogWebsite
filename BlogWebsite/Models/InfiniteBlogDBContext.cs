@@ -18,17 +18,19 @@ namespace BlogWebsite.Models
         public virtual DbSet<Channel> Channel { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<Directory> Directory { get; set; }
-        public virtual DbSet<FileComment> FileComment { get; set; }
+        //public virtual DbSet<FileComment> FileComment { get; set; }
         public virtual DbSet<FileReact> FileReact { get; set; }
         public virtual DbSet<Files> Files { get; set; }
         public virtual DbSet<FileTag> FileTag { get; set; }
         public virtual DbSet<FileType> FileType { get; set; }
+        public virtual DbSet<NavBar> NavBar { get; set; }
         public virtual DbSet<React> React { get; set; }
         public virtual DbSet<RelationShip> RelationShip { get; set; }
         public virtual DbSet<Tags> Tags { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<UsersImg> UsersImg { get; set; }
         public virtual DbSet<Ustate> Ustate { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -74,6 +76,9 @@ namespace BlogWebsite.Models
                 entity.Property(e => e.CIMG)
                     .HasColumnName("C_img");
 
+                entity.Property(e=>e.CSIMG)
+                    .HasColumnName("C_Simg");
+
 
                 entity.Property(e => e.CTotalWatch).HasColumnName("C_TotalWatch");
 
@@ -89,12 +94,22 @@ namespace BlogWebsite.Models
                 entity.HasKey(e => e.CId);
 
                 entity.Property(e => e.CId)
+                .IsRequired()
                     .HasColumnName("C_ID")
-                    .ValueGeneratedNever();
+                    .HasMaxLength(20);
 
                 entity.Property(e => e.CDepth).HasColumnName("C_Depth");
 
-                entity.Property(e => e.CPid).HasColumnName("C_PID");
+
+                entity.Property(e => e.CPid)
+                .IsRequired()
+                .HasColumnName("C_PID")
+                .HasMaxLength(20);
+
+                entity.Property(e => e.CommentText)
+                .IsRequired()
+                .HasColumnName("CommentText")
+                .IsUnicode(false);
 
                 entity.Property(e => e.CUserId)
                     .IsRequired()
@@ -102,11 +117,27 @@ namespace BlogWebsite.Models
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
+                entity.Property(e => e.FileID)
+                    .IsRequired()
+                    .HasColumnName("FileID")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Date)
+                    .HasColumnName("Cdate")
+                    .HasColumnType("date");
+
                 entity.HasOne(d => d.CUser)
                     .WithMany(p => p.Comment)
                     .HasForeignKey(d => d.CUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("userCommetnConstrait");
+
+                entity.HasOne(d => d.file)
+                .WithMany(p => p.FileComment)
+                .HasForeignKey(d => d.FileID)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FileCommentConstraint");
             });
 
             modelBuilder.Entity<Directory>(entity =>
@@ -153,26 +184,26 @@ namespace BlogWebsite.Models
                     .HasConstraintName("typeFileDirectoryConstraint");
             });
 
-            modelBuilder.Entity<FileComment>(entity =>
-            {
-                entity.HasKey(e => new { e.FId, e.CId });
+            //modelBuilder.Entity<FileComment>(entity =>
+            //{
+            //    entity.HasKey(e => new { e.FId, e.CId });
 
-                entity.Property(e => e.FId).HasColumnName("F_ID");
+            //    entity.Property(e => e.FId).HasColumnName("F_ID");
 
-                entity.Property(e => e.CId).HasColumnName("C_ID");
+            //    entity.Property(e => e.CId).HasColumnName("C_ID");
 
-                entity.HasOne(d => d.C)
-                    .WithMany(p => p.FileComment)
-                    .HasForeignKey(d => d.CId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("CommentConstraint");
+            //    entity.HasOne(d => d.C)
+            //        .WithMany(p => p.FileComment)
+            //        .HasForeignKey(d => d.CId)
+            //        .OnDelete(DeleteBehavior.ClientSetNull)
+            //        .HasConstraintName("CommentConstraint");
 
-                entity.HasOne(d => d.F)
-                    .WithMany(p => p.FileComment)
-                    .HasForeignKey(d => d.FId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("userCommentConstraint");
-            });
+            //    entity.HasOne(d => d.F)
+            //        .WithMany(p => p.FileComment)
+            //        .HasForeignKey(d => d.FId)
+            //        .OnDelete(DeleteBehavior.ClientSetNull)
+            //        .HasConstraintName("userCommentConstraint");
+            //});
 
             modelBuilder.Entity<FileReact>(entity =>
             {
@@ -292,6 +323,38 @@ namespace BlogWebsite.Models
                     .HasColumnName("T_text")
                     .HasMaxLength(10)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<NavBar>(entity =>
+            {
+                entity.HasKey(e => e.NID);
+
+                entity.Property(e=>e.NID)
+                      .HasColumnName("N_ID")
+                      .HasMaxLength(10)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.NName)
+                      .HasColumnName("N_Name")
+                      .HasMaxLength(12)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.NUrl)
+                      .HasColumnName("N_Url")
+                      .IsUnicode(false);
+
+                entity.Property(e => e.NCID)
+                      .HasColumnName("NCID")
+                      .HasMaxLength(20)
+                      .IsUnicode(false);
+
+
+                entity.HasOne(d=>d.NC)
+                    .WithMany(p=>p.NavBar)
+                    .HasForeignKey(d=>d.NCID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("NavBarChannelConstrait");
+
             });
 
             modelBuilder.Entity<React>(entity =>

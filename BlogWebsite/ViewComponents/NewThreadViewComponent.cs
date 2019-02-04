@@ -6,6 +6,7 @@ using BlogWebsite.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using BlogWebsite.Models.ClassDiagram;
+using BlogWebsite.Models.DataModel.RegisterThreadModel;
 
 namespace BlogWebsite.ViewComponents
 {
@@ -21,9 +22,16 @@ namespace BlogWebsite.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            //var data = _dbContext.Users.FirstOrDefault(s => s.UFirstName.Equals("Abdo"));
+            string Cid = RouteData.Values["Cid"].ToString();
+            var channelDirectory = _dbContext.Directory.Where(d => d.DOwnerId.Equals(Cid))
+                                   .Select(d=>new { d.DName,d.DId}).ToList();
+            RegisterThread registerThread = new RegisterThread();
+            foreach (var item in channelDirectory)
+            {
+                registerThread.AvailbleDirectory.Add(item.DId, item.DName);
+            }
             
-            return View(new ModelThread());
+            return View(registerThread);
         }
     }
 }

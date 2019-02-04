@@ -7,15 +7,18 @@ namespace BlogWebsite.Models
     {
         public Comment()
         {
-            FileComment = new HashSet<FileComment>();
+            //FileComment = new HashSet<FileComment>();
         }
 
-        public int CId { get; set; }
-        public int CPid { get; set; }
+        public string CId { get; set; }
+        public string CPid { get; set; }
         public string CUserId { get; set; }
         public int CDepth { get; set; }
-
+        public string CommentText { get; set; }
+        public string FileID { get; set; }
         public Users CUser { get; set; }
-        public ICollection<FileComment> FileComment { get; set; }
+        public Files file { get; set; }
+        public DateTime Date { get; set; }
+        //public ICollection<FileComment> FileComment { get; set; }
     }
 }

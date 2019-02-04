@@ -1,23 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BlogWebsite.Models;
-using BlogWebsite.Models.DataModel.HomeModel;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using BlogWebsite.Models.LocalRepo;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.Http;
-using System.IO;
-using static System.Net.Mime.MediaTypeNames;
-using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
 using BlogWebsite.Models.ClassDiagram;
+using System.Threading.Tasks;
+using System.IO;
+using BlogWebsite.Models.DataModel;
+using Microsoft.AspNetCore.Identity;
 
 namespace BlogWebsite.Controllers
 {
@@ -36,21 +30,21 @@ namespace BlogWebsite.Controllers
 
         public ViewResult MyFeed()
         {
-            //var dbuser = _dbcontext.Users.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
- 
-            var jsonUser = HttpContext.Session.GetString(User.Identity.Name);
-            var user = JsonConvert.DeserializeObject<ModelUser>(jsonUser);
+            var dbuser = _dbcontext.Users.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
+
+            //var jsonUser = HttpContext.Session.GetString(User.Identity.Name);
+            ModelUser user = new ModelUser();
             var userImg = _dbcontext.UsersImg.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
             if(userImg != null)
             {
-                ViewBag.img = RetriveImg(userImg.UImg);
+                ViewBag.img = Infrastructure.ImageConverter.ConvertToString(userImg.UImg);
 
             }
 
-            var userChannelRelation = _dbcontext.RelationShip.Where(u => u.ActioinUserId.Equals(user.ID) && u.RStateId == 1);
+            var userChannelRelation = _dbcontext.RelationShip.Where(u => u.ActioinUserId.Equals(User.Identity.Name) && u.RStateId == 1);
             var Userchannel = from RelationShip in _dbcontext.RelationShip
                               join channnel in _dbcontext.Channel on RelationShip.RCid equals channnel.CId
-                              where RelationShip.ActioinUserId == user.ID
+                              where RelationShip.ActioinUserId == User.Identity.Name
                               select new
                               {
                                   ID = channnel.CId,
@@ -95,7 +89,7 @@ namespace BlogWebsite.Controllers
                     Texts = file.TText,
                     CID = file.CID,
                     CName = file.CName,
-                    img = RetriveImg(file.TPic)
+                    img = Infrastructure.ImageConverter.ConvertToString(file.TPic)
                 };
                 user.addThread(thread);
             }
@@ -103,44 +97,83 @@ namespace BlogWebsite.Controllers
             return View(user);
         }
 
+
+
         public ViewResult Discover()
         {
+            var userImg = _dbcontext.UsersImg.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
+            if (userImg != null)
+            {
+                ViewBag.img = Infrastructure.ImageConverter.ConvertToString(userImg.UImg);
 
+            }
             return View();
         }
 
 
 
-
-
+        
+        
         public ViewResult AccountSetting()
         {
-            return View();
-        }
-        [HttpPost]
-        public ViewResult AccountSetting(IFormFile Pic)
-        {            
-            return View();
-        }
-
-
-
-
-
-
-
-
-
-        private string RetriveImg(byte[] img)
-        {
-            //UsersImg ImgData = _dbcontext.UsersImg.FirstOrDefault(s => s.UId == User.Identity.Name);
-            if (img == null)
+            var userImg = _dbcontext.UsersImg.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
+            if (userImg != null)
             {
-                return "non";
+                ViewBag.img = Infrastructure.ImageConverter.ConvertToString(userImg.UImg);
+
             }
-            var base64 = Convert.ToBase64String(img);
-            var imgscr = string.Format("data:image/png;base64,{0}", base64);
-            return imgscr;
+            var dbUser = _dbcontext.Users.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
+            ModelUser user = new ModelUser(dbUser.UId, dbUser.UEmail, dbUser.UFirstName, dbUser.ULastName, dbUser.UBirthDay);
+            var dbuserImg = _dbcontext.UsersImg.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
+            user.img = Infrastructure.ImageConverter.ConvertToString(dbuserImg.UImg);
+            return View(user);
         }
+
+
+
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult changeUserPic(IFormFile Pic)
+        {
+
+            if (Pic != null)
+            {
+                if (Pic.Length > 0)
+                {
+                    byte[] p1 = Infrastructure.ImageConverter.convertToByte(Pic);
+                    var imgUser = _dbcontext.UsersImg.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
+                    imgUser.UImg = p1;
+                    _dbcontext.SaveChanges();
+                }
+            }
+            return RedirectToAction("AccountSetting", "User");
+
+        }
+
+        [HttpPost,ValidateAntiForgeryToken]
+        public IActionResult passwordChange(passwordModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("AccountSetting", "User");
+            }
+            var hasher = new PasswordHasher<Users>();
+            Users user = new Users();
+            user.UPassword = hasher.HashPassword(user, model.Password);
+
+            var dbuser = _dbcontext.Users.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
+            dbuser.UPassword = user.UPassword;
+            _dbcontext.SaveChanges();
+            return RedirectToAction("AccountSetting", "User");
+
+        }
+
+
+
+
+
+
+
+
     }
 }

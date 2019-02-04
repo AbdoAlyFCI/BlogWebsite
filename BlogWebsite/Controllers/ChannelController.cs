@@ -6,10 +6,6 @@ using BlogWebsite.Models;
 using BlogWebsite.Models.LocalRepo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using BlogWebsite.Models.DataModel;
 using BlogWebsite.Models.DataModel.ChannelModel;
@@ -17,7 +13,7 @@ using BlogWebsite.Models.ClassDiagram;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+using BlogWebsite.Models.DataModel.RegisterThreadModel;
 
 namespace BlogWebsite.Controllers
 {
@@ -32,41 +28,60 @@ namespace BlogWebsite.Controllers
             this.cache = cache;
         }
 
-        //[Route("Channel")]
-        public  IActionResult MyChannel(string id)
-        {
-            /*1-Check if the Channel in the cache or not 
-             *2-if it in cache get it 
-             * 3-if not, build it from database
-             * 4-if not exist in database retutn wrong id (this channel not avalible)
-             */
-            //cache.Remove(id);
-            biuldChannelSteps(id);
-            var channel = cache.Get(id);
-            return View("MyChannel",channel);
-        }
+        /* 1-MyChannel
+         * 2-RegisterNewChannel (Get)
+         * 3-RegisterNewChannel (Post)
+         * 4-ChannelPanel
+         * 5-Thread
+         * 6-AddThread (Post)
+         * 7-AddDirectory (Post)
+         * 8-ChangeChannelHeaderPic (Post)
+         * 8.1-ChangeChannelPic (Post)
+         * 9-AddFollower (Post)
+         * 10-GetSpecificDirectory
+         * ***/
 
 
-        [HttpGet]
+
+        /*1- Register New Channel (Get)*/
+        [HttpGet,Authorize]
         public IActionResult RegisterNewChannel()
         {
-            var jsonUser = HttpContext.Session.GetString(User.Identity.Name);
-            var user = JsonConvert.DeserializeObject<ModelUser>(jsonUser);
-
-            if (user.ChannelID != null)
+            var userImg = _dbContext.UsersImg.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
+            if (userImg != null)
             {
-                return RedirectToAction("MyChannel","Channel");
+                ViewBag.img = Infrastructure.ImageConverter.ConvertToString(userImg.UImg);
+
+            }
+            /*1- Get user data from DB 
+             *2- check if the user have channel 
+             *3- if have one redirect to it
+             *4- if not continue to register page
+             */
+            var dbtUser = _dbContext.Users.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
+            var channel = _dbContext.Entry(dbtUser).Collection(u => u.Channel).Query().FirstOrDefault(u=>u.COwnerId.Equals(User.Identity.Name));
+            
+            //var jsonUser = HttpContext.Session.GetString(User.Identity.Name);
+            //var user = JsonConvert.DeserializeObject<ModelUser>(jsonUser);
+
+
+            if (channel != null)
+            {
+                return Redirect("/Channel/MyChannel/" + channel.CId);
+                //return RedirectToAction("MyChannel", "Channel",user.ChannelID);
             }
 
             return View();
         }
 
-
-        [ValidateAntiForgeryToken]
-        [HttpPost]
-        public async Task <IActionResult> RegisterNewChannel(channelRegister channel)
+        /*2- Register New Channel (Post)*/
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterNewChannel(channelRegister channel)
         {
-       
+            /*1- check the valid of the data that sent
+             *2- build channel object
+             * 3-save to DB
+             */
             if (!ModelState.IsValid)
             {
                 return View();
@@ -77,7 +92,7 @@ namespace BlogWebsite.Controllers
             channel.description = channel.description.Trim();
 
             var newChannel = _dbContext.Channel.SingleOrDefault(s => s.CId.Equals(channel.ID));
-            if(newChannel != null)
+            if (newChannel != null)
             {
                 //To Change 
                 return View();
@@ -96,66 +111,132 @@ namespace BlogWebsite.Controllers
                 RelationShip = new List<RelationShip>(),
             });
             await _dbContext.SaveChangesAsync();
-            var jsonUser = HttpContext.Session.GetString(User.Identity.Name);
-            var cuser = JsonConvert.DeserializeObject<ModelUser>(jsonUser);
-            cuser.ChannelID = channel.ID;
+            //var jsonUser = HttpContext.Session.GetString(User.Identity.Name);
+            //var cuser = JsonConvert.DeserializeObject<ModelUser>(jsonUser);
+            //cuser.ChannelID = channel.ID;
 
-            return View("MyChannel");
+
+            return RedirectToAction("MyChannel", "Channel", channel.ID);
+        }
+
+        /*3-My Channel*/
+        public IActionResult MyChannel(string Cid)
+        {
+
+            /*1- Build channel
+             *2- Return to view
+            */
+
+            var userImg = _dbContext.UsersImg.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
+            if (userImg != null)
+            {
+                ViewBag.img = Infrastructure.ImageConverter.ConvertToString(userImg.UImg);
+
+            }
+
+
+            var follow = _dbContext.RelationShip.AsNoTracking().FirstOrDefault(u => u.RCid.Equals(Cid) && u.ActioinUserId.Equals(User.Identity.Name));
+            if(follow == null)
+            {
+                ViewBag.State = "N";
+            }
+            else if (follow.RStateId == 1)
+            {
+                ViewBag.State = "F";
+            }
+            else if (follow.RStateId == 2)
+            {
+                ViewBag.State = "B";
+            }
+            buildChannelSteps(Cid);
+            var channel = cache.Get(Cid);
+            return View("MyChannel",channel);
         }
 
 
-        public IActionResult ChannelPanel(string id)
+        /*4-Channel Panel*/
+        public IActionResult ChannelPanel(string Cid)
         {
+            var userImg = _dbContext.UsersImg.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
+            if (userImg != null)
+            {
+                ViewBag.img = Infrastructure.ImageConverter.ConvertToString(userImg.UImg);
 
-            if (id == null)
+            }
+            if (Cid == null)
             {
                 return RedirectToAction("MyChannel", "RegisterNewChannel");
             }
+            ModelChannel channel;
+            if (!cache.TryGetValue(Cid, out channel))
+            {
+                buildChannelSteps(Cid);
+            }
+            channel = (ModelChannel)cache.Get(Cid);
+            return View(channel);
+            
+        }
 
-            return View();
+        /*5-Thread*/
+        public IActionResult Thread(string Cid, string Did, string Tid)
+        {
+            var userImg = _dbContext.UsersImg.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
+            if (userImg != null)
+            {
+                ViewBag.img = Infrastructure.ImageConverter.ConvertToString(userImg.UImg);
+
+            }
+
+            ModelChannel channel;
+            if (!cache.TryGetValue(Cid, out channel))
+            {
+                buildChannelSteps(Cid);
+            }
+
+            channel = (ModelChannel)cache.Get(Cid);
+
+            return View(channel);
         }
 
 
-        [ValidateAntiForgeryToken]
-        [HttpPost]
-        
-        public async Task<ViewResult> AddThread(ModelThread thread)
+        /*6-Add Thread (Post)*/
+        [HttpPost,ValidateAntiForgeryToken]        
+        public async Task<IActionResult> AddThread(RegisterThread thread,string id)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-
-            //var dbuser = _dbContext.Users.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
-
             Channel channel = _dbContext.Channel
-                             .FirstOrDefault(c => c.CId.Equals(thread.ID));
+                             .FirstOrDefault(c => c.CId.Equals(id));
 
 
             var director = _dbContext.Entry(channel)
                           .Collection(d => d.Directory).Query()
-                          .FirstOrDefault(d => d.DId.Equals(thread.directorId));
+                          .FirstOrDefault(d => d.DId.Equals(thread.DataThread.directorId));
+
             var filesNum = _dbContext.Entry(director)
                           .Collection(d => d.Files).Query().Count();
+
             Files newFile = new Files{
                 FId = "th"+director.DName+ channel.CId + Convert.ToString(filesNum+1),
-                FName = thread.Name,
+                FName = thread.DataThread.Name,
                 FCid = channel.CId,
-                FDescription = thread.Description,
-                FText = thread.Texts,
+                FDescription = thread.DataThread.Description,
+                FText = thread.DataThread.Text,
                 FPublishDate = DateTime.Now.Date,
                 FPublishState = 1,
             };
-            newFile.FileComment = new List<FileComment>();
+            newFile.FileComment = new List<Comment>();
             newFile.FileReact = new List<FileReact>();
             newFile.FileTag = new List<FileTag>();
-            if (thread.Pic != null)
+            if (thread.DataThread.Pic != null)
             {
-                if (thread.Pic.Length > 0)
+                if (thread.DataThread.Pic.Length > 0)
                 {
                     byte[] p1 = null;
-                    using (var fs1 = thread.Pic.OpenReadStream())
+                    using (var fs1 = thread.DataThread.Pic.OpenReadStream())
                     using (var ms1 = new MemoryStream())
                     {
                         await fs1.CopyToAsync(ms1);
@@ -166,32 +247,15 @@ namespace BlogWebsite.Controllers
 
                 }
             }
-            //var channelCache =(ModelChannel)cache.Get(channel.CId);
-  
-            //channelCache.createThread(thread.directorId, thread);
-            //var userChace = (ModelUser)cache.Get(User.Identity.Name);
-            //userChace.RegisterChannel(channelCache);
+
             director.Files.Add(newFile);
             await _dbContext.SaveChangesAsync();
-            return View("MyChannel");
+            return RedirectToAction("MyChannel","Channel",id);
         }
 
 
-        //[Route("Thread")]
-        public IActionResult Thread(string Cid,string Did,string Tid)
-        {
-            ModelChannel channel;
-            if(!cache.TryGetValue(Cid,out channel))
-            {
-                biuldChannelSteps(Cid);
-            }
-            channel =(ModelChannel) cache.Get(Cid);
-            return View(channel);
-        }
-
-
-        [ValidateAntiForgeryToken]
-        [HttpPost]
+        /*7-Add Directory (Post)*/        
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<ViewResult> AddFolder (ChannelData Folder)
         {
             if (!ModelState.IsValid)
@@ -218,18 +282,174 @@ namespace BlogWebsite.Controllers
             return View("MyChannel");
         }
 
-        private  void SetChannelInAction(string ID)
+
+        /*8-Change Channel Header Pic (Post)*/
+        [HttpPost]
+        public async Task<IActionResult> ChangeChannelHeaderPic(IFormFile Pic, string ID)
         {
-            cache.GetOrCreate(ID,
-                cacheEntry =>
+            if (Pic != null)
+            {
+                if (Pic.Length > 0)
                 {
-                    var channel = _dbContext.Channel.AsNoTracking().FirstOrDefault(c => c.CId.Equals(ID));
-                    ModelChannel modelChannel = new ModelChannel(channel.CId, channel.CName, channel.CDescription, channel.CTotalWatch);
-                    modelChannel.img = RetriveImg(channel.CIMG);
-                    return modelChannel;
-                });
+                    byte[] p1 = null;
+                    using (var fs1 = Pic.OpenReadStream())
+                    using (var ms1 = new MemoryStream())
+                    {
+                        await fs1.CopyToAsync(ms1);
+                        p1 = ms1.ToArray();
+                    }
+                    var base64 = Convert.ToBase64String(p1);
+                    var imgscr = string.Format("data:image/png;base64,{0}", base64);
+                    var channel = (ModelChannel)cache.Get(ID);
+                    channel.img = imgscr;
+                    var tempChange = _dbContext.Channel.SingleOrDefault(c => c.CId.Equals(ID));
+
+                    tempChange.CIMG = p1;
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+
+            return RedirectToAction("MyChannel", "Channel", ID);
+        }
+
+        /*9-Change Channel Pic (Post)*/
+        [HttpPost]
+        public async Task<IActionResult> ChangeChannelPic(IFormFile Pic, string  Cid   )
+        {
+            if (Pic != null)
+            {
+                if (Pic.Length > 0)
+                {
+                    byte[] p1 = null;
+                    using (var fs1 = Pic.OpenReadStream())
+                    using (var ms1 = new MemoryStream())
+                    {
+                        await fs1.CopyToAsync(ms1);
+                        p1 = ms1.ToArray();
+                    }
+                    var base64 = Convert.ToBase64String(p1);
+                    var imgscr = string.Format("data:image/png;base64,{0}", base64);
+                    var channel = (ModelChannel)cache.Get(Cid);
+                    channel.simg = imgscr;
+                    var tempChange = _dbContext.Channel.SingleOrDefault(c => c.CId.Equals(Cid));
+
+                    tempChange.CSIMG = p1;
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+
+            return Redirect("ChannelPanel?Cid=" + Cid);
+            //return RedirectToAction("ChannelPannel", "Channel", Cid);
+        }
+
+        /*10-AddFollower (Post)*/
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddFollower(string Cid)
+        {
+            var user = _dbContext.Users.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
+            var channel = _dbContext.Channel.FirstOrDefault(c => c.CId.Equals(Cid));
+            user.RelationShip.Add(new RelationShip
+            {
+                RUid = user.UId,
+                RCid = channel.CId,
+                RStateId = 1,
+                ActioinUserId = user.UId
+            });
+            await _dbContext.SaveChangesAsync();
+            return Redirect(string.Format("/Channel/MyChannel/" + Cid));
+        }
+
+        [HttpPost,IgnoreAntiforgeryToken]
+        public IActionResult RemoveFollower(string Cid)
+        {
+            var relation = _dbContext.RelationShip.FirstOrDefault(u => u.ActioinUserId.Equals(User.Identity.Name));
+            _dbContext.Remove(relation);
+            _dbContext.SaveChanges();
+
+            //return RedirectToAction("MyChannel", "Channel", Cid);
+            return Redirect(string.Format("/Channel/MyChannel/"+Cid));
 
         }
+
+        /*11-Get specific Directory*/
+        public IActionResult getSpecificDirectory(string Cid,string Did)
+        {
+            var userImg = _dbContext.UsersImg.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
+            if (userImg != null)
+            {
+                ViewBag.img = Infrastructure.ImageConverter.ConvertToString(userImg.UImg);
+
+            }
+            var channelCache =(ModelChannel) cache.Get(Cid);
+            ViewBag.Name = channelCache.getSpecificDirectoryThreads(Did)[0].directorname;
+            ViewBag.Did = Did;
+            return View(channelCache);
+        }
+
+        /*12-Change Channel Description*/
+        [HttpPost,ValidateAntiForgeryToken]
+        public IActionResult changeChannelDescription(string Cid,string description)
+        {
+            var channel = _dbContext.Channel.FirstOrDefault(c => c.CId.Equals(Cid));
+            channel.CDescription = description;
+
+            var cacheChannel= (ModelChannel)cache.Get(Cid);
+            cacheChannel.Description = description;
+
+            _dbContext.SaveChanges();
+            return Redirect("ChannelPanel?Cid=" + Cid);
+        }
+
+        /*13-Change channel Navbar Item*/
+        [HttpPost,ValidateAntiForgeryToken]
+        public IActionResult changeNavItem (string Cid,string Did,ModelNavBar item)
+        {
+            var navItem = _dbContext.NavBar.FirstOrDefault(n => n.NID.Equals(Did));
+            navItem.NName = item.Name;
+            navItem.NUrl = item.Url;
+            _dbContext.SaveChanges();
+
+            var channelCache = (ModelChannel) cache.Get(Cid);
+            channelCache.ChangeNavItem(item, Did);
+            return RedirectToAction("ChannelPanel", "Channel", Cid);
+        }
+
+        /*14-Get about page*/
+        public ViewResult About(string Cid)
+        {
+            var userImg = _dbContext.UsersImg.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
+            if (userImg != null)
+            {
+                ViewBag.img = Infrastructure.ImageConverter.ConvertToString(userImg.UImg);
+
+            }
+
+            var channel = (ModelChannel)cache.Get(Cid);
+            return View(channel);
+        }
+
+
+        /*15-Add Comment to thread*/
+        [HttpPost,ValidateAntiForgeryToken]
+        public IActionResult addComment(string Cid,string Did,string Tid,string Comment)
+        {
+            var thread = _dbContext.Files.FirstOrDefault(f => f.FId.Equals(Tid));
+            var commnet = _dbContext.Entry(thread).Collection(c => c.FileComment).Query().Count();
+            thread.FileComment.Add(new Models.Comment
+            {
+                CId = Tid + Convert.ToString(commnet) +1,
+                CDepth = 0,
+                CommentText = Comment,
+                CUserId = User.Identity.Name,
+                Date = DateTime.Now,
+                CPid = Tid + Convert.ToString(commnet) +1
+            });
+
+            _dbContext.SaveChanges();
+            return Redirect(string.Format($"/Channel/Thread/{Cid}/{Did}/{Tid}"));
+        }
+
+        
         public void BuildDirectorInAction(string id)
         {
             var channelCache = (ModelChannel)cache.Get(id);
@@ -260,7 +480,7 @@ namespace BlogWebsite.Controllers
                         var base64 = Convert.ToBase64String(file.FImg);
                         imgscr = string.Format("data:image/png;base64,{0}", base64);
                     }
-                   
+
                     director.addThread(new ModelThread
                     {
                         ID = file.FId,
@@ -269,7 +489,9 @@ namespace BlogWebsite.Controllers
                         directorId = director.ID,
                         PublishDate = file.FPublishDate,
                         Texts = file.FText,
-                        img= imgscr
+                        img = imgscr,
+                        directorname = director.Name,
+                        CID = channelCache.ID,
 
                     });
                 }
@@ -277,74 +499,35 @@ namespace BlogWebsite.Controllers
             
         }
 
-        [HttpPost]
-        public async Task<IActionResult> ChangeChannelHeaderPic(IFormFile Pic,string ID)
+
+
+        private void SetChannelInAction(string Cid)
         {
-            if (Pic != null)
-            {
-                if (Pic.Length > 0)
+            cache.GetOrCreate(Cid,
+                cacheEntry =>
                 {
-                    byte[] p1 = null;
-                    using (var fs1 = Pic.OpenReadStream())
-                    using (var ms1 = new MemoryStream())
+                    var channel = _dbContext.Channel.FirstOrDefault(c => c.CId.Equals(Cid));
+                    ModelChannel modelChannel = new ModelChannel(channel.CId, channel.CName, channel.CDescription, channel.CTotalWatch);
+                    modelChannel.ownerID = channel.COwnerId;
+                    var navbarItems = _dbContext.Entry(channel).Collection(e => e.NavBar).Query();
+                    foreach (var item in navbarItems)
                     {
-                        await fs1.CopyToAsync(ms1);
-                        p1 = ms1.ToArray();
+                        modelChannel.AddNavItem(new ModelNavBar
+                        {
+                            NID = item.NID,
+                            Name = item.NName,
+                            Url = item.NUrl
+                        });
                     }
-                    var base64 = Convert.ToBase64String(p1);
-                    var imgscr = string.Format("data:image/png;base64,{0}", base64);
-                    var channel = (ModelChannel)cache.Get(ID);
-                    channel.img = imgscr;
-                    var tempChange = _dbContext.Channel.SingleOrDefault(c => c.CId.Equals(ID));
-                    
-                    tempChange.CIMG = p1;
-                    await _dbContext.SaveChangesAsync();
-                }
-            }
+                    modelChannel.img = Infrastructure.ImageConverter.ConvertToString(channel.CIMG);
+                    modelChannel.simg = Infrastructure.ImageConverter.ConvertToString(channel.CSIMG);
+                    modelChannel.Followers = _dbContext.RelationShip.Where(c => c.RCid.Equals(channel.CId) && c.RStateId == 1).ToList().Count;
+                    return modelChannel;
+                });
 
-            return RedirectToAction("MyChannel", "Channel", ID);
         }
 
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddFollower(string id)
-        {
-            var user = _dbContext.Users.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
-            var channel = _dbContext.Channel.FirstOrDefault(c => c.CId.Equals(id));
-            user.RelationShip.Add(new RelationShip
-            {
-                RUid = user.UId,
-                RCid = channel.CId,
-                RStateId=1,
-                ActioinUserId=user.UId
-            });
-            await _dbContext.SaveChangesAsync();
-            return RedirectToAction("MyChannel", "Channel", id);
-        }
-
-
-        //private void RetriveImg()
-        //{
-        //    UsersImg ImgData = _dbContext.UsersImg.FirstOrDefault(s => s.UId == User.Identity.Name);
-        //    var base64 = Convert.ToBase64String(ImgData.UImg);
-        //    //var imgscr = string.Format("data:image/png;base64,{0}", base64);
-        //    //ViewData["img"] = imgscr;
-        //}
-
-        private  string RetriveImg(byte[] img)
-        {
-            //UsersImg ImgData = _dbcontext.UsersImg.FirstOrDefault(s => s.UId == User.Identity.Name);
-            if (img == null)
-            {
-                return "non";
-            }
-            var base64 = Convert.ToBase64String(img);
-            var imgscr = string.Format("data:image/png;base64,{0}", base64);
-            return imgscr;
-        }
-
-        private void biuldChannelSteps(string id)
+        private void buildChannelSteps(string id)
         {
             SetChannelInAction(id);
             BuildDirectorInAction(id);
@@ -355,3 +538,4 @@ namespace BlogWebsite.Controllers
 
 
 }
+ 
