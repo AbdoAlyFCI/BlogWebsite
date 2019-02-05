@@ -381,7 +381,7 @@ namespace BlogWebsite.Controllers
 
             }
             var channelCache =(ModelChannel) cache.Get(Cid);
-            ViewBag.Name = channelCache.getSpecificDirectoryThreads(Did)[0].directorname;
+            ViewBag.Name = channelCache.getSpecificDirectoryThreads(Did)[0].getPeekData().directorName;
             ViewBag.Did = Did;
             return View(channelCache);
         }
@@ -458,7 +458,7 @@ namespace BlogWebsite.Controllers
 
             foreach (var directory in directories)
             {
-                var modelDirectory = new ModelDirectory(directory.DId, directory.DName, directory.DDepth);
+                var modelDirectory = new ModelDirectory(directory.DId, directory.DName);
                 channelCache.createDirectory(modelDirectory);
             }
         }
@@ -480,20 +480,20 @@ namespace BlogWebsite.Controllers
                         var base64 = Convert.ToBase64String(file.FImg);
                         imgscr = string.Format("data:image/png;base64,{0}", base64);
                     }
-
-                    director.addThread(new ModelThread
+                    ModelPeekThread peekThread = new ModelPeekThread()
                     {
                         ID = file.FId,
                         Name = file.FName,
                         Description = file.FDescription,
                         directorId = director.ID,
                         PublishDate = file.FPublishDate,
-                        Texts = file.FText,
                         img = imgscr,
-                        directorname = director.Name,
+                        directorName = director.Name,
                         CID = channelCache.ID,
+                    };
 
-                    });
+                    director.addThread(new ModelThread(peekThread, file.FText));
+                    
                 }
             }
             

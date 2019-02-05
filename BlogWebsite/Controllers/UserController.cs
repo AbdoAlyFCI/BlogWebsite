@@ -78,20 +78,19 @@ namespace BlogWebsite.Controllers
                                 };
             foreach (var file in fileDirectory)
             {
-                ModelThread thread = new ModelThread()
+                ModelPeekThread peekThread = new ModelPeekThread()
                 {
                     ID = file.TID,
                     Name = file.TName,
                     Description = file.TDescription,
                     PublishDate = file.TDate,
                     directorId = file.DID,
-                    directorname = file.DName,
-                    Texts = file.TText,
+                    directorName = file.DName,
                     CID = file.CID,
-                    CName = file.CName,
+                    Cname = file.CName,
                     img = Infrastructure.ImageConverter.ConvertToString(file.TPic)
                 };
-                user.addThread(thread);
+                user.addThread(new ModelThread(peekThread,file.TText));
             }
             ViewBag.ChannelID = user.ChannelID;
             return View(user);

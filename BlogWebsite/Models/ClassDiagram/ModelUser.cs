@@ -78,7 +78,7 @@ namespace BlogWebsite.Models.ClassDiagram
         
         public List<ModelThread> orderThread()
         {
-            threads = threads.OrderBy(t => t.PublishDate).ToList();
+            //threads = threads.OrderByDescending(t => ).ToList();
 
             return threads;
         }

@@ -13,6 +13,9 @@ namespace BlogWebsite.Models.ClassDiagram
         public string img { get; set; }
         public DateTime? PublishDate { get; set; }
         public string CID { get; set; }
-        public string directorId { get; set; } 
+        public string Cname { get; set; }
+        public string directorId { get; set; }
+        public string directorName { get; set; }
+
     }
 }

@@ -3,21 +3,12 @@
     ViewData["Title"] = "Discover";
 }
 
-<section class="masterFeedSection">
+<section class="mg-top-sm">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-12 col-12">
-                @* Last Feed *@
                 <div class=" ViewBox">
-                    @*Feed*@
-
-
-                    <h3>Last Feed </h3>
-                    <span class="free-postion top-right md-font">
-                        <i id="block" class="fas fa-th-large">d</i>
-                        <i id="list" class="fas fa-bars">s</i>
-                    </span>
-
+                    <h1 class="md-font">Discover</h1>
                     @await Component.InvokeAsync("DiscoverThread")
                 </div>
             </div>
@@ -62,10 +53,10 @@
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-6 col-sm-12 col-12">
-                            <div class="md-Rectangle">
+                            <aside class="md-Rectangle">
                                 <h3>Trends</h3>
-                                <div class="trends">
-                                    <ul>
+                                <nav>
+                                    <ul class="vertical-list sm-font">
                                         <li>#trend1</li>
                                         <li>#trend1</li>
                                         <li>#trend1</li>
@@ -78,8 +69,8 @@
                                         <li>#trend1</li>
 
                                     </ul>
-                                </div>
-                            </div>
+                                </nav>
+                            </aside>
                         </div>
                     </div>
 

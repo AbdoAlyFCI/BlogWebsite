@@ -467,11 +467,11 @@ table .btn {
 #PersonalPic div{
     text-align:center;
 }
-#PersonalPic div img {      
+/*#PersonalPic div img {      
     width: 150px;
     height: 150px;
     border-radius: 100px;
-}
+}*/
 
 #settingList {
     border-right:solid 2px;
@@ -553,10 +553,15 @@ table .btn {
     right:12px;
 }
 
-/*New Subject*/#NewSubject{
+
+
+/*New Subject*/
+#NewSubject{
     width:800px;
     background-color:transparent;
-}#NewSubject div{    
+}
+
+#NewSubject div{    
     height:40px;
     background-color:rgb(220, 203, 203);
     margin-top:2%;
@@ -582,7 +587,9 @@ table .btn {
 #NewSubject i {
     font-size: 20px;
     margin-left: 4%;
-}/*MyChannel*/
+}
+
+/*MyChannel*/
 
 #Header img {
     height: 250px;

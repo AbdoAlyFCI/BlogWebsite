@@ -3,11 +3,10 @@
     ViewData["Title"] = "MyFeed";
 }
 
-<section class="masterFeedSection">
+<section class="mg-top-sm">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-12 col-12" >
-                @* Last Feed *@
                 <div class=" ViewBox">
                     @*Feed*@
                     @if (Model.orderThread().Count == 0)
@@ -18,42 +17,35 @@
                     }
                     else
                     {
-                    <h3>Last Feed </h3>
-                    <span class="free-postion top-right md-font">
-                        <i id="block" class="fas fa-th-large">d</i>
-                        <i id="list" class="fas fa-bars">s</i>
-                    </span>
-                    @*<span class="NewDisplay">
-            <h3 class="d-inline">Last feed</h3>
-            <i id="block" class="fas fa-th-large">d</i>
-            <i id="list" class="fas fa-bars">s</i>
-        </span>*@
+                    <h1 class="md-font">Last Feed </h1>
                     <div class="row">
-
-                      
-
                         @foreach (var file in Model.orderThread())
                         {
-                            <div class="col-12 LV">
+                            <div class="col-12">
+                                <article class="seed">
+                                    <figure class="float-left">
+                                        <img src="@file.getPeekData().img" alt="error"/>                                       
+                                    </figure>
+                                    <aside >
+                                        <header>
+                                            <h1><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@file.getPeekData().CID" asp-route-Did="@file.getPeekData().directorId" asp-route-Tid="@file.getPeekData().ID">@file.getPeekData().Name</a></h1>
+                                            <h2>by <a asp-controller="Channel" asp-action="MyChannel" asp-route-Cid="@file.getPeekData().CID">@file.getPeekData().Cname</a></h2>
+                                        </header>
 
-                                <div class="New">
-                                    <div class="float-left image" style="background-image: url(@file.img)">
-                                        @*<div><img src="~/image/Test/square_Marc.jpg" /></div>*@
-                                    </div>
-                                    <div class="float-left Discription">
-                                        <div>
-                                            <p style="font-size:large ; margin-bottom:3px;"><b><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@file.CID" asp-route-Did="@file.directorId" asp-route-Tid="@file.ID">@file.Name</a></b></p>
-                                            <p>@file.Description</p>
-                                        </div>
-                                        @*<div class="genralInfo">
-                                <span>@file.PublishDate</span><br />
-                                <span>
-                                    <i class="far fa-eye"></i><span class="mr-2"> 5</span>
-                                    <i class="fas fa-comments"></i><span> 20</span>
-                                </span>
-                            </div>*@
-                                    </div>
-                                    <div class="float-left react">
+                                            @if (file.getPeekData().Description.Length > 220)
+                                            {
+                                                string s = file.getPeekData().Description.Substring(0, 180) + "...........";                                            
+                                                <p> @s</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@file.getPeekData().Description</p>
+                                            }
+                                        <footer>
+                                            <time datetime="@file.getPeekData().PublishDate">@file.getPeekData().PublishDate</time>
+                                        </footer>  
+                                    </aside>
+                                    @*<div class="float-left react">
                                         <ul>
                                             <li class="Save" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
                                                 <i class="far fa-bookmark" id="out"></i>
@@ -68,57 +60,19 @@
                                                 <i class="fas fa-thumbs-down" hidden></i>
                                             </li>
                                         </ul>
-                                    </div>
-                                </div>
+                                    </div>*@
+                                </article>
 
 
                             </div>
                         }
 
-
-
-                        
-                        @*<div class="col-12 LV">
-
-                <div class="New">
-                    <div class="float-left image">
-                        <div><img src="~/image/Test/square_Marc.jpg" /></div>
-                    </div>
-                    <div class="float-left Discription">
-                        <div>
-                            <h2><a>Title</a></h2>
-                            <p></p>
-                        </div>
-                        <div class="genralInfo">
-                            <span>09/27/2018</span><br />
-                            <span>
-                                <i class="far fa-eye"></i><span class="mr-2"> 5</span>
-                                <i class="fas fa-comments"></i><span> 20</span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="float-left react">
-                        <ul>
-                            <li class="Save" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                <i class="far fa-bookmark" id="out"></i>
-                                <i class="fas fa-bookmark" id="in" hidden></i>
-                            </li>
-                            <li class="Like" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                <i class="far fa-thumbs-up"></i>
-                                <i class="fas fa-thumbs-up" hidden></i>
-                            </li>
-                            <li class="Dislike" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                <i class="far fa-thumbs-down"></i>
-                                <i class="fas fa-thumbs-down" hidden></i>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-
-            </div>*@
                     </div>
                     }
+                    <div page-model="@Model.orderThread()" page-action="List" page-classes-enabled="true" 
+                         page-class="btn" page-class-normal="btn-secondary"
+                         page-class-selected="btn-primary" class="btn-group pull-right m-1">
+                    </div>
                 </div>
             </div>
             <div class="col-lg-4 col-12">
@@ -162,10 +116,10 @@
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-6 col-sm-12 col-12">
-                            <div class="md-Rectangle">
+                            <aside class="md-Rectangle">
                                 <h3>Trends</h3>
-                                <div class="trends">
-                                    <ul>
+                                <nav>
+                                    <ul class="vertical-list sm-font">
                                         <li>#trend1</li>
                                         <li>#trend1</li>
                                         <li>#trend1</li>
@@ -178,8 +132,8 @@
                                         <li>#trend1</li>
 
                                     </ul>
-                                </div>
-                            </div>
+                                </nav>
+                            </aside>
                         </div>
                     </div>
                     
@@ -189,5 +143,3 @@
         </div>
     </div>
 </section>
-
-<script src="~/JavaScript/Feed.js"></script>

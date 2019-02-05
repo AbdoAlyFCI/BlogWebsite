@@ -9,19 +9,17 @@ namespace BlogWebsite.Models.ClassDiagram
     {
         public string ID { get; set; }
         public string Name { get; set; }
-        private int Depth;
         List<ModelThread> threads = new List<ModelThread>();
 
-        public ModelDirectory(string ID,string Name,int depth)
+        public ModelDirectory(string ID,string Name)
         {
             this.ID = ID;
             this.Name = Name;
-            this.Depth = depth;
         }
 
         public void addThread(ModelThread thread)
         {
-            if (threads.FirstOrDefault(t => t.ID.Equals(thread.ID)) == null){
+            if (threads.FirstOrDefault(t => t.getPeekData().ID.Equals(thread.getPeekData().ID)) == null){
                 threads.Add(thread);
             }
         }
@@ -33,7 +31,7 @@ namespace BlogWebsite.Models.ClassDiagram
 
         public ModelThread GetThread (string ID)
         {
-            return threads.FirstOrDefault(t => t.ID.Equals(ID));
+            return threads.FirstOrDefault(t => t.getPeekData().ID.Equals(ID));
         }
 
         public List<ModelThread> getallThread()

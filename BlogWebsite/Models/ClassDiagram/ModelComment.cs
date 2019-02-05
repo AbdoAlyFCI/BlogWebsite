@@ -12,7 +12,6 @@ namespace BlogWebsite.Models.ClassDiagram
         public string Comment { get; set; }
         public string userImg { get; set; }
 
-
         List<ModelComment> nestedComment = new List<ModelComment>();
 
         public void addNestedComment(ModelComment comment)

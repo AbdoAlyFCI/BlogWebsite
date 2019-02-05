@@ -26,9 +26,6 @@ namespace BlogWebsite.Models.ClassDiagram
             this.Name = Name;
             this.Description = Description;
             this.totalView = totalView;
-
-            //this.Followers = Followers;
-            //this.blockedUser = blockedUser;
         }
 
         public void addFollower()
@@ -36,31 +33,16 @@ namespace BlogWebsite.Models.ClassDiagram
             Followers++;
         }
 
-        public void removeFollower(ModelUser user)
+        public void removeFollower()
         {
             Followers--;
         }
-
-        //public void addblockUser(ModelUser user)
-        //{
-        //    blockedUser.Add(user);
-        //}
-
-        //public void removeBlockUser(ModelUser user)
-        //{
-        //    blockedUser.Remove(user);
-        //}
-
         public void createDirectory(ModelDirectory directory)
         {
             if (Directories.FirstOrDefault(d=>d.ID.Equals(directory.ID))==null)
                 Directories.Add(directory);
         }
 
-        //public void removeDirectory( ID)
-        //{
-        //    //Directories.Where(d=>d.Name==ID).Remove();
-        //}
 
         public ModelDirectory GetDirectory(string ID)
         {
@@ -71,12 +53,9 @@ namespace BlogWebsite.Models.ClassDiagram
         {
             return Directories;
         }
-        public ModelThread createThread()
-        {
-            return new ModelThread();
-        }
 
-        public void createThread(string ID,ModelThread thread)
+
+        public void addThread(string ID,ModelThread thread)
         {
             if(Directories.FirstOrDefault(s=>s.ID.Equals(ID))==null)
                 Directories.FirstOrDefault(d=>d.ID==ID).addThread(thread);
@@ -86,12 +65,6 @@ namespace BlogWebsite.Models.ClassDiagram
         public void removeThread(string ID,string threadID)
         {
             Directories.FirstOrDefault(d => d.ID == ID).removeThread(threadID);
-        }
-
-
-        public void deleteChannel()
-        {
-
         }
 
         public List<ModelThread> getAllThread()
@@ -106,7 +79,7 @@ namespace BlogWebsite.Models.ClassDiagram
                 }
 
             }
-            threads = threads.OrderBy(t => t.PublishDate).ToList();
+            threads = threads.OrderBy(t => t.getPeekData().PublishDate).ToList();
 
             return threads;
         }
@@ -149,7 +122,7 @@ namespace BlogWebsite.Models.ClassDiagram
                 }
 
             }
-            threads = threads.OrderBy(t => t.PublishDate).ToList();
+            threads = threads.OrderBy(t => t.getPeekData().PublishDate).ToList();
 
 
             return threads;

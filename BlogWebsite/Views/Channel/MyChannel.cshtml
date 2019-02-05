@@ -61,13 +61,13 @@
                             <div class="col-12 LV">
 
                                 <div class="New">
-                                    <div class="float-left image" style="background-image: url(@file.img)">
+                                    <div class="float-left image" style="background-image: url(@file.getPeekData().img)">
                                         @*<div><img src="~/image/Test/square_Marc.jpg" /></div>*@
                                     </div>
                                     <div class="float-left Discription">
                                         <div>
-                                            <p style="font-size:large ; margin-bottom:3px;"><b><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@Model.ID" asp-route-Did="@file.directorId" asp-route-Tid="@file.ID">@file.Name</a></b></p>
-                                            <p>@file.Description</p>
+                                            <p style="font-size:large ; margin-bottom:3px;"><b><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@Model.ID" asp-route-Did="@file.getPeekData().directorId" asp-route-Tid="@file.getPeekData().ID">@file.getPeekData().Name</a></b></p>
+                                            <p>@file.getPeekData().Description</p>
                                         </div>
                                         @*<div class="genralInfo">
                                                 <span>@file.PublishDate</span><br />
@@ -117,7 +117,7 @@
                                     {
                                         @if (Model.ownerID.Equals(User.Identity.Name))
                                         {
-                                            <button class="btn btn-primary" type="submit"><a class="link" asp-controller="Channel" asp-action="ChannelPanel" asp-route-Cid="@Model.ID">Setting</a></button>
+                                            <a class="btn btn-danger" asp-controller="Channel" asp-action="ChannelPanel" asp-route-Cid="@Model.ID">Setting</a>
 
                                         }
                                         else
@@ -176,11 +176,11 @@
                                             @foreach (var item in Directory.getallThread())
                                             {
                                                 <li>| <i class="fas fa-file"></i>&ensp;
-                                                      <a class="link" asp-controller="Channel" asp-action="Thread" asp-route-Cid="@Model.ID" asp-route-Did="@Directory.ID" asp-route-Tid="@item.ID">
-                                                          @if (item.Name.Length > 27)
+                                                      <a class="link" asp-controller="Channel" asp-action="Thread" asp-route-Cid="@Model.ID" asp-route-Did="@Directory.ID" asp-route-Tid="@item.getPeekData().ID">
+                                                          @if (item.getPeekData().Name.Length > 27)
                                                           {
                                                               
-                                                                  string s = item.Name.Substring(0, 22) + "........";
+                                                                  string s = item.getPeekData().Name.Substring(0, 22) + "........";
                                                               @s
                                                                      
 
@@ -188,7 +188,7 @@
                                                           else
                                                           {
 
-                                                              @item.Name
+                                                              @item.getPeekData().Name
                                                           }
 
                                                       </a>                                           

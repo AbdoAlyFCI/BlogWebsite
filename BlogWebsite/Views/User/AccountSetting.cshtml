@@ -2,40 +2,44 @@
 @{
     ViewData["Title"] = "Account Setting";
 }
-<div id="PersonalPic">
+<section  class="mg-bottom-sm mg-top-sm text-center">
     <div>
-        <img class="lg-img" src="@Model.img" />
-        <button id="changeImgPicBtn" >
-            <i class="fas fa-camera"></i>
-        </button>
-        <h3>@Model.firstName @Model.lastName</h3>
-        <h6>ID:@Model.ID</h6>
-    </div>
-</div>
-<section>
+        <figure>
+            <img class="lg-img" src="@Model.img" />
+            <button id="changeImgPicBtn">
+                <i class="fas fa-camera"></i>
+            </button>
+        </figure>
 
+        <h1 class="lg-font">@Model.firstName @Model.lastName</h1>
+        <p>ID:@Model.ID</p>
+    </div>
+</section>
+<section>
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div id="settingDetails">
                     <div class="row">
                         <div class="col-3">
-                            <div id="settingList">
-                                <ul>
-                                    <li>
-                                        <button class="btn btn-block" id="genraInfoBtn">Genral info</button>
-                                    </li>
-                                    <li>
-                                        <button class="btn btn-block" id="followedChannelBtn">Followed channel</button>
-                                    </li>
-                                    <li>
-                                        <button class="btn btn-block" id="blockUsersBtn">Block users</button>
-                                    </li>
-                                    <li>
-                                        <button class="btn btn-block" id="muteTagsBtn">Mute tags</button>
-                                    </li>
-                                </ul>
-                            </div>
+                            <aside class="mg-top-sm">
+                                <nav>
+                                    <ul class="vertical-list">
+                                        <li>
+                                            <button class="btn btn-block" id="genraInfoBtn">Genral info</button>
+                                        </li>
+                                        <li>
+                                            <button class="btn btn-block" id="followedChannelBtn">Followed channel</button>
+                                        </li>
+                                        <li>
+                                            <button class="btn btn-block" id="blockUsersBtn">Block users</button>
+                                        </li>
+                                        <li>
+                                            <button class="btn btn-block" id="muteTagsBtn">Mute tags</button>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </aside>
                         </div>
                         <div class="col-9">                           
                             <div id="genraInfo">

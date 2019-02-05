@@ -105,7 +105,21 @@ sm-font{
     font-size:15px;
 }
 
+.vertical-list {
+    list-style-type: none;
+    padding-left: 4px;
+}
 
+.vertical-list li{
+    margin-bottom:12px;
+}
+
+.mg-top-sm{
+    margin-top:3%;
+}
+.mg-bottom-sm{
+    margin-bottom:1%;
+}
 .tab {
     width: inherit;
     height: 70px;
@@ -117,4 +131,50 @@ sm-font{
 .tab:hover {
     background-color: rgba(244, 202, 173, 0.89);
     border-radius: 50px 0 0 50px;
+}
+
+.seed{
+    width:inherit;
+    height:190px;
+    background-color:#85aec0;
+}
+
+.seed figure{
+    height:190px;
+    width:30%;
+}
+
+.seed figure img{
+    height:inherit;
+    width:100%;
+    z-index:0;
+}
+
+.seed aside{
+    display:block;
+    height:inherit;
+    padding-top:1% ;
+    padding-left:31%;
+}
+.seed aside header {
+        background-color: transparent;
+
+        margin-bottom: 1px;
+        position: unset;
+        padding-top: 0;
+        padding-bottom:0;
+}
+
+.seed aside header h1{
+    font-size:21px;
+}
+.seed aside header h2 {
+    font-size: 10px;
+}
+
+.seed aside footer{
+    position:absolute;
+    bottom:20px;
+    width:inherit;
+    background-color:transparent;
 }

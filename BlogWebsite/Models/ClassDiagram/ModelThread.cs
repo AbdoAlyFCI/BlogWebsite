@@ -9,29 +9,19 @@ namespace BlogWebsite.Models.ClassDiagram
 {
     public class ModelThread
     {
-        
-        public string ID { get; set; }
-        //[Required(ErrorMessage ="Please enter a name for the thread")]
-        public string Name { get; set; }  //
-        
-        public string Texts { get; set; }   //
-        public ModelUser Owner { get; set; }
-        public string Description { get; set; } //
-        public List<ModelUser> Like { get; set; }  
-        public List<ModelUser> Dislike { get; set; }
-        public DateTime? PublishDate { get; set; }
-        public string directorname { get; set; } //
-        public string directorId { get; set; }  //
-        public IFormFile Pic { get; set; } //
-        public string img { get; set; }
-        public string CID { get; set; }
-        public string CName { get; set;}
-        private List<ModelTag> threadTags = new List<ModelTag>();
+        private ModelPeekThread PeekThread=new ModelPeekThread();
+        public string Texts { get; set; }
+        //private List<ModelTag> threadTags = new List<ModelTag>();
         public bool Draft { get; set; } = false;
+
 
         private List<ModelComment> comments = new List<ModelComment>();
 
-
+        public ModelThread (ModelPeekThread peekThread,string text)
+        {
+            this.PeekThread = peekThread;
+            this.Texts = text;
+        }
 
 
         public void AddComment(ModelComment comment)
@@ -41,7 +31,7 @@ namespace BlogWebsite.Models.ClassDiagram
                 comments.Add(comment);
             }
 
-                    }
+        }
 
 
         public List<ModelComment> GetComments()
@@ -49,35 +39,7 @@ namespace BlogWebsite.Models.ClassDiagram
             return comments;
         }
 
-        public void addLike(ModelUser user)
-        {
-            Like.Add(user);
-        }
-
-        public void addDislike(ModelUser user)
-        {
-            Dislike.Add(user);
-        }
-
-        public void removeLike(ModelUser user)
-        {
-            Like.Remove(user);
-        }
-
-        public void removeDislike(ModelUser user)
-        {
-            Dislike.Remove(user);
-        }
-
-        public List<ModelUser> getLikeList()
-        {
-            return Like;
-        }
-
-        public List<ModelUser> getDisLikeList()
-        {
-            return Dislike;
-        }
+    
 
         public void ChangeText(string Text)
         {
@@ -89,14 +51,26 @@ namespace BlogWebsite.Models.ClassDiagram
             this.Texts = Text;
         }
 
-        public void addTag(ModelTag tag)
+
+        public ModelPeekThread getPeekData()
         {
-            threadTags.Add(tag);
+            return PeekThread;
         }
 
-        public void removeTag(ModelTag tag)
+        public void setPeekData(ModelPeekThread peekThread)
         {
-            threadTags.Remove(tag);
+            this.PeekThread = peekThread;
         }
+
+        /*Delay*/
+        //public void addTag(ModelTag tag)
+        //{
+        //    threadTags.Add(tag);
+        //}
+
+        //public void removeTag(ModelTag tag)
+        //{
+        //    threadTags.Remove(tag);
+        //}
     }
 }
