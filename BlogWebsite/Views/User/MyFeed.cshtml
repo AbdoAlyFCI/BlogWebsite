@@ -26,53 +26,52 @@
                                     <figure class="float-left">
                                         <img src="@file.getPeekData().img" alt="error"/>                                       
                                     </figure>
-                                    <aside >
+                                    <aside>
                                         <header>
                                             <h1><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@file.getPeekData().CID" asp-route-Did="@file.getPeekData().directorId" asp-route-Tid="@file.getPeekData().ID">@file.getPeekData().Name</a></h1>
                                             <h2>by <a asp-controller="Channel" asp-action="MyChannel" asp-route-Cid="@file.getPeekData().CID">@file.getPeekData().Cname</a></h2>
                                         </header>
 
-                                            @if (file.getPeekData().Description.Length > 220)
-                                            {
-                                                string s = file.getPeekData().Description.Substring(0, 180) + "...........";                                            
-                                                <p> @s</p>
-                                            }
-                                            else
-                                            {
-                                                <p>@file.getPeekData().Description</p>
-                                            }
+                                        @if (file.getPeekData().Description == null)
+                                        {
+
+                                            <p></p>
+                                        }
+                                        else if (file.getPeekData().Description.Length > 220)
+                                        {
+                                            string s = file.getPeekData().Description.Substring(0, 180) + "...........";
+                                            <p> @s</p>
+                                        }
+                                        else
+                                        {
+                                            <p>@file.getPeekData().Description</p>
+                                        }
                                         <footer>
                                             <time datetime="@file.getPeekData().PublishDate">@file.getPeekData().PublishDate</time>
-                                        </footer>  
+                                        </footer>
                                     </aside>
-                                    @*<div class="float-left react">
-                                        <ul>
-                                            <li class="Save" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                                <i class="far fa-bookmark" id="out"></i>
-                                                <i class="fas fa-bookmark" id="in" hidden></i>
-                                            </li>
-                                            <li class="Like" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                                <i class="far fa-thumbs-up"></i>
-                                                <i class="fas fa-thumbs-up" hidden></i>
-                                            </li>
-                                            <li class="Dislike" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                                <i class="far fa-thumbs-down"></i>
-                                                <i class="fas fa-thumbs-down" hidden></i>
-                                            </li>
-                                        </ul>
-                                    </div>*@
                                 </article>
-
-
                             </div>
                         }
 
                     </div>
                     }
-                    <div page-model="@Model.orderThread()" page-action="List" page-classes-enabled="true" 
-                         page-class="btn" page-class-normal="btn-secondary"
-                         page-class-selected="btn-primary" class="btn-group pull-right m-1">
-                    </div>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            @if (ViewBag.ShowPrevious==true)
+                            {
+                                int next = ViewBag.CurentPage - 1;
+                                
+                                <li class="page-item"><a class="page-link" asp-controller="User" asp-action="MyFeed" asp-route-page="@next">Previous</a></li>
+
+                            }
+                            @if (ViewBag.ShowNext== true)
+                            {
+                                int next = ViewBag.CurentPage + 1;
+                                <li class="page-item"><a class="page-link" asp-controller="User" asp-action="MyFeed" asp-route-page="@next">Next</a></li>
+                            }
+                        </ul>
+                    </nav>
                 </div>
             </div>
             <div class="col-lg-4 col-12">

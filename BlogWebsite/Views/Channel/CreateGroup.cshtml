@@ -1,0 +1,23 @@
+﻿@model ModelChannel
+
+<div class="middle-Screen" id="NewFolder">
+    <h1 class="md-font"><strong>Add new Folder</strong></h1>
+    <i onclick="OnClose('NewFolder')" id="Close" class="fas fa-window-close"></i>
+    <form method="post" asp-action="AddFolder" asp-controller="Channel" asp-route-Cid="@Model.ID">
+        <input asp-for="@Model.createDirectoryModel().DirectoryName" type="text" id="FolderNameInput" class="form-control" placeholder="Folder Name">
+        <span asp-validation-for="@Model.createDirectoryModel().DirectoryName"></span>
+        <button id="FolderNameSubmit" class="btn btn-danger" type="submit">Add</button>
+    </form>
+</div>
+
+<div class="middle-Screen" id="ChangeHedar" style="display:none">
+    <h1 class="md-font"><strong>Change Channel Header</strong></h1>
+    <i onclick="OnClose('ChangeHedar')" id="Close" class="fas fa-window-close free-postion top-right "></i>
+    <form method="post" asp-controller="Channel" asp-action="ChangeChannelHeaderPic" asp-route-Cid="@Model.ID" enctype="multipart/form-data">
+        <input type="file" name="Pic" />
+        <input type="submit" value="Uploade" />
+    </form>
+</div>
+<div id="overlay" onclick="offNewThread()" style="overflow:auto">
+    @await Component.InvokeAsync("NewThread")
+</div>

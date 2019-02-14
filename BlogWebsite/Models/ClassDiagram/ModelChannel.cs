@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BlogWebsite.Infrastructure;
+using BlogWebsite.Models.DataModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +20,7 @@ namespace BlogWebsite.Models.ClassDiagram
         private List<ModelNavBar> navBars = new List<ModelNavBar>();
         public string img { get; set; }
         public string simg { get; set; }
+        public int totalPages { get; private set; }
 
 
         public ModelChannel(string ID,string Name,string Description,int? totalView)
@@ -37,7 +40,7 @@ namespace BlogWebsite.Models.ClassDiagram
         {
             Followers--;
         }
-        public void createDirectory(ModelDirectory directory)
+        public void addDirectory(ModelDirectory directory)
         {
             if (Directories.FirstOrDefault(d=>d.ID.Equals(directory.ID))==null)
                 Directories.Add(directory);
@@ -67,7 +70,7 @@ namespace BlogWebsite.Models.ClassDiagram
             Directories.FirstOrDefault(d => d.ID == ID).removeThread(threadID);
         }
 
-        public List<ModelThread> getAllThread()
+        public List<ModelThread> getAllThread(int pageNum = 1)
         {
             List<ModelThread> threads = new List<ModelThread>();
             foreach (var Directorty in Directories)
@@ -79,7 +82,7 @@ namespace BlogWebsite.Models.ClassDiagram
                 }
 
             }
-            threads = threads.OrderBy(t => t.getPeekData().PublishDate).ToList();
+            threads = threads.OrderByDescending(t => t.getPeekData().PublishDate).Skip((pageNum-1)*GeneralData.pageSize).Take(GeneralData.pageSize).ToList();
 
             return threads;
         }
@@ -148,6 +151,17 @@ namespace BlogWebsite.Models.ClassDiagram
             navBars.FirstOrDefault(n => n.NID.Equals(NID)).Name = navBar.Name;
 
             navBars.FirstOrDefault(n => n.NID.Equals(NID)).Url = navBar.Url;
+        }
+
+        public createDirectoryModel createDirectoryModel()
+        {
+            return new createDirectoryModel();
+        }
+
+        public void CalculateTotalPages()
+        {
+            int num = Directories.Sum(d => d.totalNum);
+            totalPages=(int)Math.Ceiling(decimal.Divide(num, GeneralData.pageSize));
         }
     }
 }

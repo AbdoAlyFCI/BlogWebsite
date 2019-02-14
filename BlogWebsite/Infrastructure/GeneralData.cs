@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlogWebsite.Models.LocalRepo
+namespace BlogWebsite.Infrastructure
 {
-    public class localDirectory
+    public static class GeneralData
     {
-        public string Name { get; set; }
+        public static int pageSize = 6;
     }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.IO;
 using BlogWebsite.Models.DataModel;
 using Microsoft.AspNetCore.Identity;
-
+using BlogWebsite.Infrastructure;
 namespace BlogWebsite.Controllers
 {
     [Authorize]
@@ -25,10 +25,12 @@ namespace BlogWebsite.Controllers
         {
             _dbcontext = dBContext;
             this.cache = cache;
-        } 
+        }
+
+        //int pageSize = 6;
 
 
-        public ViewResult MyFeed()
+        public ViewResult MyFeed(int page=1)
         {
             var dbuser = _dbcontext.Users.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
 
@@ -60,9 +62,11 @@ namespace BlogWebsite.Controllers
                                        DID = directory.DId,
                                        DName = directory.DName
                                    };
+            
 
             var fileDirectory = from DChannel in directoryChannel
-                                join thread in _dbcontext.Files on DChannel.DID equals thread.FCid
+                                join thread in _dbcontext.Files on DChannel.DID equals thread.FCid    
+                                
                                 select new
                                 {
                                     CID = DChannel.CID,
@@ -76,6 +80,13 @@ namespace BlogWebsite.Controllers
                                     TDescription = thread.FDescription,
                                     TPic = thread.FImg,
                                 };
+            int total = fileDirectory.Count();
+            int totalPages = (int)Math.Ceiling(decimal.Divide(total, GeneralData.pageSize));
+            fileDirectory = fileDirectory.OrderByDescending(f => f.TDate);
+            fileDirectory = fileDirectory.Skip((page - 1) * GeneralData.pageSize)
+                                       .Take(GeneralData.pageSize);
+
+
             foreach (var file in fileDirectory)
             {
                 ModelPeekThread peekThread = new ModelPeekThread()
@@ -92,7 +103,14 @@ namespace BlogWebsite.Controllers
                 };
                 user.addThread(new ModelThread(peekThread,file.TText));
             }
-            ViewBag.ChannelID = user.ChannelID;
+
+            ViewBag.CurentPage = page;
+            ViewBag.ShowPrevious = page > 1;
+            ViewBag.ShowNext = page < totalPages;
+
+
+
+            //ViewBag.ChannelID = user.ChannelID;
             return View(user);
         }
 

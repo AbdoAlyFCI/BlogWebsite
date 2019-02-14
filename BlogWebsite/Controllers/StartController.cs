@@ -9,14 +9,12 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using BlogWebsite.Models.DataModel.HomeModel;
-using BlogWebsite.Models.LocalRepo;
 using System.Security.Claims;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.EntityFrameworkCore;
 using BlogWebsite.Models.ClassDiagram;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-
+using BlogWebsite.Infrastructure;
 namespace BlogWebsite.Controllers
 {
     public class StartController : Controller
@@ -50,7 +48,7 @@ namespace BlogWebsite.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Index");
+                return View("Welcome");
             }
             userModel.newUser.firstName = userModel.newUser.firstName.Trim();
             userModel.newUser.lastName = userModel.newUser.lastName.Trim();
@@ -59,7 +57,7 @@ namespace BlogWebsite.Controllers
             var newUser = _dbContext.Users.SingleOrDefault(i => i.UEmail.Equals(userModel.newUser.Email));
             if (newUser != null)
             {
-                throw new Exception("Email already exists.");
+                return View("Welcome");
             }
 
             var hasher = new PasswordHasher<Users>();
@@ -79,14 +77,19 @@ namespace BlogWebsite.Controllers
             };
             newUser.UPassword = hasher.HashPassword(newUser, userModel.newUser.Password);
 
-
+            var userImg = new UsersImg
+            {
+                UId = newUser.UId,
+                UImg = ImageConverter.convertToByte(userModel.newUser.Pic)
+            };
 
 
 
             await _dbContext.Users.AddAsync(newUser);
+            await _dbContext.UsersImg.AddAsync(userImg);
             await _dbContext.SaveChangesAsync();
             await LogInUserAsync(newUser.UId);
-            return RedirectToAction("Index", "User");
+            return RedirectToAction("MyFeed", "User");
         }
 
         [AllowAnonymous, HttpPost]
@@ -94,21 +97,23 @@ namespace BlogWebsite.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Index");
+                return View("Welcome");
             }
             var currentUser = _dbContext.Users.SingleOrDefault(i => i.UEmail.Equals(userModel.currentUser.Email));
             if (currentUser == null)
             {
                 //Will Change Soon
 
-                throw new Exception("User does not exist.");
+                //throw new Exception("User does not exist.");
             }
             var hasher = new PasswordHasher<Users>();
             var passwordResult = hasher.VerifyHashedPassword(currentUser, currentUser.UPassword, userModel.currentUser.Password);
             if (passwordResult != PasswordVerificationResult.Success)
             {
                 //Will Change Soon
-                throw new Exception("The password is wrong.");
+                //throw new Exception("The password is wrong.");
+                return View("Welcome");
+
             }
 
             await LogInUserAsync(currentUser.UId);

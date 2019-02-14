@@ -4,7 +4,12 @@
 }
 
 <div class="RegisterSection">
-    <form asp-action="RegisterNewChannel" asp-controller="Channel" method="post">
+    <form asp-action="RegisterNewChannel" asp-controller="Channel" method="post" enctype="multipart/form-data">
+        <span asp-validation-for="ID"></span>
+        <span asp-validation-for="name"></span>
+        <span asp-validation-for="description"></span>
+        <span asp-validation-for="Pic"></span>
+        <span asp-validation-for="Cover"></span>
         <fieldset>
             <legend class="text-center"><b>Register new channel</b></legend>
             <table>
@@ -22,11 +27,11 @@
                 </tr>
                 <tr>
                     <th>Uplode cover Img</th>
-                    <td><input type="file" /></td>
+                    <td><input asp-for="Cover" type="file" /></td>
                 </tr>
                 <tr>
                     <th>Uplode Img</th>
-                    <td><input type="file" /></td>
+                    <td><input asp-for="Pic" type="file" /></td>
                 </tr>
                 <tr>
                     <td colspan="2"><button class="btn btn-danger" style="width:85%"> Create new channel</button></td>

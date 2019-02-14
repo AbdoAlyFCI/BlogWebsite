@@ -1,24 +1,30 @@
 ﻿@model ModelThread
 
-<h3>@Model.Name</h3>
-@*<span class="free-postion top-right md-font">
 
-    </span>*@
-<span>@Model.PublishDate</span>
-<h6><a asp-controller="Channel" asp-action="getSpecificDirectory" asp-route-Cid="@Model.CID" asp-route-Did="@Model.directorId">/@Model.directorname</a></h6>
-<br />
-<div>
+<article>
+    <h1 class="md-font"><strong>@Model.getPeekData().Name</strong></h1>
+
+    <h2 class="sm-font"><a asp-controller="Channel" asp-action="getSpecificDirectory" asp-route-Cid="@Model.getPeekData().CID" asp-route-Did="@Model.getPeekData().directorId">/@Model.getPeekData().directorName</a></h2>
+    <p>@Model.getPeekData().PublishDate</p>
+    <br />
     @Html.Raw(@Model.Texts)
-</div>
-<hr />
-<div>
-    <h4>Comments</h4>
-    <div class="form-group">
-        <form  method="post" asp-controller="Channel" asp-action="addComment" asp-route-Cid="@Model.CID" asp-route-Did="@Model.directorId" asp-route-Tid="@Model.ID">
-            <textarea class="form-control" name="Comment"></textarea>
-            <button class="btn btn-danger" type="submit">Submit</button>
-        </form>
-    </div>
+</article>
+<hr/>
+<section>
+    <h1 class="md-font">Comments</h1>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="form-group">
+            <form method="post" asp-controller="Channel" asp-action="addComment" asp-route-Cid="@Model.getPeekData().CID" asp-route-Did="@Model.getPeekData().directorId" asp-route-Tid="@Model.getPeekData().ID">
+                <textarea class="form-control" name="Comment"></textarea>
+                <button class="btn btn-danger" type="submit">Submit</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <a class="btn btn-block btn-primary" asp-controller="Start" asp-action="Welcome"> SignUp or Login To Comment</a>
+    }
     <br />
     @foreach (var comment in Model.GetComments())
     {
@@ -26,49 +32,8 @@
             <img class="md-img" src="@comment.userImg" alt="error" />
         </div>
         <div style="width:inherit">
-            <h5>@comment.userName</h5>
+            <h2 class="sm-font">@comment.userName</h2>
             <p>@comment.Comment</p>
         </div>
     }
-
-    <div>
-        @*<div>
-                <div class="float-left" style="height:70px;">
-                    <img class="md-img" src="~/image/Test/square_Marc.jpg" alt="error" />
-                </div>
-                <div style="width:inherit">
-                    <h5>User</h5>
-                    <p>First comment First comment  First comment First comment First comment First comment First comment</p>
-                </div>
-            </div>*@
-        @*<div style="margin-left:5%">
-                <div class="float-left" style="height:58px;">
-                    <img class="sm-img" src="~/image/Test/square_Marc.jpg" alt="error" />
-                </div>
-                <div style="width:inherit">
-                    <h5>User</h5>
-                    <p>fg comment First comment  First comment First comment First comment First comment First comment</p>
-                </div>
-            </div>*@
-        @*<div style="margin-left:5%">
-                <div class="float-left" style="height:58px;">
-                    <img class="md-img" src="~/image/Test/square_Marc.jpg" alt="error" />
-                </div>
-                <div style="width:inherit">
-                    <h5>User</h5>
-                    <p>fg comment First comment  First comment First comment First comment First comment First comment</p>
-                </div>
-            </div>*@
-        @*<div style="margin-left:5%">
-                <div class="float-left" style="height:58px;">
-                    <img class="md-img" src="~/image/Test/square_Marc.jpg" alt="error" />
-                </div>
-                <div style="width:inherit">
-                    <h5>User</h5>
-                    <p>fg comment First comment  First comment First comment First comment First comment First comment</p>
-                </div>
-            </div>*@
-    </div>
-
-
-</div>
+</section>

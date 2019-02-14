@@ -30,7 +30,7 @@
 /*Body*/
 body {
     background-color: white;
-    padding-bottom: 70px;
+    /*padding-bottom: 70px;*/
 }
 /*header NavBar*/
 header {
@@ -43,6 +43,12 @@ header {
     z-index:1;
 }
 
+footer {
+    background-color: rgb(236, 97, 97);
+    position:relative;
+    bottom:-100px;
+    font-size:large
+}
 /*.Logo_H img{
     width:34px;
     height:34px;    
@@ -126,7 +132,7 @@ header {
     left: 0;
     background-color: rgba(2,2,2,.1);
     width: 950px;
-    height: 500px;
+    min-height: 500px;
 }
 .logIn {
     margin-top: 10px;
@@ -494,10 +500,7 @@ table .btn {
     background-color:#33b4a6
 }
 
-#settingDetails{
-    min-height:500px;
-    background-color:#7cd8f4
-}
+
 
 /*Channel Panel*/
 #genralInfo{
@@ -655,7 +658,7 @@ table .btn {
     margin:auto;
 }
 
-#Folders {
+/*#Folders {
     height: 450px;
     padding: 1.5%;
     font-size:21px;
@@ -670,7 +673,7 @@ table .btn {
 
 #Folders ul li ul{
     padding-left:10px;
-}
+}*/
 
 
 

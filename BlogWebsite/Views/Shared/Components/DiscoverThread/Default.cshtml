@@ -14,7 +14,12 @@
                         <h2>by <a asp-controller="Channel" asp-action="MyChannel" asp-route-Cid="@file.CID">@file.Name</a></h2>
                     </header>
 
-                    @if (file.Description.Length > 220)
+                    @if (file.Description == null)
+                    {
+
+                        <p></p>
+                    }
+                    else if (file.Description.Length > 220)
                     {
                         string s = file.Description.Substring(0, 180) + "...........";
                         <p> @s</p>

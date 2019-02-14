@@ -8,11 +8,12 @@
             <div class="col-12">
                 <div>
       
-                    <form enctype="multipart/form-data" asp-action="AddThread" asp-controller="Channel" asp-route-id="fc" method="post">
-                        <h2 class="align-middle" style="color:white">New Thread</h2>
+                    <form enctype="multipart/form-data" asp-action="AddThread" asp-controller="Channel" asp-route-Cid="@ViewBag.Cid" method="post">
+                        <h1 class="lg-font" style="color:white">New Thread</h1>
+                        <i onclick="OnClose('overlay')" style="color:white" id="Close" class="fas fa-window-close free-postion top-right "></i>
                         <div class="form-group">
                             <select class="form-control" id="FolderSelect" asp-for="DataThread.directorId">
-                                <option value="" hidden >Select Folder</option>
+                                <option value="" hidden>Select Folder</option>
                                 @foreach (var item in Model.AvailbleDirectory)
                                 {
                                     <option value="@item.Key">@item.Value</option>
@@ -36,12 +37,12 @@
                         <br />
                         <h4 style="color:white">Thread Image</h4>
                         <input type="file" asp-for="DataThread.Pic" />
-                      
+
                         <br />
                         @*<input type="submit" value="Uploade" />>*@
                         <table style="width:100%;">
                             <tr>
-                                <td  ><button class="btn btn-light" id="SubmitThread" type="submit" value="Uploade" style="width:548.8px">Submit</button></td>
+                                <td><button class="btn btn-light" id="SubmitThread" type="submit" value="Uploade" style="width:548.8px">Submit</button></td>
                                 <td><button class="btn btn-danger" style="width:548.8px" type="button" id="PreviewBtn">Preview</button></td>
                             </tr>
                             <tr>

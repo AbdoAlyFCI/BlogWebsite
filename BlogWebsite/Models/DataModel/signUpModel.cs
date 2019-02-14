@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using Microsoft.AspNetCore.Http;
 
 namespace BlogWebsite.Models
 {
@@ -38,5 +39,7 @@ namespace BlogWebsite.Models
         [Required(ErrorMessage = "Please  enter your Birth year")]
         public string birthYear { get; set; }
 
+        [Required(ErrorMessage ="Please select img for your profile")]
+        public IFormFile Pic { get; set; }
     }
 }

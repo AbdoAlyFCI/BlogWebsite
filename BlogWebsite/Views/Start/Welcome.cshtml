@@ -46,7 +46,7 @@
                     </div>
                     <div class="col-lg-3 col-md-12"> @* Sign Up div *@
                         <div>
-                            <form class="signUp" method="post" asp-action="signUp">
+                            <form class="signUp" method="post" asp-action="SignUp" enctype="multipart/form-data">
                                 <span asp-validation-for="newUser.firstName" style="width:320px;"></span>
                                 <span asp-validation-for="newUser.lastName" style="width:320px;"></span>
                                 <span asp-validation-for="newUser.Email" style="width:320px;"></span>
@@ -55,6 +55,7 @@
                                 <span asp-validation-for="newUser.birthYear" style="width:320px;"></span>
                                 <span asp-validation-for="newUser.birthMonth" style="width:320px;"></span>
                                 <span asp-validation-for="newUser.birthDay" style="width:320px;"></span>
+                                <span asp-validation-for="newUser.Pic" style="width:320px;"></span>
                                 <fieldset>
                                     <legend><b>Sign Up</b></legend>
                                     <table>
@@ -92,12 +93,16 @@
                                                 </select>
                                             </td>
                                         </tr>
+                                        <tr >
+                                            <td><input  style="width:100px" type="file" asp-for="newUser.Pic" /></td>
+                                        </tr>
                                         @*<tr>
-                    <td colspan="2"><input type="checkbox" name="Remember" value="OK" />&nbsp;&nbsp;  I agree with all condtion and rules</td>
-                </tr>*@
+            <td colspan="2"><input type="checkbox" name="Remember" value="OK" />&nbsp;&nbsp;  I agree with all condtion and rules</td>
+        </tr>*@
                                         <tr>
                                             <td><input class="btn btn-danger" type="submit" value="Sign Up" /></td>
                                         </tr>
+
 
                                     </table>
 

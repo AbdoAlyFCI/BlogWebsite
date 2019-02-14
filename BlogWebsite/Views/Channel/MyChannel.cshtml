@@ -8,13 +8,19 @@
         <div class="row">
             <div class="col-12" id="Header">
                 <img src="@Model.img" alt="Channelbanner" />
-                <button id="ChangeHeader"  onclick="onNewHeader()" style="">
-                    <i class="fas fa-camera"></i>
-                </button>
+                @if (User.Identity.IsAuthenticated == true)
+                {
+                    @if (Model.ownerID.Equals(User.Identity.Name))
+                    {
+                        <button id="ChangeHeader" onclick="onNewHeader()" style="">
+                            <i class="fas fa-camera"></i>
+                        </button>
+
+                    }
+                }
             </div>
             <div class="col-12">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
@@ -24,9 +30,9 @@
                             {
                                 if (Model.getNavBar()[i].Name != null || Model.getNavBar()[i].Url != null)
                                 {
-                                <li class="nav-item ">
-                                    <a class="nav-link" href="@Model.getNavBar()[i].Url">@Model.getNavBar()[i].Name<span class="sr-only">(current)</span></a>
-                                </li>
+                                    <li class="nav-item ">
+                                        <a class="nav-link" href="@Model.getNavBar()[i].Url">@Model.getNavBar()[i].Name<span class="sr-only">(current)</span></a>
+                                    </li>
                                 }
                             }
                             <li class="nav-item">
@@ -40,65 +46,66 @@
                     </div>
                 </nav>
             </div>
-
         </div>
     </div>
-
 </section>
-<section style="margin-top:1%">
+<section class="mg-top-sm">
     <div class="container">
         <div class="row">
-            <div class="col-8">
+            <div class="col-lg-8 col-md-12 col-12">
                 <div class="ViewBox">
-                    <h3>Channel Feed </h3>
-                    <span class="free-postion top-right md-font">
-                        <i id="block" class="fas fa-th-large">d</i>
-                        <i id="list" class="fas fa-bars">s</i>
-                    </span>
+                    <h1 class="md-font">Last Feed</h1>
                     <div class="row">
-                        @foreach (var file in Model.getAllThread())
+                        @foreach (var file in Model.getAllThread(ViewBag.pagenum))
                         {
-                            <div class="col-12 LV">
+                            <div class="col-12">
+                                <article class="seed">
+                                    <figure class="float-left">
+                                        <img src="@file.getPeekData().img" alt="error" />
+                                    </figure>
+                                    <aside>
+                                        <header>
+                                            <h1><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@file.getPeekData().CID" asp-route-Did="@file.getPeekData().directorId" asp-route-Tid="@file.getPeekData().ID">@file.getPeekData().Name</a></h1>
+                                            <h2><a asp-controller="Channel" asp-action="getSpecificDirectory" asp-route-Cid="@Model.ID" asp-route-Did="@file.getPeekData().directorId">/@file.getPeekData().directorName</a></h2>
+                                        </header>
+                                        @if (file.getPeekData().Description == null)
+                                        {
 
-                                <div class="New">
-                                    <div class="float-left image" style="background-image: url(@file.getPeekData().img)">
-                                        @*<div><img src="~/image/Test/square_Marc.jpg" /></div>*@
-                                    </div>
-                                    <div class="float-left Discription">
-                                        <div>
-                                            <p style="font-size:large ; margin-bottom:3px;"><b><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@Model.ID" asp-route-Did="@file.getPeekData().directorId" asp-route-Tid="@file.getPeekData().ID">@file.getPeekData().Name</a></b></p>
+                                            <p></p>
+                                        }
+                                        else if (file.getPeekData().Description.Length > 220)
+                                        {
+                                            string s = file.getPeekData().Description.Substring(0, 180) + "...........";
+                                            <p> @s</p>
+                                        }
+                                        else
+                                        {
                                             <p>@file.getPeekData().Description</p>
-                                        </div>
-                                        @*<div class="genralInfo">
-                                                <span>@file.PublishDate</span><br />
-                                                <span>
-                                                    <i class="far fa-eye"></i><span class="mr-2"> 5</span>
-                                                    <i class="fas fa-comments"></i><span> 20</span>
-                                                </span>
-                                            </div>*@
-                                    </div>
-                                    <div class="float-left react">
-                                        <ul>
-                                            <li class="Save" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                                <i class="far fa-bookmark" id="out"></i>
-                                                <i class="fas fa-bookmark" id="in" hidden></i>
-                                            </li>
-                                            <li class="Like" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                                <i class="far fa-thumbs-up"></i>
-                                                <i class="fas fa-thumbs-up" hidden></i>
-                                            </li>
-                                            <li class="Dislike" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
-                                                <i class="far fa-thumbs-down"></i>
-                                                <i class="fas fa-thumbs-down" hidden></i>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-
+                                        }
+                                        <footer>
+                                            <time datetime="@file.getPeekData().PublishDate">@file.getPeekData().PublishDate</time>
+                                        </footer>
+                                    </aside>
+                                </article>
                             </div>
                         }
                     </div>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            @if (ViewBag.pagenum >1)
+                            {
+                                int next = ViewBag.pagenum - 1;
+
+                                <li class="page-item"><a class="page-link" asp-controller="User" asp-action="MyFeed" asp-route-page="@next">Previous</a></li>
+
+                            }
+                            @if (ViewBag.pagenum <Model.totalPages)
+                            {
+                                int next = ViewBag.pagenum + 1;
+                                <li class="page-item"><a class="page-link" asp-controller="User" asp-action="MyFeed" asp-route-page="@next">Next</a></li>
+                            }
+                        </ul>
+                    </nav>
 
                 </div>
             </div>
@@ -145,7 +152,7 @@
                                     }
                                     else
                                     {
-                                        <button class="btn btn-primary" type="submit"><a class="link" asp-controller="Start" asp-action="Welcome"> SignUp</a></button>
+                                        <a class="btn btn-primary" asp-controller="Start" asp-action="Welcome"> SignUp</a>
 
                                     }
 
@@ -154,80 +161,68 @@
 
                         </div>
                     </div>
-                    @if(Model.ownerID.Equals(User.Identity.Name)){
-                    <div class="col-12" style="margin-top:4%">
-                        <div class="sm-Rectangle" id="AddItemTable">
-                            @* class="infoTable" *@
-                            <button onclick="onNewFolder()"><i class="fas fa-folder-plus"></i></button>
-                            <button onclick="onNewThread()"><i class="fas fa-file-medical"></i></button>
+                    @if (Model.ownerID.Equals(User.Identity.Name))
+                    {
+                        <div class="col-12" style="margin-top:4%">
+                            <div class="sm-Rectangle" id="AddItemTable">
+                                @* class="infoTable" *@
+                                <button onclick="onNewFolder()"><i class="fas fa-folder-plus"></i></button>
+                                <button onclick="onNewThread()"><i class="fas fa-file-medical"></i></button>
+                            </div>
                         </div>
-                    </div>
                     }
                     <div class="col-12" style="margin-top:4%;">
-                        <div id="Folders" class="md-Rectangle">
+                        <nav class="md-Rectangle md-font">
                             @*id="Folders"*@
-                            <ul>
+                            <ul class="vertical-list">
                                 @foreach (var Directory in Model.getAllDirectory())
                                 {
                                     <li onclick="onClick(this)">
                                         <i class="fas fa-folder-open"></i>
                                         @Directory.Name
-                                        <ul>
+                                        <ul class="vertical-list">
                                             @foreach (var item in Directory.getallThread())
                                             {
-                                                <li>| <i class="fas fa-file"></i>&ensp;
-                                                      <a class="link" asp-controller="Channel" asp-action="Thread" asp-route-Cid="@Model.ID" asp-route-Did="@Directory.ID" asp-route-Tid="@item.getPeekData().ID">
-                                                          @if (item.getPeekData().Name.Length > 27)
-                                                          {
-                                                              
-                                                                  string s = item.getPeekData().Name.Substring(0, 22) + "........";
-                                                              @s
-                                                                     
+                                                <li>
+                                                    | <i class="fas fa-file"></i>&ensp;
+                                                    <a class="link" asp-controller="Channel" asp-action="Thread" asp-route-Cid="@Model.ID" asp-route-Did="@Directory.ID" asp-route-Tid="@item.getPeekData().ID">
+                                                        @if (item.getPeekData().Name.Length > 27)
+                                                        {
 
-                                                          }
-                                                          else
-                                                          {
+                                                            string s = item.getPeekData().Name.Substring(0, 22) + "........";
+                                                            @s
 
-                                                              @item.getPeekData().Name
-                                                          }
 
-                                                      </a>                                           
+                                                        }
+                                                        else
+                                                        {
+
+                                                            @item.getPeekData().Name
+                                                        }
+
+                                                    </a>
                                                 </li>
-                                            
+
                                             }
                                         </ul>
                                     </li>
-                                }                                
+                                }
                             </ul>
-                        </div>
+                        </nav>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<div id="NewFolder">
-        <span ><strong style="font-size:larger">Add new Folder</strong></span>
-        <i onclick="offNewFolder()" id="Close" class="fas fa-window-close"></i>
-        @*<form method="post" asp-action="AddFolder" asp-controller="Channel">
-            <input asp-for="FolderName" type="text" id="FolderNameInput" class="form-control" placeholder="Folder Name">
-            <span asp-validation-for="FolderName"></span>
-            <button id="FolderNameSubmit" class="btn btn-danger" type="submit">Add</button>
-        </form>*@
-    </div>
 
-<div id="Headers" style="display:none">
-
-    <span><strong style="font-size:larger">Change Channel Header</strong></span>
-    <i onclick="offNewFolder()" id="Close" class="fas fa-window-close"></i>
-    <form method="post" asp-controller="Channel" asp-action="ChangeChannelHeaderPic" asp-route-ID="fc" enctype="multipart/form-data">
-        <input type="file" name="Pic" />
-        <input type="submit" value="Uploade" />
-    </form>
-</div>
-<div id="overlay" onclick="offNewThread()" style="overflow:auto">
-    @await Component.InvokeAsync("NewThread")
-</div>
+@if (User.Identity.IsAuthenticated == true)
+{
+    @if (Model.ownerID.Equals(User.Identity.Name))
+    {
+        @await Html.PartialAsync("~/Views/Channel/CreateGroup.cshtml")
+    }
+}
 
 
 

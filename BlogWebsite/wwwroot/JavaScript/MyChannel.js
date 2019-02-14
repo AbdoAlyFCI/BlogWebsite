@@ -4,10 +4,9 @@
 }
 
 function onNewHeader() {
-    document.getElementById("Headers").style.display = "block";
+    document.getElementById("ChangeHedar").style.display = "block";
     document.documentElement.style.overflow = 'hidden';
 }
-
 //function offNewThread() {
 //    document.getElementById("overlay").style.display = "none";
 //}
@@ -30,5 +29,10 @@ function onClick(Parent) {
         Parent.childNodes[1].className = ('fas fa-folder');
         Parent.childNodes[3].style.display = "none";    
     }
+}
+
+function OnClose(e) {
+    document.getElementById(e).style.display = "none";
+    document.documentElement.style.overflow = 'auto';
 }
 

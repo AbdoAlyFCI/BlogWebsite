@@ -9,6 +9,7 @@ namespace BlogWebsite.Models.ClassDiagram
     {
         public string ID { get; set; }
         public string Name { get; set; }
+        public int totalNum { get; set; } = 0;
         List<ModelThread> threads = new List<ModelThread>();
 
         public ModelDirectory(string ID,string Name)
@@ -21,6 +22,7 @@ namespace BlogWebsite.Models.ClassDiagram
         {
             if (threads.FirstOrDefault(t => t.getPeekData().ID.Equals(thread.getPeekData().ID)) == null){
                 threads.Add(thread);
+                totalNum++;
             }
         }
 

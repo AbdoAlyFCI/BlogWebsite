@@ -3,46 +3,51 @@
     ViewData["Title"] = "Channel Panel";
 }
 
-<div id="PersonalPic">
+<section  class="mg-bottom-sm mg-top-sm text-center">
     <div>
-        <img class="lg-img" src="@Model.simg" />
-        <button id="ChangeHeader" onclick="onNewHeader()">
-            <i class="fas fa-camera"></i>
-        </button>
-        <h3>@Model.Name</h3>
-        <h6>ID:@Model.ID</h6>
+        <figure>
+            <img class="lg-img" src="@Model.simg" />
+            <button id="ChangeHeader" onclick="onNewHeader()">
+                <i class="fas fa-camera"></i>
+            </button>
+        </figure>
+
+        <h1 class="lg-font">@Model.Name</h1>
+        <p>ID:@Model.ID</p>
     </div>
-</div>
+</section>
 <section>
 
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div id="settingDetails">
+                <div class="viewStretch">
                     <div class="row">
                         <div class="col-3">
-                            <div id="settingList">
-                                <ul>
-                                    <li>
-                                        <button class="btn btn-block" id="GenralinfoBtn">Genral info</button>
-                                    </li>
-                                    <li>
-                                        <button class="btn btn-block" id="NavbarBtn">Navbar</button>
-                                    </li>
-                                    <li >
-                                        <button class="btn btn-block" id="DraftsBtn">Drafts</button>                                 
-                                    </li>
-                                    <li>
-                                        <button class="btn btn-block" id="BlockusersBtn">Block users</button>  
-                                    </li>
-                                    <li>
-                                        <button class="btn btn-block" id="AboutBtn">About</button>
-                                    </li>
-                                    <li>                                      
-                                        <a class="btn btn-block" style="background-color:#dddddd"  asp-controller="Channel" asp-action="MyChannel" asp-route-Cid="fc">See Chaneel</a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <aside class="mg-top-sm">
+                                <nav>
+                                    <ul class="vertical-list">
+                                        <li>
+                                            <button class="btn btn-block btn-danger" id="GenralinfoBtn">Genral info</button>
+                                        </li>
+                                        <li>
+                                            <button class="btn btn-block btn-danger" id="NavbarBtn">Navbar</button>
+                                        </li>
+                                        <li>
+                                            <button class="btn btn-block btn-danger" id="DraftsBtn">Drafts</button>
+                                        </li>
+                                        <li>
+                                            <button class="btn btn-block btn-danger" id="BlockusersBtn">Block users</button>
+                                        </li>
+                                        <li>
+                                            <button class="btn btn-block btn-danger" id="AboutBtn">About</button>
+                                        </li>
+                                        <li>
+                                            <a class="btn btn-block  btn-danger"  asp-controller="Channel" asp-action="MyChannel" asp-route-Cid="fc">See Chaneel</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </aside>
                         </div>
                         <div class="col-9">
                             <div id="GenralTab">
@@ -151,13 +156,13 @@
                                         <div class="col-12 LV">
 
                                             <div class="New">
-                                                <div class="float-left image" style="background-image: url(@file.img)">
+                                                <div class="float-left image" style="background-image: url(@file.getPeekData().img)">
                                                     @*<div><img src="~/image/Test/square_Marc.jpg" /></div>*@
                                                 </div>
                                                 <div class="float-left Discription">
                                                     <div>
-                                                        <p style="font-size:large ; margin-bottom:3px;"><b><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@Model.ID" asp-route-Did="@file.directorId" asp-route-Tid="@file.ID">@file.Name</a></b></p>
-                                                        <p>@file.Description</p>
+                                                        <p style="font-size:large ; margin-bottom:3px;"><b><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@Model.ID" asp-route-Did="@file.getPeekData().directorId" asp-route-Tid="@file.getPeekData().ID">@file.getPeekData().Name</a></b></p>
+                                                        <p>@file.getPeekData().Description</p>
                                                     </div>
                                                     @*<div class="genralInfo">
                                                             <span>@file.PublishDate</span><br />

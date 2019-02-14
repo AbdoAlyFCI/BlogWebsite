@@ -23,6 +23,7 @@ namespace BlogWebsite.ViewComponents
         public IViewComponentResult Invoke()
         {
             string Cid = RouteData.Values["Cid"].ToString();
+            ViewBag.Cid = Cid;
             var channelDirectory = _dbContext.Directory.Where(d => d.DOwnerId.Equals(Cid))
                                    .Select(d=>new { d.DName,d.DId}).ToList();
             RegisterThread registerThread = new RegisterThread();

@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BlogWebsite.Models;
-using BlogWebsite.Models.LocalRepo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.Authorization;
 using BlogWebsite.Models.DataModel;
-using BlogWebsite.Models.DataModel.ChannelModel;
 using BlogWebsite.Models.ClassDiagram;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
 using BlogWebsite.Models.DataModel.RegisterThreadModel;
+using BlogWebsite.Infrastructure;
 
 namespace BlogWebsite.Controllers
 {
@@ -27,6 +26,8 @@ namespace BlogWebsite.Controllers
             _dbContext = dBContext;
             this.cache = cache;
         }
+
+
 
         /* 1-MyChannel
          * 2-RegisterNewChannel (Get)
@@ -47,6 +48,7 @@ namespace BlogWebsite.Controllers
         [HttpGet,Authorize]
         public IActionResult RegisterNewChannel()
         {
+            
             var userImg = _dbContext.UsersImg.FirstOrDefault(u => u.UId.Equals(User.Identity.Name));
             if (userImg != null)
             {
@@ -109,18 +111,29 @@ namespace BlogWebsite.Controllers
                 CFollowers = 0,
                 CTotalWatch = 0,
                 RelationShip = new List<RelationShip>(),
+                CIMG = ImageConverter.convertToByte(channel.Cover),
+                CSIMG = ImageConverter.convertToByte(channel.Pic)
             });
+            for (int i = 0; i < 4; i++)
+            {
+                await _dbContext.NavBar.AddAsync(new NavBar
+                {
+                    NID=string.Format($"N{channel.ID}{i}"),
+                    NCID=channel.ID
+                });  
+            }
+
             await _dbContext.SaveChangesAsync();
             //var jsonUser = HttpContext.Session.GetString(User.Identity.Name);
             //var cuser = JsonConvert.DeserializeObject<ModelUser>(jsonUser);
             //cuser.ChannelID = channel.ID;
 
+            return Redirect(string.Format("/Channel/MyChannel/" + channel.ID));
 
-            return RedirectToAction("MyChannel", "Channel", channel.ID);
         }
 
         /*3-My Channel*/
-        public IActionResult MyChannel(string Cid)
+        public IActionResult MyChannel(string Cid,int page=1)
         {
 
             /*1- Build channel
@@ -133,23 +146,10 @@ namespace BlogWebsite.Controllers
                 ViewBag.img = Infrastructure.ImageConverter.ConvertToString(userImg.UImg);
 
             }
-
-
-            var follow = _dbContext.RelationShip.AsNoTracking().FirstOrDefault(u => u.RCid.Equals(Cid) && u.ActioinUserId.Equals(User.Identity.Name));
-            if(follow == null)
-            {
-                ViewBag.State = "N";
-            }
-            else if (follow.RStateId == 1)
-            {
-                ViewBag.State = "F";
-            }
-            else if (follow.RStateId == 2)
-            {
-                ViewBag.State = "B";
-            }
+            checkFollowing(Cid);
             buildChannelSteps(Cid);
             var channel = cache.Get(Cid);
+            ViewBag.pagenum = page;
             return View("MyChannel",channel);
         }
 
@@ -194,14 +194,14 @@ namespace BlogWebsite.Controllers
             }
 
             channel = (ModelChannel)cache.Get(Cid);
-
+            checkFollowing(Cid);
             return View(channel);
         }
 
 
         /*6-Add Thread (Post)*/
         [HttpPost,ValidateAntiForgeryToken]        
-        public async Task<IActionResult> AddThread(RegisterThread thread,string id)
+        public async Task<IActionResult> AddThread(RegisterThread thread,string Cid)
         {
             if (!ModelState.IsValid)
             {
@@ -209,7 +209,7 @@ namespace BlogWebsite.Controllers
             }
 
             Channel channel = _dbContext.Channel
-                             .FirstOrDefault(c => c.CId.Equals(id));
+                             .FirstOrDefault(c => c.CId.Equals(Cid));
 
 
             var director = _dbContext.Entry(channel)
@@ -250,28 +250,30 @@ namespace BlogWebsite.Controllers
 
             director.Files.Add(newFile);
             await _dbContext.SaveChangesAsync();
-            return RedirectToAction("MyChannel","Channel",id);
+
+            return Redirect(string.Format($"/Channel/MyChannel/{Cid}"));
         }
 
 
-        /*7-Add Directory (Post)*/        
+        /*7-Add Directory (Post)*/
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ViewResult> AddFolder (ChannelData Folder)
+        public async Task<IActionResult> AddFolder (createDirectoryModel Directory,string Cid)
         {
             if (!ModelState.IsValid)
             {
-                return View("MyChannel");
+                return Redirect(string.Format($"/Channel/Thread/{Cid}"));
             }
-            var getUser = (localUser)cache.Get(User.Identity.Name);
-            var channellist = _dbContext.Directory.Where(s => s.DOwnerId == getUser.myChannel.ID).ToList().Count()+1;
-            var newID = getUser.myChannel.ID + "D" + Convert.ToString(channellist);
+            //var getUser = (localUser)cache.Get(User.Identity.Name);
+            var channellist = _dbContext.Directory.Where(s => s.DOwnerId == Cid).ToList().Count()+1;
+            var newID = Cid + "D" + Convert.ToString(channellist);
 
-            var channel = _dbContext.Channel.SingleOrDefault(s => s.COwnerId .Equals( getUser.ID));
+            var channel = _dbContext.Channel.SingleOrDefault(s => s.CId .Equals(Cid));
+
             channel.Directory.Add(new Models.Directory
             {
                 DId = newID,
                 DDepth = 0,
-                DName = Folder.FolderName,
+                DName = Directory.DirectoryName,
                 DParentId = newID,
                 DType = 1,
                 //DTypeNavigation = new FileType()
@@ -279,7 +281,7 @@ namespace BlogWebsite.Controllers
 
             await _dbContext.SaveChangesAsync();
 
-            return View("MyChannel");
+            return Redirect(string.Format($"/Channel/MyChannel/{Cid}"));
         }
 
 
@@ -383,6 +385,7 @@ namespace BlogWebsite.Controllers
             var channelCache =(ModelChannel) cache.Get(Cid);
             ViewBag.Name = channelCache.getSpecificDirectoryThreads(Did)[0].getPeekData().directorName;
             ViewBag.Did = Did;
+            checkFollowing(Cid);
             return View(channelCache);
         }
 
@@ -425,6 +428,7 @@ namespace BlogWebsite.Controllers
             }
 
             var channel = (ModelChannel)cache.Get(Cid);
+            checkFollowing(Cid);
             return View(channel);
         }
 
@@ -459,7 +463,7 @@ namespace BlogWebsite.Controllers
             foreach (var directory in directories)
             {
                 var modelDirectory = new ModelDirectory(directory.DId, directory.DName);
-                channelCache.createDirectory(modelDirectory);
+                channelCache.addDirectory(modelDirectory);
             }
         }
 
@@ -470,8 +474,12 @@ namespace BlogWebsite.Controllers
             var channelCache =(ModelChannel) cache.Get(id);
             foreach (var director in channelCache.getAllDirectory())
             {
-               
-                var files = _dbContext.Files.AsNoTracking().Where(s => s.FCid.Equals(director.ID)).ToList();
+
+                var files = _dbContext.Files.AsNoTracking().Where(s => s.FCid.Equals(director.ID));
+                int total = files.Count();
+                //files = files.OrderByDescending(e => e.FPublishDate);
+                //files = files.Skip((pagenum - 1) * pageSize).Take(pageSize);
+                       
                 foreach (var file in files)
                 {
                     string imgscr = null;
@@ -495,6 +503,11 @@ namespace BlogWebsite.Controllers
                     director.addThread(new ModelThread(peekThread, file.FText));
                     
                 }
+                channelCache.CalculateTotalPages();
+                //ViewBag.CurentPage = pagenum;
+                //ViewBag.ShowPrevious = pagenum > 1;
+                //ViewBag.ShowNext = pagenum < total;
+
             }
             
         }
@@ -532,6 +545,23 @@ namespace BlogWebsite.Controllers
             SetChannelInAction(id);
             BuildDirectorInAction(id);
             SetThreadInAction(id);
+        }
+
+        private void checkFollowing(string Cid)
+        {
+            var follow = _dbContext.RelationShip.AsNoTracking().FirstOrDefault(u => u.RCid.Equals(Cid) && u.ActioinUserId.Equals(User.Identity.Name));
+            if (follow == null)
+            {
+                ViewBag.State = "N";
+            }
+            else if (follow.RStateId == 1)
+            {
+                ViewBag.State = "F";
+            }
+            else if (follow.RStateId == 2)
+            {
+                ViewBag.State = "B";
+            }
         }
     }
 

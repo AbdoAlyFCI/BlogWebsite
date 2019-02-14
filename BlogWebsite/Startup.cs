@@ -10,6 +10,7 @@ using BlogWebsite.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using ReflectionIT.Mvc.Paging;
 
 namespace BlogWebsite
 {
@@ -36,7 +37,7 @@ namespace BlogWebsite
 
               });
 
-
+            services.AddPaging();
             services.AddSession(options => {
                 //options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
             });
