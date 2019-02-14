@@ -1,0 +1,144 @@
+﻿@model ModelUser
+@{
+    ViewData["Title"] = "MyFeed";
+}
+
+<section class="mg-top-sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12 col-12" >
+                <div class=" ViewBox">
+                    @*Feed*@
+                    @if (Model.orderThread().Count == 0)
+                    {
+                        <h3>
+                            You not follow any channel yet
+                        </h3>
+                    }
+                    else
+                    {
+                    <h1 class="md-font">Last Feed </h1>
+                    <div class="row">
+                        @foreach (var file in Model.orderThread())
+                        {
+                            <div class="col-12">
+                                <article class="seed">
+                                    <figure class="float-left">
+                                        <img src="@file.getPeekData().img" alt="error"/>                                       
+                                    </figure>
+                                    <aside>
+                                        <header>
+                                            <h1><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@file.getPeekData().CID" asp-route-Did="@file.getPeekData().directorId" asp-route-Tid="@file.getPeekData().ID">@file.getPeekData().Name</a></h1>
+                                            <h2>by <a asp-controller="Channel" asp-action="MyChannel" asp-route-Cid="@file.getPeekData().CID">@file.getPeekData().Cname</a></h2>
+                                        </header>
+
+                                        @if (file.getPeekData().Description == null)
+                                        {
+
+                                            <p></p>
+                                        }
+                                        else if (file.getPeekData().Description.Length > 220)
+                                        {
+                                            string s = file.getPeekData().Description.Substring(0, 180) + "...........";
+                                            <p> @s</p>
+                                        }
+                                        else
+                                        {
+                                            <p>@file.getPeekData().Description</p>
+                                        }
+                                        <footer>
+                                            <time datetime="@file.getPeekData().PublishDate">@file.getPeekData().PublishDate</time>
+                                        </footer>
+                                    </aside>
+                                </article>
+                            </div>
+                        }
+
+                    </div>
+                    }
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            @if (ViewBag.ShowPrevious==true)
+                            {
+                                int next = ViewBag.CurentPage - 1;
+                                
+                                <li class="page-item"><a class="page-link" asp-controller="User" asp-action="MyFeed" asp-route-page="@next">Previous</a></li>
+
+                            }
+                            @if (ViewBag.ShowNext== true)
+                            {
+                                int next = ViewBag.CurentPage + 1;
+                                <li class="page-item"><a class="page-link" asp-controller="User" asp-action="MyFeed" asp-route-page="@next">Next</a></li>
+                            }
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div>
+                    @* User Channels that follow *@
+                    <div class="row">
+                        <div class="col-lg-12 col-md-6 col-sm-12 col-12 ">
+                            <div id="Channels" class="carousel slide" data-ride="carousel" data-interval="false">
+                                <ol class="carousel-indicators">
+                                    <li data-target="#Channels" data-slide-to="0" class="active"></li>
+                                    <li data-target="#Channels" data-slide-to="1"></li>
+                                </ol>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="md-Rectangle">
+                                            <h3>Suggested Channels</h3>
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                <div class="tab">
+                                                    <img class="md-img" src="~/image/Test/square_Marc.jpg" />
+                                                    <span>Channel</span>
+                                                    <button class="btn btn-primary free-postion right">follow</button>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="md-Rectangle">
+                                            <h3>Followed Channels</h3>
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                <div class="tab">
+                                                    <img class="md-img" src="~/image/Test/square_Marc.jpg" />
+                                                    <span>Channel</span>
+                                                    <button class="btn btn-primary free-postion right">follow</button>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6 col-sm-12 col-12">
+                            <aside class="md-Rectangle">
+                                <h3>Trends</h3>
+                                <nav>
+                                    <ul class="vertical-list sm-font">
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+
+                                    </ul>
+                                </nav>
+                            </aside>
+                        </div>
+                    </div>
+                    
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

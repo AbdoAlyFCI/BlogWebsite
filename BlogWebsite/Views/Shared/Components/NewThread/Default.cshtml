@@ -1,0 +1,62 @@
+﻿
+@model RegisterThread
+
+<script src="https://cdn.ckeditor.com/4.11.1/standard/ckeditor.js"></script>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div>
+      
+                    <form enctype="multipart/form-data" asp-action="AddThread" asp-controller="Channel" asp-route-Cid="@ViewBag.Cid" method="post">
+                        <h1 class="lg-font" style="color:white">New Thread</h1>
+                        <i onclick="OnClose('overlay')" style="color:white" id="Close" class="fas fa-window-close free-postion top-right "></i>
+                        <div class="form-group">
+                            <select class="form-control" id="FolderSelect" asp-for="DataThread.directorId">
+                                <option value="" hidden>Select Folder</option>
+                                @foreach (var item in Model.AvailbleDirectory)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            </select>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Thread Name" id="ThreadName" asp-for="DataThread.Name" />
+                        <div class="form-group">
+                            <textarea class="form-control" asp-for="DataThread.Text" id="editor1"></textarea>
+                        </div>
+                        <script>
+                            CKEDITOR.replace('editor1');
+                        </script>
+
+                        <br /><br />
+                        <h4 style="color:white">Description (Optinal)</h4>
+                        <textarea class="form-control" rows="5" asp-for="DataThread.Description"></textarea>
+                        <br />
+                        <h4 style="color:white">Tags</h4>
+                        <input type="text" class="form-control" placeholder="Put ',' to distenct between tags" />
+                        <br />
+                        <h4 style="color:white">Thread Image</h4>
+                        <input type="file" asp-for="DataThread.Pic" />
+
+                        <br />
+                        @*<input type="submit" value="Uploade" />>*@
+                        <table style="width:100%;">
+                            <tr>
+                                <td><button class="btn btn-light" id="SubmitThread" type="submit" value="Uploade" style="width:548.8px">Submit</button></td>
+                                <td><button class="btn btn-danger" style="width:548.8px" type="button" id="PreviewBtn">Preview</button></td>
+                            </tr>
+                            <tr>
+                                <td><button class="btn btn-light" type="reset" style="width:548.8px">Reset</button></td>
+                                <td><button class="btn btn-danger" style="width:548.8px">Save</button></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+

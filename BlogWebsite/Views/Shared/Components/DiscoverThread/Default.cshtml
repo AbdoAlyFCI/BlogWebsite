@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ModelPeekThread>
+
+<div class="row">
+    @foreach (var file in Model)
+    {
+        <div class="col-12">
+            <article class="seed">
+                <figure class="float-left">
+                    <img src="@file.img" alt="error" />
+                </figure>
+                <aside>
+                    <header>
+                        <h1><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@file.CID" asp-route-Did="@file.directorId" asp-route-Tid="@file.ID">@file.Name</a></h1>
+                        <h2>by <a asp-controller="Channel" asp-action="MyChannel" asp-route-Cid="@file.CID">@file.Name</a></h2>
+                    </header>
+
+                    @if (file.Description == null)
+                    {
+
+                        <p></p>
+                    }
+                    else if (file.Description.Length > 220)
+                    {
+                        string s = file.Description.Substring(0, 180) + "...........";
+                        <p> @s</p>
+                    }
+                    else
+                    {
+                        <p>@file.Description</p>
+                    }
+                    <footer>
+                        <time datetime="@file.PublishDate">@file.PublishDate</time>
+                    </footer>
+                </aside>
+                @*<div class="float-left react">
+                        <ul>
+                            <li class="Save" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                <i class="far fa-bookmark" id="out"></i>
+                                <i class="fas fa-bookmark" id="in" hidden></i>
+                            </li>
+                            <li class="Like" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                <i class="far fa-thumbs-up"></i>
+                                <i class="fas fa-thumbs-up" hidden></i>
+                            </li>
+                            <li class="Dislike" onmouseover="iconOver(this)" onmouseout="iconOut(this)">
+                                <i class="far fa-thumbs-down"></i>
+                                <i class="fas fa-thumbs-down" hidden></i>
+                            </li>
+                        </ul>
+                    </div>*@
+            </article>
+
+
+        </div>
+    }
+</div>

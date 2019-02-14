@@ -1,0 +1,85 @@
+﻿@model ModelUser
+@{
+    ViewData["Title"] = "Discover";
+}
+
+<section class="mg-top-sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12 col-12">
+                <div class=" ViewBox">
+                    <h1 class="md-font">Discover</h1>
+                    @await Component.InvokeAsync("DiscoverThread")
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div>
+                    @* User Channels that follow *@
+                    <div class="row">
+                        <div class="col-lg-12 col-md-6 col-sm-12 col-12 ">
+                            <div id="Channels" class="carousel slide" data-ride="carousel" data-interval="false">
+                                <ol class="carousel-indicators">
+                                    <li data-target="#Channels" data-slide-to="0" class="active"></li>
+                                    <li data-target="#Channels" data-slide-to="1"></li>
+                                </ol>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="md-Rectangle">
+                                            <h3>Suggested Channels</h3>
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                <div class="tab">
+                                                    <img class="md-img" src="~/image/Test/square_Marc.jpg" />
+                                                    <span>Channel</span>
+                                                    <button class="btn btn-primary free-postion right">follow</button>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="md-Rectangle">
+                                            <h3>Followed Channels</h3>
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                <div class="tab">
+                                                    <img class="md-img" src="~/image/Test/square_Marc.jpg" />
+                                                    <span>Channel</span>
+                                                    <button class="btn btn-primary free-postion right">follow</button>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6 col-sm-12 col-12">
+                            <aside class="md-Rectangle">
+                                <h3>Trends</h3>
+                                <nav>
+                                    <ul class="vertical-list sm-font">
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+                                        <li>#trend1</li>
+
+                                    </ul>
+                                </nav>
+                            </aside>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/JavaScript/Feed.js"></script>
+

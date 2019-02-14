@@ -1,0 +1,218 @@
+﻿@model ModelChannel
+@{
+    ViewData["Title"] = "Channel Panel";
+}
+
+<section  class="mg-bottom-sm mg-top-sm text-center">
+    <div>
+        <figure>
+            <img class="lg-img" src="@Model.simg" />
+            <button id="ChangeHeader" onclick="onNewHeader()">
+                <i class="fas fa-camera"></i>
+            </button>
+        </figure>
+
+        <h1 class="lg-font">@Model.Name</h1>
+        <p>ID:@Model.ID</p>
+    </div>
+</section>
+<section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="viewStretch">
+                    <div class="row">
+                        <div class="col-3">
+                            <aside class="mg-top-sm">
+                                <nav>
+                                    <ul class="vertical-list">
+                                        <li>
+                                            <button class="btn btn-block btn-danger" id="GenralinfoBtn">Genral info</button>
+                                        </li>
+                                        <li>
+                                            <button class="btn btn-block btn-danger" id="NavbarBtn">Navbar</button>
+                                        </li>
+                                        <li>
+                                            <button class="btn btn-block btn-danger" id="DraftsBtn">Drafts</button>
+                                        </li>
+                                        <li>
+                                            <button class="btn btn-block btn-danger" id="BlockusersBtn">Block users</button>
+                                        </li>
+                                        <li>
+                                            <button class="btn btn-block btn-danger" id="AboutBtn">About</button>
+                                        </li>
+                                        <li>
+                                            <a class="btn btn-block  btn-danger"  asp-controller="Channel" asp-action="MyChannel" asp-route-Cid="fc">See Chaneel</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </aside>
+                        </div>
+                        <div class="col-9">
+                            <div id="GenralTab">
+                                <table class="table" style="text-align:center">
+                                    <tr>
+                                        <th colspan="3" style="font-size:large">
+                                            Genral info
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>Threads</th>
+                                        <th>Directories</th>
+                                        <th>Followers</th>
+                                    </tr>
+                                    <tr>
+                                        <td>@Model.ThreadsNum()</td>
+                                        <td>@Model.DirectoryNum()</td>
+                                        <td>@Model.FollowersNum()</td>
+                                    </tr>
+                                </table>
+                                <br />
+                                <section class="details-box">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div>
+                                                <div>
+                                                    <h2>Last Activities</h2>
+                                                    <a class="free-postion  top-right" asp-action="LastActivites">more</a>
+                                                </div>
+                                                <div>
+
+                                                    @for (int i = 0; i < 5; i++)
+                                                    {
+                                                        <div class="tab">
+                                                            <div>
+                                                                <img class="md-img" src="~/image/Test/square_Marc.jpg" />
+                                                                <p class="float-right"><a asp-controller="User" asp-action="info">Ahmed</a> Comment on tour article <a asp-controller="User" asp-action="info">newArtticle</a><br />1/1/2019</p>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div style="height:400px">
+                                                <div>
+                                                    <h2>Last Notifications</h2>
+                                                    <a class="free-postion  top-right" asp-action="LastNotifications">more</a>
+                                                </div>
+                                                <div>
+
+                                                    @for (int i = 0; i < 5; i++)
+                                                    {
+                                                        <div class="tab">
+                                                            <div>
+                                                                <img class="md-img" src="~/image/Test/square_Marc.jpg" />
+                                                                <p class="float-right"><a asp-controller="User" asp-action="info">Ahmed</a> Comment on tour article <a asp-controller="User" asp-action="info">newArtticle</a><br />1/1/2019</p>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div id="Navbar" style="display:none">
+                                <h3>Navbar Setting</h3>
+                                <table class="table">
+                                    <tr>
+                                        <th>Name</th>
+                                        <td>Home</td>
+                                        <th></th>
+                                        <td></td>
+                                        <th></th>
+                                    </tr>
+                                    @for (int i = 0; i < 4; i++)
+                                    {
+
+                                        <tr>
+                                            <form asp-controller="Channel" asp-action="changeNavItem" asp-route-Cid="@Model.ID" asp-route-Did="@Model.getNavBar()[i].NID">
+                                                <th>Name</th>
+                                                <td><input class="inputText" asp-for="getNavObject().Name" value="@Model.getNavBar()[i].Name" /></td>
+                                                <th>Link</th>
+                                                <td><input class="inputText" asp-for="getNavObject().Url" value="@Model.getNavBar()[i].Url" /></td>
+                                                <th><button type="submit">Change</button></th>
+                                            </form>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <th>Name</th>
+                                        <td>About</td>
+                                        <th></th>
+                                        <td></td>
+                                        <th></th>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div id="Drafts" style="display:none">
+                                <h3>Draft Threads</h3>
+                                <div class="row">
+                                    @foreach (var file in Model.getDraftThreads())
+                                    {
+                                        <div class="col-12 LV">
+
+                                            <div class="New">
+                                                <div class="float-left image" style="background-image: url(@file.getPeekData().img)">
+                                                    @*<div><img src="~/image/Test/square_Marc.jpg" /></div>*@
+                                                </div>
+                                                <div class="float-left Discription">
+                                                    <div>
+                                                        <p style="font-size:large ; margin-bottom:3px;"><b><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@Model.ID" asp-route-Did="@file.getPeekData().directorId" asp-route-Tid="@file.getPeekData().ID">@file.getPeekData().Name</a></b></p>
+                                                        <p>@file.getPeekData().Description</p>
+                                                    </div>
+                                                    @*<div class="genralInfo">
+                                                            <span>@file.PublishDate</span><br />
+                                                            <span>
+                                                                <i class="far fa-eye"></i><span class="mr-2"> 5</span>
+                                                                <i class="fas fa-comments"></i><span> 20</span>
+                                                            </span>
+                                                        </div>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div id="BlockedUser" style="display:none">
+                                <h3>Blocked User</h3>
+                                @await Component.InvokeAsync("BlockedUser")
+                            </div>
+                            <div id="About" style="display:none">
+                                <h3>About</h3>
+                                <div>
+                                    <p>@Model.Description</p>                        
+                                <br />
+                                <br />
+                                <h4>Change Description</h4>
+                                    <form asp-controller="Channel" asp-action="changeChannelDescription" asp-route-Cid="@Model.ID">
+                                        <textarea class="form-control" rows="5" name="description"></textarea>
+                                        <button class="btn btn-danger" type="submit">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<div id="Headers" style="display:none">
+
+    <span><strong style="font-size:larger">Add new Folder</strong></span>
+    <i onclick="offNewFolder()" id="Close" class="fas fa-window-close"></i>
+    <form method="post" asp-controller="Channel" asp-action="ChangeChannelPic" asp-route-Cid="@Model.ID" enctype="multipart/form-data">
+        <input type="file" name="Pic" />
+        <input type="submit" value="Uploade" />
+    </form>
+</div>
+<script src="~/JavaScript/ChannelPanel.js"></script>
+<script src="~/JavaScript/MyChannel.js"></script>

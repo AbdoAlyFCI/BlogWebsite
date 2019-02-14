@@ -10,7 +10,17 @@
 
 /*Medium Screen*/
 @media(min-width: 576px) and (max-width: 991px) {
-
+    /*Navbar*/
+    .menu_H h6{
+        display:none;
+    }
+    .menu_H a{
+        margin-right:18px;
+        font-size:23px;
+    }
+    .search_H input{
+        width:146px;
+    }
     /* Log in and sign up page */
     #signPage {
         min-height: 900px;
@@ -53,6 +63,21 @@
         display:inline;
     }
 
+    /*My Channel*/
+    #contextMenu{
+        top:-0.6rem;
+    }
+
+    #renameDialogue {
+        width: 40%;
+        display: none;
+    }
+
+    #deleteDialogue {
+        width: 25%;
+        display: none;
+    }
+
 }
 
 @media (min-width: 576px) and (max-width:786px){
@@ -67,12 +92,21 @@
         margin-left: 14%;
     }
     /*My Feed*/
-    .none {
-        display: none;
-    }
-
     .New {
         width: inherit;
+    }
+
+    .Discription{
+        width:62.43%;
+    }
+    .react{
+        width:10.43%;
+    }
+
+
+    #renameDialogue {
+        width: 55%;
+        display: none;
     }
 }
 
@@ -81,8 +115,19 @@
 
 @media (max-width: 575px){
     /*NavBar*/
+    /*.menu_H{
+        margin-bottom:15px;
+    }*/
     .menu_H h6 {
         display: none;
+    }
+    .menu_H a{
+        margin-right:90px;
+        font-size:24px
+    }
+
+    .search_H input {
+        width: 140px;
     }
     /* Log in and sign up page */
     #signPage {
@@ -112,11 +157,25 @@
         border: ridge 2px gray;
     }
     /*My Feed*/
-    .none {
-        display: none;
+    .Discription {
+        width: 56.43%;
     }
-    .New {
-        width: inherit;
+
+    .react {
+        width: 16.43%;
+    }
+    /*My Channel*/
+    .ChannelBar{
+        height:88px;
+    }
+
+    #contextMenu {
+        top:4rem;
+    }
+
+    #renameDialogue {
+        width: 84%;
+        display: none;
     }
 }
 

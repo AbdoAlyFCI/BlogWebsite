@@ -1,0 +1,230 @@
+﻿@model ModelChannel
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-12" id="Header">
+                <img src="@Model.img" alt="Channelbanner" />
+                @if (User.Identity.IsAuthenticated == true)
+                {
+                    @if (Model.ownerID.Equals(User.Identity.Name))
+                    {
+                        <button id="ChangeHeader" onclick="onNewHeader()" style="">
+                            <i class="fas fa-camera"></i>
+                        </button>
+
+                    }
+                }
+            </div>
+            <div class="col-12">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-controller="Channel" asp-action="MyChannel" asp-route-Cid="@Model.ID">Home <span class="sr-only">(current)</span></a>
+                            </li>
+                            @for (int i = 0; i < 4; i++)
+                            {
+                                if (Model.getNavBar()[i].Name != null || Model.getNavBar()[i].Url != null)
+                                {
+                                    <li class="nav-item ">
+                                        <a class="nav-link" href="@Model.getNavBar()[i].Url">@Model.getNavBar()[i].Name<span class="sr-only">(current)</span></a>
+                                    </li>
+                                }
+                            }
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Channel" asp-action="About" asp-route-Cid="@Model.ID">About <span class="sr-only">(current)</span></a>
+                            </li>
+                        </ul>
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="mg-top-sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12 col-12">
+                <div class="ViewBox">
+                    <h1 class="md-font">Last Feed</h1>
+                    <div class="row">
+                        @foreach (var file in Model.getAllThread(ViewBag.pagenum))
+                        {
+                            <div class="col-12">
+                                <article class="seed">
+                                    <figure class="float-left">
+                                        <img src="@file.getPeekData().img" alt="error" />
+                                    </figure>
+                                    <aside>
+                                        <header>
+                                            <h1><a asp-controller="Channel" asp-action="Thread" asp-route-Cid="@file.getPeekData().CID" asp-route-Did="@file.getPeekData().directorId" asp-route-Tid="@file.getPeekData().ID">@file.getPeekData().Name</a></h1>
+                                            <h2><a asp-controller="Channel" asp-action="getSpecificDirectory" asp-route-Cid="@Model.ID" asp-route-Did="@file.getPeekData().directorId">/@file.getPeekData().directorName</a></h2>
+                                        </header>
+                                        @if (file.getPeekData().Description == null)
+                                        {
+
+                                            <p></p>
+                                        }
+                                        else if (file.getPeekData().Description.Length > 220)
+                                        {
+                                            string s = file.getPeekData().Description.Substring(0, 180) + "...........";
+                                            <p> @s</p>
+                                        }
+                                        else
+                                        {
+                                            <p>@file.getPeekData().Description</p>
+                                        }
+                                        <footer>
+                                            <time datetime="@file.getPeekData().PublishDate">@file.getPeekData().PublishDate</time>
+                                        </footer>
+                                    </aside>
+                                </article>
+                            </div>
+                        }
+                    </div>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            @if (ViewBag.pagenum >1)
+                            {
+                                int next = ViewBag.pagenum - 1;
+
+                                <li class="page-item"><a class="page-link" asp-controller="User" asp-action="MyFeed" asp-route-page="@next">Previous</a></li>
+
+                            }
+                            @if (ViewBag.pagenum <Model.totalPages)
+                            {
+                                int next = ViewBag.pagenum + 1;
+                                <li class="page-item"><a class="page-link" asp-controller="User" asp-action="MyFeed" asp-route-page="@next">Next</a></li>
+                            }
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="sm-Rectangle">
+                            <div>
+                                <img class="md-img float-left" src="@Model.simg" />
+                                <div class="float-left">
+                                    <h4>@Model.Name</h4>
+                                    <h6>@Model.FollowersNum() followers</h6>
+                                </div>
+                                <div class="free-postion top-right">
+                                    @if (User.Identity.IsAuthenticated == true)
+                                    {
+                                        @if (Model.ownerID.Equals(User.Identity.Name))
+                                        {
+                                            <a class="btn btn-danger" asp-controller="Channel" asp-action="ChannelPanel" asp-route-Cid="@Model.ID">Setting</a>
+
+                                        }
+                                        else
+                                        {
+                                            if (ViewBag.State == "N")
+                                            {
+                                                <form method="post" asp-controller="Channel" asp-action="AddFollower" asp-route-Cid="@Model.ID">
+                                                    <button class="btn btn-primary" type="submit"> Follow</button>
+                                                </form>
+                                            }
+                                            else if (ViewBag.State == "F")
+                                            {
+                                                <form method="post" asp-controller="Channel" asp-action="RemoveFollower" asp-route-Cid="@Model.ID">
+                                                    <button class="btn btn-primary" type="submit"> Unfollow</button>
+                                                </form>
+                                            }
+                                            else if (ViewBag.State == "B")
+                                            {
+                                                <form method="post" asp-controller="Channel" asp-action="AddFollower" asp-route-Cid="@Model.ID">
+                                                    <button class="btn btn-primary" type="submit"> UnBlock</button>
+                                                </form>
+                                            }
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-primary" asp-controller="Start" asp-action="Welcome"> SignUp</a>
+
+                                    }
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    @if (Model.ownerID.Equals(User.Identity.Name))
+                    {
+                        <div class="col-12" style="margin-top:4%">
+                            <div class="sm-Rectangle" id="AddItemTable">
+                                @* class="infoTable" *@
+                                <button onclick="onNewFolder()"><i class="fas fa-folder-plus"></i></button>
+                                <button onclick="onNewThread()"><i class="fas fa-file-medical"></i></button>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-12" style="margin-top:4%;">
+                        <nav class="md-Rectangle md-font">
+                            @*id="Folders"*@
+                            <ul class="vertical-list">
+                                @foreach (var Directory in Model.getAllDirectory())
+                                {
+                                    <li onclick="onClick(this)">
+                                        <i class="fas fa-folder-open"></i>
+                                        @Directory.Name
+                                        <ul class="vertical-list">
+                                            @foreach (var item in Directory.getallThread())
+                                            {
+                                                <li>
+                                                    | <i class="fas fa-file"></i>&ensp;
+                                                    <a class="link" asp-controller="Channel" asp-action="Thread" asp-route-Cid="@Model.ID" asp-route-Did="@Directory.ID" asp-route-Tid="@item.getPeekData().ID">
+                                                        @if (item.getPeekData().Name.Length > 27)
+                                                        {
+
+                                                            string s = item.getPeekData().Name.Substring(0, 22) + "........";
+                                                            @s
+
+
+                                                        }
+                                                        else
+                                                        {
+
+                                                            @item.getPeekData().Name
+                                                        }
+
+                                                    </a>
+                                                </li>
+
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (User.Identity.IsAuthenticated == true)
+{
+    @if (Model.ownerID.Equals(User.Identity.Name))
+    {
+        @await Html.PartialAsync("~/Views/Channel/CreateGroup.cshtml")
+    }
+}
+
+
+
+
+<script src="~/JavaScript/MyChannel.js"></script>

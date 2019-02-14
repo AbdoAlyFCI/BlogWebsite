@@ -1,0 +1,21 @@
+﻿@model List<stateUser>
+
+<table class="table">
+    @foreach (var user in Model)
+    {
+        var data = user.getAllDate();
+        <tr>
+            <td>
+                <img class="md-img" src="@data.Item3" />
+            </td>
+            <td>
+                <h4>@data.Item2</h4>
+            </td>
+            <td>
+                <form asp-route-uid="@data.Item1">
+                    <button><i class="fas fa-times-circle"></i></button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
