@@ -6,7 +6,7 @@ This my second project with ASP Core MVC after [Student Distribution](https://gi
 ## Why I start this project.
 The main reason to start this project is to put harder challenge for me after I finsih my first project , The idea start to be just personal blog and then turned to be a website that anyone can use the and turned to be some thing like small social network maybe with some limits but still not bad (for me at least)
 
-###What I learn from that project
+### What I learn from that project
  After I saw [where the problem for me ](https://github.com/sped439/StudentDistribution#what-should-do-know "where the problem for me ") I read a lot to make this project better in a lot of ways and that was obvious in my database design ,and hosted my website for first time for me.
  
  
