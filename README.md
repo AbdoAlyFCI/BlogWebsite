@@ -1,4 +1,4 @@
-# Infinite Blog (Open source web project) ver 1.0
+# Infinite Blog (Open source web project) ver 1.0 
 [![Logo](https://i.ibb.co/FsRHHpF/mlogo.png "Logo")](https://i.ibb.co/FsRHHpF/mlogo.png "Logo")
 ## Overview
 This my second project with ASP Core MVC after [Student Distribution](https://github.com/sped439/StudentDistribution "Student Distribution") ,It is a web site that could use as a simple social network for writing and sharing articles by give the the ability to every one to create his own blog in just minutes and start writing and sharing his articles to the world.
@@ -7,7 +7,7 @@ This my second project with ASP Core MVC after [Student Distribution](https://gi
 The main reason to start this project is to put harder challenge for me after I finsih my first project , The idea start to be just personal blog and then turned to be a website that anyone can use the and turned to be some thing like small social network maybe with some limits but still not bad (for me at least)
 
 ### What I learn from that project
- After I saw [where the problem for me ](https://github.com/sped439/StudentDistribution#what-should-do-know "where the problem for me ") I read a lot to make this project better in a lot of ways and that was obvious in my database design ,and hosted my website for first time for me.
+ After I saw [where the problem for me ](https://github.com/sped439/StudentDistribution#what-should-do-know "where the problem for me ") I read a lot to make this project better in a lot of ways, First I decided to make a strong relational database ,second Host the website ,third give the website update form time to time
  
  
 [![Logo](https://i.ibb.co/xLWBFss/database.png "database")](https://i.ibb.co/xLWBFss/database.png "Logo")
